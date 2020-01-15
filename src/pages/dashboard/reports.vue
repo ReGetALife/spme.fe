@@ -1,13 +1,26 @@
 <template>
   <div>
-    <h1>我的实验报告</h1>
+    <h1>我的实验</h1>
     <a-table :columns="columns" :dataSource="data" rowKey="name">
-      <span slot="status"> <a-badge status="success" />已提交 </span>
+      <span slot="status" slot-scope="{ status }">
+        <a-badge :status="status | statusFilter" />
+        {{ status | statusFilter2 }}
+      </span>
       <!-- <span slot="action" slot-scope="text, record"> -->
-      <span slot="action">
-        <a href="javascript:;"> <a-icon type="eye" />&nbsp;预览 </a>
+      <span slot="action" slot-scope="record">
+        <a :href="record.url" target="_blank" :disabled="!record.url">
+          <a-icon type="eye" />&nbsp;预览
+        </a>
         <a-divider type="vertical" />
-        <a href="javascript:;"> <a-icon type="download" />&nbsp;下载 </a>
+        <a
+          :href="record.url"
+          :download="record.disposition"
+          :disabled="!record.url"
+        >
+          <a-icon type="download" />&nbsp;下载
+        </a>
+        <!-- <a-divider type="vertical" /> -->
+        <!-- <a-button type="primary" :disabled="record.status !== 0">提交所有</a-button> -->
       </span>
     </a-table>
   </div>
@@ -21,7 +34,8 @@ const columns = [
   { title: "评语", dataIndex: "comment", width: "300px" },
   {
     title: "操作",
-    dataIndex: "action",
+    key: "action",
+    // dataIndex: 'action',
     scopedSlots: { customRender: "action" }
   }
 ];
@@ -29,28 +43,134 @@ const columns = [
 const data = [
   {
     name: "安全管理（RACF）",
-    status: 1,
-    score: 5,
-    comment: "还不错"
+    labId: "racf",
+    status: "",
+    score: "",
+    comment: ""
   },
   {
     name: "存储管理（DFSMS）",
-    status: 1,
-    score: 5,
-    comment:
-      "还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错还不错"
+    labId: "sms",
+    status: "",
+    score: "",
+    comment: ""
   },
-  { name: "目录管理（Catalog）", status: 1, score: 5, comment: "还不错" },
-  { name: "系统命令（MVS）", status: 1, score: 5, comment: "还不错" },
-  { name: "脚本语言（REXX）", status: 1, score: 5, comment: "还不错" }
+  {
+    name: "目录管理（Catalog）",
+    labId: "catalog",
+    status: "",
+    score: "",
+    comment: ""
+  },
+  {
+    name: "系统命令（MVS）",
+    labId: "mvs",
+    status: "",
+    score: "",
+    comment: ""
+  },
+  {
+    name: "脚本语言（REXX）",
+    labId: "rexx",
+    status: "",
+    score: "",
+    comment: ""
+  }
 ];
 
 export default {
   data() {
     return {
       columns,
-      data
+      data,
+      allRates: []
     };
+  },
+  async created() {
+    this.allRates = await this.$http.get("/api/db/checkScore").catch(() => {});
+
+    this.data.forEach((lab, index) => {
+      this.$http
+        .get("/api/db/getReports", {
+          params: {
+            lab: lab.labId.toUpperCase()
+          },
+          responseType: "arraybuffer"
+        })
+        .then(res => {
+          if (res.data.byteLength) {
+            // 生成 pdf url
+            console.log(res);
+            lab.status = 1; // 已提交
+            lab.disposition = res.headers.map["content-disposition"][0]
+              .split("=")[1]
+              .replace(/"/g, "");
+            console.log("dis", lab.disposition);
+            let binaryData = [];
+            console.log("body", res.body);
+            binaryData.push(res.body);
+
+            lab.url = window.URL.createObjectURL(
+              new Blob(binaryData, {
+                type: "application/pdf"
+              })
+            );
+
+            this.data = [...this.data]; // 更新数据
+
+            console.log("url", lab.url);
+
+            // 是否批改
+            console.log("allrates", this.allRates);
+            if (this.allRates && +this.allRates.status === 200) {
+              let ratedLabIndex = this.allRates.body.findIndex(rate => {
+                return rate.lab.toLowerCase() === lab.labId;
+              });
+              if (ratedLabIndex !== -1) {
+                lab.comment = this.allRates.body[ratedLabIndex].comment;
+                lab.score = this.allRates.body[ratedLabIndex].score;
+                lab.status = 2;
+              }
+            }
+          } else {
+            lab.status = 0; // 未提交
+          }
+        });
+    });
+  },
+  methods: {},
+  filters: {
+    statusFilter(status) {
+      switch (status) {
+        case 0:
+          return "default"; // 未提交
+          break;
+        case 1:
+          return "success"; // 已提交
+          break;
+        case 2:
+          return "warning"; // 已批改
+          break;
+        default:
+          break;
+      }
+    },
+    statusFilter2(status) {
+      switch (status) {
+        case 0:
+          return "未提交";
+          break;
+        case 1:
+          return "已提交";
+          break;
+        case 2:
+          return "已批改";
+          break;
+        default:
+          return "状态未知";
+          break;
+      }
+    }
   }
 };
 </script>

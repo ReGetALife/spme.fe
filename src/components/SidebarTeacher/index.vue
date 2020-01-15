@@ -41,7 +41,7 @@ export default {
         },
         {
           name: "存储管理（DFSMS）",
-          path: "dfsms",
+          path: "sms",
           icon: "hdd"
         },
         {

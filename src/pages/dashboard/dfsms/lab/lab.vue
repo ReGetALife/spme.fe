@@ -50,18 +50,18 @@ export default {
           });
       } else {
         let reqBody = {
-          lab: "SMS",
+          lab: "DFSMS",
           lower_lab: questions[0].lower_lab,
           step: questions[0].step
         };
         axios
-          .post(`/api/db/confirmAnswer`, reqBody)
+          .post(`/api/db/submitLab`, reqBody)
           .then(() => {
-            axios
-              .post(`/api/db/saveReports`, {
-                lab: "SMS"
-              })
-              .then(() => console.log("生成 pdf 成功"));
+            // axios
+            //   .post(`/api/db/saveReports`, {
+            //     lab: "SMS"
+            //   })
+            //   .then(() => console.log("生成 pdf 成功"));
             this.$message.success("提交成功");
           })
           .catch(err => {

@@ -1,6 +1,17 @@
 <template>
-  <div>
+  <div class="detail-page">
     <h1>{{ $route.params.name | formatName }}</h1>
+    <a-popconfirm
+      title="确认发布成绩？"
+      placement="left"
+      @confirm="handOutScores"
+      okText="确认"
+      cancelText="取消"
+    >
+      <a-button class="hand-out-score" type="primary">
+        <a-icon type="notification" />发布成绩
+      </a-button>
+    </a-popconfirm>
     <a-table
       :columns="columns"
       :dataSource="data"
@@ -52,7 +63,7 @@ const columns = [
 export default {
   data() {
     return {
-      lab: this.$route.params.name,
+      // lab: this.$route.params.name,
       data: [],
       loading: false,
       columns,
@@ -60,6 +71,11 @@ export default {
       disposition: "",
       url: ""
     };
+  },
+  computed: {
+    lab() {
+      return this.$route.params.name;
+    }
   },
   created() {
     this.fetch();
@@ -81,6 +97,7 @@ export default {
           }
         })
         .then(data => {
+          console.log("GET /db/submitted", data);
           this.loading = false;
           this.data = data.body;
         });
@@ -127,6 +144,18 @@ export default {
       this.getPDF(record).then(() => {
         this.$refs.downloadHref.click();
       });
+    },
+    handOutScores() {
+      this.$http
+        .post("/api/db/reScore", {
+          lab: this.lab.toUpperCase()
+        })
+        .then(() => {
+          this.$message.success("发布成功");
+        })
+        .catch(() => {
+          this.$message.error("发布失败");
+        });
     }
   },
   filters: {
@@ -136,7 +165,7 @@ export default {
         case "racf":
           title = "安全管理（RACF）";
           break;
-        case "dfsms":
+        case "sms":
           title = "存储管理（DFSMS）";
           break;
         case "catalog":
@@ -159,3 +188,14 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.detail-page {
+  position: relative;
+  .hand-out-score {
+    position: absolute;
+    right: 0;
+    top: 8px;
+  }
+}
+</style>

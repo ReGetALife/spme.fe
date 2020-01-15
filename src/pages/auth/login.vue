@@ -76,6 +76,11 @@ export default {
   //     this.form.validateFields();
   //   });
   // },
+  mounted() {
+    this.form.setFieldsValue({
+      address: "10.60.43.8:8800"
+    });
+  },
   methods: {
     handleSubmit(e) {
       e.preventDefault();
@@ -97,6 +102,7 @@ export default {
             this.$store.dispatch("user/login", user);
             const loginState = await Axios.get("/api/login");
             if (loginState.data.role === "teacher") {
+              sessionStorage.setItem("isTeacher", true);
               this.$router.push("/teacher");
               return;
             }

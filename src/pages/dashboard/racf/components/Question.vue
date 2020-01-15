@@ -75,12 +75,12 @@ export default {
         })
         .catch(e => {
           e.response.status;
-          this.$message.error("保存草稿失败，请重试");
+          this.$message.error("实验已提交，保存无效");
         });
     },
 
     submitAll() {
-      Axios.post("/api/db/confirmAnswer", {
+      Axios.post("/api/db/submitLab", {
         lab: "RACF",
         lower_lab: this.lower_lab,
         step: this.step

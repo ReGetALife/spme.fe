@@ -18,7 +18,7 @@ const router = new Router({
   routes: [
     {
       path: "/",
-      redirect: "/dashboard"
+      redirect: "/dashboard/reports"
     },
     {
       path: "/dashboard",

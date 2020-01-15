@@ -21,9 +21,9 @@
               style="margin-right: 10px"
               type="primary"
               @click="saveCurrent"
-              >保存</a-button
+              >保存本页</a-button
             >
-            <a-button type="primary" @click="visible = true">提交</a-button>
+            <a-button type="primary" @click="visible = true">提交所有</a-button>
             <a-modal title="确认提交？" v-model="visible" @ok="submitAll">
               <p>提交报告后老师将可以看到</p>
               <p>同时将不能再对答案进行更改。</p>

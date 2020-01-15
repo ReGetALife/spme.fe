@@ -26,7 +26,7 @@
                 style="margin-right: 15px"
                 type="primary"
                 @click="subDraft(questions.question_id)"
-                >保存</a-button
+                >保存本页</a-button
               >
               <a-button
                 style="margin-right: 15px"
@@ -34,7 +34,7 @@
                 html-type="submit"
                 @click="sub()"
                 v-if="index == steps.length - 1"
-                >提交</a-button
+                >提交所有</a-button
               >
             </span>
           </div>
@@ -99,7 +99,7 @@ export default {
       };
       Axios({
         method: "post",
-        url: "/api/db/confirmAnswer",
+        url: "/api/db/submitLab",
         data: data
       })
         .then(response => {

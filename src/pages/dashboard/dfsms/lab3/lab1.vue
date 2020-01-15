@@ -33,9 +33,9 @@
                 style="margin-right: 10px"
                 type="primary"
                 @click="handleSubmit($event, 1)"
-                >保存</a-button
+                >保存本页</a-button
               >
-              <a-button type="primary" html-type="submit">提交</a-button>
+              <a-button type="primary" html-type="submit">提交所有</a-button>
             </span>
           </div>
         </a-form>

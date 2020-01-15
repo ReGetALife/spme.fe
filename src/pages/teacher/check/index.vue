@@ -1,6 +1,15 @@
 <template>
   <div style="height: 100%" id="teach_check_page">
-    <h2>{{ uid }} 的 {{ lab.toUpperCase() }} 实验报告</h2>
+    <div class="header">
+      <h2>
+        <span class="back-button" @click="$router.go(-1)">
+          <a-icon type="left" />返回
+        </span>
+        <span style="vertical-align: middle"
+          >{{ lab.toUpperCase() }} / {{ uid }}</span
+        >
+      </h2>
+    </div>
     <div class="wrapper">
       <div class="pdf">
         <a-spin :spinning="isLoadingPDF" :style="{ height: '100%' }">
@@ -41,6 +50,7 @@
               <a-button @click="$router.go(-1)">返回</a-button>
               <a-button
                 type="primary"
+                :loading="isSaving"
                 @click="save"
                 :style="{ marginLeft: '8px' }"
                 >保存</a-button
@@ -70,13 +80,15 @@ export default {
       formItemLayout,
       formTailLayout,
       form: this.$form.createForm(this),
-      isLoadingPDF: true
+      isLoadingPDF: true, // 是否正在加载 pdf
+      isSaving: false // 是否正在保存分数和评论
     };
   },
   computed: {
     ...mapState("report", ["score", "comment", "uid", "url", "lab"])
   },
   mounted() {
+    console.log(this.url);
     this.form.setFieldsValue({
       score: this.score,
       comment: this.comment
@@ -87,6 +99,7 @@ export default {
   },
   methods: {
     save() {
+      this.isSaving = true;
       this.$http
         .post(`/api/db/subScore`, {
           uid: this.uid,
@@ -94,8 +107,15 @@ export default {
           comment: this.form.getFieldValue("comment"),
           lab: this.lab
         })
-        .then()
-        .catch();
+        .then(() => {
+          this.isSaving = false;
+          this.$message.success("保存成功");
+        })
+        // .then()
+        .catch(() => {
+          this.isSaving = false;
+          this.$message.error("保存失败");
+        });
     }
   }
 };
@@ -103,10 +123,19 @@ export default {
 
 <style lang="scss">
 #teach_check_page {
+  .header {
+    .back-button {
+      color: gray;
+      font-size: 14px;
+      vertical-align: middle;
+      margin-right: 4px;
+      cursor: pointer;
+    }
+  }
   .wrapper {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 95%;
   }
   .pdf {
     height: 100%;

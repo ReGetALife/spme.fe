@@ -21,7 +21,8 @@
           <a-dropdown>
             <a>{{ username }}</a>
             <a-menu slot="overlay" @click="handleClick">
-              <a-menu-item key="reports">我的实验报告</a-menu-item>
+              <a-menu-item key="teacher" v-if="isTeacher">教师面板</a-menu-item>
+              <a-menu-item key="reports">我的实验</a-menu-item>
               <a-menu-item key="logout">退出登录</a-menu-item>
             </a-menu>
           </a-dropdown>
@@ -51,7 +52,8 @@ export default {
   },
   data() {
     return {
-      collapsed: false
+      collapsed: false,
+      isTeacher: sessionStorage.getItem("isTeacher")
     };
   },
 
@@ -62,12 +64,16 @@ export default {
   },
 
   methods: {
-    handleClick({ key }) {
+    async handleClick({ key }) {
       if (key === "logout") {
-        this.$store.dispatch("user/logout");
-        this.$router.push("/auth/login");
+        await this.$store.dispatch("user/logout");
+        setTimeout(() => {
+          this.$router.push("/auth/login");
+        }, 300);
       } else if (key === "reports") {
         this.$router.push("/dashboard/reports");
+      } else if (key === "teacher") {
+        this.$router.push("/teacher/home");
       }
     }
   }
