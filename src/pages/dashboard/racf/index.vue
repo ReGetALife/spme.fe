@@ -3,7 +3,7 @@
     <template slot="left">
       <LabContent :content="content" />
     </template>
-    <template slot="right">
+    <template slot="right" v-if="lab !== 'intro'">
       <LabReport :name="'步骤' + currentStep">
         <Question ref="Question" :step="currentStep" :lower_lab="lower_lab" />
         <div>

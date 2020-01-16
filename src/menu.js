@@ -67,5 +67,11 @@ export default [
       { name: "实验 6 显示数据集信息实验", path: "lab6" },
       { name: "实验 7 综合实验", path: "lab7" }
     ]
+  },
+  {
+    name: "ISPF",
+    path: "ispf",
+    icon: "hdd",
+    children: [{ name: "独立实验", path: "lab" }]
   }
 ];

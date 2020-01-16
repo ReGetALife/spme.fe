@@ -1,6 +1,6 @@
 <template>
   <div class="teacher-home">
-    <h1>总览</h1>
+    <h1>实验总览</h1>
     <a-list class="overview-list" itemLayout="horizontal" :dataSource="data">
       <a-list-item slot="renderItem" slot-scope="item">
         <!-- <a slot="actions">edit</a> -->

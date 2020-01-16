@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login-page">
     <a-form :form="form" @submit="handleSubmit" style="width: 360px">
       <h1>z/OS MF</h1>
       <a-form-item>
@@ -95,9 +95,9 @@ export default {
 
       try {
         const user = this.form.getFieldsValue();
-        user.teacherPass = this.form.getFieldsValue().password;
+        // user.teacherPass = this.form.getFieldsValue().password;
         const response = await Axios.post("/api/login", user);
-        switch (response.status) {
+        switch (+response.status) {
           case 200: {
             this.$store.dispatch("user/login", user);
             const loginState = await Axios.get("/api/login");
@@ -117,11 +117,19 @@ export default {
             });
         }
       } catch (error) {
-        Modal.error({
-          title: "登录失败",
-          content: error.message,
-          centered: true
-        });
+        if (error.message.includes("401")) {
+          Modal.error({
+            title: "登录失败",
+            content: "用户名或密码错误",
+            centered: true
+          });
+        } else {
+          Modal.error({
+            title: "登录失败",
+            content: error.message,
+            centered: true
+          });
+        }
       } finally {
         this.isLoading = false;
       }

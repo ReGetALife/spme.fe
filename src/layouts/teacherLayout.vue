@@ -64,6 +64,7 @@ export default {
   methods: {
     async handleClick({ key }) {
       if (key === "logout") {
+        sessionStorage.removeItem("isTeacher");
         await this.$store.dispatch("user/logout");
         setTimeout(() => {
           this.$router.push("/auth/login");

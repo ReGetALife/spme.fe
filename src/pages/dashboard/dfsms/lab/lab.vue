@@ -50,7 +50,7 @@ export default {
           });
       } else {
         let reqBody = {
-          lab: "DFSMS",
+          lab: "SMS",
           lower_lab: questions[0].lower_lab,
           step: questions[0].step
         };

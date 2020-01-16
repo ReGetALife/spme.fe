@@ -87,6 +87,16 @@ export default {
     };
   },
   async created() {
+    // 获取提交状态
+    let labStatus = await this.$http.get("/api/db/getLabStatus");
+    this.data.forEach((item, index, arr) => {
+      let status = labStatus.body.find(
+        lab => lab.lab.toLowerCase() === item.labId
+      ).status;
+      arr[index].status = status;
+    });
+
+    // 获取分数（若已经批改）
     this.allRates = await this.$http.get("/api/db/checkScore").catch(() => {});
 
     this.data.forEach((lab, index) => {
@@ -100,14 +110,14 @@ export default {
         .then(res => {
           if (res.data.byteLength) {
             // 生成 pdf url
-            console.log(res);
-            lab.status = 1; // 已提交
+            // console.log(res);
+            // lab.status = 1; // 已提交
             lab.disposition = res.headers.map["content-disposition"][0]
               .split("=")[1]
               .replace(/"/g, "");
-            console.log("dis", lab.disposition);
+            // console.log("dis", lab.disposition);
             let binaryData = [];
-            console.log("body", res.body);
+            // console.log("body", res.body);
             binaryData.push(res.body);
 
             lab.url = window.URL.createObjectURL(
@@ -118,10 +128,10 @@ export default {
 
             this.data = [...this.data]; // 更新数据
 
-            console.log("url", lab.url);
+            // console.log("url", lab.url);
 
             // 是否批改
-            console.log("allrates", this.allRates);
+            // console.log("allrates", this.allRates);
             if (this.allRates && +this.allRates.status === 200) {
               let ratedLabIndex = this.allRates.body.findIndex(rate => {
                 return rate.lab.toLowerCase() === lab.labId;
@@ -129,11 +139,11 @@ export default {
               if (ratedLabIndex !== -1) {
                 lab.comment = this.allRates.body[ratedLabIndex].comment;
                 lab.score = this.allRates.body[ratedLabIndex].score;
-                lab.status = 2;
+                lab.status = "scored";
               }
             }
           } else {
-            lab.status = 0; // 未提交
+            // lab.status = 0; // 未提交
           }
         });
     });
@@ -142,14 +152,17 @@ export default {
   filters: {
     statusFilter(status) {
       switch (status) {
-        case 0:
-          return "default"; // 未提交
+        case "unsaved":
+          return "default"; // 未保存
           break;
-        case 1:
-          return "success"; // 已提交
+        case "saved":
+          return "warning"; // 已保存
           break;
-        case 2:
-          return "warning"; // 已批改
+        case "submitted":
+          return "processing"; // 已提交
+          break;
+        case "scored":
+          return "success"; // 已批改
           break;
         default:
           break;
@@ -157,13 +170,16 @@ export default {
     },
     statusFilter2(status) {
       switch (status) {
-        case 0:
-          return "未提交";
+        case "unsaved":
+          return "未保存";
           break;
-        case 1:
+        case "saved":
+          return "已保存";
+          break;
+        case "submitted":
           return "已提交";
           break;
-        case 2:
+        case "scored":
           return "已批改";
           break;
         default:

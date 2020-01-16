@@ -30,7 +30,7 @@ export default {
       ],
       menuConfig: [
         {
-          name: "所有提交",
+          name: "实验总览",
           path: "home",
           icon: "home"
         },
