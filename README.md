@@ -1,4 +1,4 @@
-# zosmf.fe
+# spme.fe
 
 ## Project setup
 ```
