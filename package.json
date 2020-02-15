@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server",
-    "serve": "vue-cli-service serve --port 1234",
+    "serve": "vue-cli-service serve --port 1234 --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test": "vue-cli-service lint --no-fix"
