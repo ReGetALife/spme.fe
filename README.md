@@ -1,5 +1,7 @@
 # spme.fe
 
+This is the front-end project of a simulation platform of mainframe experiment at Tongji University, which is based on z/OSMF REST APIs .
+
 ## Project setup
 ```
 npm install
