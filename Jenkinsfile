@@ -2,10 +2,30 @@ pipeline {
   agent any
   stages {
     stage('build') {
+      agent {
+        docker {
+          image 'node:10-alpine'
+        }
+
+      }
       steps {
-        sh '''npm install
+        sh '''node -v
+npm -v
+npm install
 npm run build'''
-        archiveArtifacts(artifacts: 'dist/**', allowEmptyArchive: true, onlyIfSuccessful: true)
+      }
+    }
+
+    stage('deploy') {
+      agent {
+        docker {
+          image 'node:10-alpine'
+          args '-p 20201:9000'
+        }
+
+      }
+      steps {
+        sh 'npm start'
       }
     }
 
