@@ -9,9 +9,9 @@ pipeline {
 
       }
       steps {
-        sh '''echo $PWD
-npm install
+        sh '''npm install
 npm run build'''
+        archiveArtifacts(artifacts: 'dist/**', allowEmptyArchive: true, onlyIfSuccessful: true)
       }
     }
 
