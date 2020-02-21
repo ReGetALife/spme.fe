@@ -9,5 +9,10 @@ docker stop nginx_spme || true
 echo 'docker rm nginx_spme'
 docker rm nginx_spme  || true
 
-echo 'docker run -d -p 20201:80 -v $WORKSPACE/dist:/usr/share/nginx/html --name nginx_spme nginx'
-docker run -d -p 20201:80 -v $WORKSPACE/dist:/usr/share/nginx/html --name nginx_spme nginx
+# make sure to export WORKSPACE, e.g.
+# export WORKSPACE=/home/user/spme/jenkins_node/workspace/spme_fe
+echo 'docker run -d -p 20201:80 -v $WORKSPACE/dist:/usr/share/nginx/html -v $WORKSPACE/nginx.conf:/etc/nginx/conf.d/nginx.conf --name nginx_spme nginx'
+docker run -d -p 20201:80 \
+-v $WORKSPACE/dist:/usr/share/nginx/html \
+-v $WORKSPACE/nginx.conf:/etc/nginx/conf.d/nginx.conf \
+--name nginx_spme nginx
