@@ -68,14 +68,14 @@ export default {
       this.handleChange(e);
       e.preventDefault();
       this.result = "";
-      console.log("command submit");
+      // console.log("command submit");
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log("Received values of form: ", values.code);
+          // console.log("Received values of form: ", values.code);
           this.$http
             .put("/api/catalog", values.code)
             .then(response => {
-              console.log(response);
+              // console.log(response);
               this.result = response.body;
             })
             .catch(() => {

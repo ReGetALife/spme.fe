@@ -13,7 +13,7 @@
 import axios from "axios";
 import LabLayout from "@/components/LabLayout";
 import LabContent from "@/components/LabContent";
-import LabReport from "@/components/LabReport";
+// import LabReport from "@/components/LabReport";
 import Console from "@/components/Console/SMSConsole";
 import content from "./lab1.md";
 
@@ -21,7 +21,7 @@ export default {
   components: {
     LabLayout,
     LabContent,
-    LabReport,
+    // LabReport,
     Console
   },
   data() {

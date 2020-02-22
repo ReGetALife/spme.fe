@@ -99,7 +99,7 @@ export default {
     // 获取分数（若已经批改）
     this.allRates = await this.$http.get("/api/db/checkScore").catch(() => {});
 
-    this.data.forEach((lab, index) => {
+    this.data.forEach(lab => {
       this.$http
         .get("/api/db/getReports", {
           params: {
@@ -154,37 +154,26 @@ export default {
       switch (status) {
         case "unsaved":
           return "default"; // 未保存
-          break;
         case "saved":
           return "warning"; // 已保存
-          break;
         case "submitted":
           return "processing"; // 已提交
-          break;
         case "scored":
           return "success"; // 已批改
-          break;
-        default:
-          break;
       }
     },
     statusFilter2(status) {
       switch (status) {
         case "unsaved":
           return "未保存";
-          break;
         case "saved":
           return "已保存";
-          break;
         case "submitted":
           return "已提交";
-          break;
         case "scored":
           return "已批改";
-          break;
         default:
           return "状态未知";
-          break;
       }
     }
   }
