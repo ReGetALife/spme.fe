@@ -2,7 +2,17 @@
 
 This is the front-end project of a simulation platform of mainframe experiment at Tongji University, which is based on z/OSMF REST APIs .
 
-## Project setup
+### Todo List
+
+-[ ] fix UI & logic bugs
+-[ ] beautify UI
+-[ ] i18n
+-[ ] refine experiment doc
+-[ ] refine project structure
+-[ ] fix eslint
+-[ ] change site logo 
+
+### Project setup
 ```
 npm install
 ```
