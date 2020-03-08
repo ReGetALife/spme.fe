@@ -4,6 +4,7 @@
       <h1>z/OS MF</h1>
       <a-form-item>
         <a-input
+          v-focus
           v-decorator="[
             'account',
             {

@@ -15,9 +15,13 @@ Vue.config.productionTip = false;
 Vue.directive("focus", {
   // When the bound element is inserted into the DOM...
   inserted: function(el) {
-    el = el.getElementsByTagName("input")[0];
-    // Focus the element
-    el.focus();
+    if (el.tagName === "input") {
+      // Focus the element
+      el.focus();
+    } else {
+      el = el.getElementsByTagName("input")[0];
+      el.focus();
+    }
   }
 });
 
