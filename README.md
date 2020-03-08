@@ -26,6 +26,13 @@ npm run serve
 ```
 npm run build
 ```
+Target output location will be `dist` folder by default.
+
+### Start server after build
+```
+npm run start
+```
+This will start an express app with proxy configured. Or you can deploy static files under `dist` folder with other web server e.g. Nginx.
 
 ### Run your tests
 ```
