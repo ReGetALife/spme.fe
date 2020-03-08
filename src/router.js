@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import store from "./store";
+import store from "@/store";
 
 // import layout
 import DashBoardLayout from "@/layouts/dashboard.vue";
@@ -30,7 +30,7 @@ const router = new Router({
         },
         {
           path: "rexx/intro",
-          component: () => import("@/pages/dashboard/rexx/intro")
+          component: () => import("@/pages/dashboard/rexx/intro/index")
         },
         {
           path: "rexx/lab1",
@@ -62,7 +62,7 @@ const router = new Router({
         },
         {
           path: "racf/:lab",
-          component: () => import("@/pages/dashboard/racf")
+          component: () => import("@/pages/dashboard/racf/index")
         },
         {
           path: "dfsms/:lab",
@@ -131,7 +131,7 @@ const router = new Router({
         },
         {
           path: "catalog/intro",
-          component: () => import("@/pages/dashboard/catalog/intro")
+          component: () => import("@/pages/dashboard/catalog/intro/index")
         },
         {
           path: "catalog/lab1",
@@ -172,7 +172,7 @@ const router = new Router({
         {
           path: "ispf/lab",
           redirect: "ispf/lab/master",
-          component: () => import("@/pages/dashboard/ispf/lab"),
+          component: () => import("@/pages/dashboard/ispf/lab/index"),
           children: [
             {
               path: "master",

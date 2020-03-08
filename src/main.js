@@ -22,7 +22,7 @@ Vue.directive("focus", {
 });
 
 new Vue({
-  router, // vue-router
+  router, // vue router
   store, // vuex
-  render: h => h(App)
+  render: h => h(App) // rendered content will be mount on #app
 }).$mount("#app");
