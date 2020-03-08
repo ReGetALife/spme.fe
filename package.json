@@ -37,7 +37,8 @@
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-ant-design": "^1.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "http-proxy-middleware": "^0.19.1"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
