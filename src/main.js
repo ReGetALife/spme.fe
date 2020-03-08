@@ -3,20 +3,26 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
-import "./plugins/ant-design-vue.js";
+import Antd from "ant-design-vue";
+import "ant-design-vue/dist/antd.css";
 import VueResource from "vue-resource";
 
+Vue.use(Antd);
 Vue.use(VueResource);
 Vue.config.productionTip = false;
+
+// Register a global custom directive called `v-focus`
 Vue.directive("focus", {
+  // When the bound element is inserted into the DOM...
   inserted: function(el) {
     el = el.getElementsByTagName("input")[0];
+    // Focus the element
     el.focus();
   }
 });
 
 new Vue({
-  router,
-  store,
+  router, // vue-router
+  store, // vuex
   render: h => h(App)
 }).$mount("#app");
