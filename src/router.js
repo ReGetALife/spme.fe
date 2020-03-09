@@ -18,7 +18,14 @@ const router = new Router({
   routes: [
     {
       path: "/",
-      redirect: "/dashboard/reports"
+      // Redirect base on user role
+      redirect: () => {
+        if (store.state.user.role === "TEACHER") {
+          return "/teacher/home";
+        } else {
+          return "/dashboard/reports";
+        }
+      }
     },
     {
       path: "/dashboard",
@@ -255,6 +262,7 @@ const router = new Router({
   ]
 });
 
+// Redirect to login page while not login
 router.beforeEach((to, from, next) => {
   if (store.getters["user/isLogin"]) {
     if (to.name === "login") {

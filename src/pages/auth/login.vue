@@ -96,16 +96,13 @@ export default {
 
       try {
         const user = this.form.getFieldsValue();
-        // user.teacherPass = this.form.getFieldsValue().password;
         const response = await Axios.post("/api/login", user);
         switch (+response.status) {
           case 200: {
-            this.$store.dispatch("user/login", user);
             const loginState = await Axios.get("/api/login");
+            await this.$store.dispatch("user/login", loginState.data);
             if (loginState.data.role === "teacher") {
               sessionStorage.setItem("isTeacher", true);
-              this.$router.push("/teacher");
-              return;
             }
             this.$router.push("/");
             return;
