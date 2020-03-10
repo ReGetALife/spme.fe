@@ -69,8 +69,8 @@ export default {
         sessionStorage.removeItem("isTeacher");
         await this.$store.dispatch("user/logout");
         setTimeout(() => {
-          this.$router.push("/auth/login");
-        }, 300);
+          this.$router.push("/");
+        }, 600);
       } else if (key === "reports") {
         this.$router.push("/dashboard/reports");
       } else if (key === "teacher") {
