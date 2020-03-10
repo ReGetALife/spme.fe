@@ -7,7 +7,7 @@ const app = express();
 app.use(
   "/api",
   proxy({
-    target: "http://10.60.43.40:8090",
+    target: "http://10.60.43.40:20202",
     changeOrigin: true,
     pathRewrite: { "^/api": "" }
   })
