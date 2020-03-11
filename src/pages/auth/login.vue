@@ -101,10 +101,6 @@ export default {
           case 200: {
             const loginState = await Axios.get("/api/login");
             await this.$store.dispatch("user/login", loginState.data);
-            if (loginState.data.role === "teacher") {
-              sessionStorage.setItem("isTeacher", true);
-            }
-            this.$router.push("/");
             return;
           }
           case 401:

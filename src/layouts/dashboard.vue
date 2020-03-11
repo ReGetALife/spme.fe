@@ -52,25 +52,23 @@ export default {
   },
   data() {
     return {
-      collapsed: false,
-      isTeacher: sessionStorage.getItem("isTeacher")
+      collapsed: false
     };
   },
 
   computed: {
     username() {
       return this.$store.state.user.username;
+    },
+    isTeacher() {
+      return this.$store.state.user.role === "TEACHER";
     }
   },
 
   methods: {
     async handleClick({ key }) {
       if (key === "logout") {
-        sessionStorage.removeItem("isTeacher");
         await this.$store.dispatch("user/logout");
-        setTimeout(() => {
-          this.$router.push("/");
-        }, 600);
       } else if (key === "reports") {
         this.$router.push("/dashboard/reports");
       } else if (key === "teacher") {

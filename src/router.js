@@ -19,11 +19,16 @@ const router = new Router({
     {
       path: "/",
       // Redirect base on user role
+      // Navigation guards are not applied on the route that redirects, only on its target.
+      // So you need to check login state and redirect to login page if necessary.
       redirect: () => {
-        if (store.state.user.role === "TEACHER") {
-          return "/teacher/home";
-        } else {
-          return "/dashboard/reports";
+        switch (store.state.user.role) {
+          case "TEACHER":
+            return "/teacher/home";
+          case "STUDENT":
+            return "/dashboard/reports";
+          default:
+            return "/auth/login";
         }
       }
     },

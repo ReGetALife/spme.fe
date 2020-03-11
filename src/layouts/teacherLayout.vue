@@ -64,11 +64,7 @@ export default {
   methods: {
     async handleClick({ key }) {
       if (key === "logout") {
-        sessionStorage.removeItem("isTeacher");
         await this.$store.dispatch("user/logout");
-        setTimeout(() => {
-          this.$router.push("/");
-        }, 600);
       } else if (key === "reports") {
         this.$router.push("/dashboard/reports");
       }

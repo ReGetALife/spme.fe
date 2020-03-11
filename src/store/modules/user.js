@@ -1,4 +1,5 @@
 import Axios from "axios";
+import router from "@/router";
 const SESSION_USER = "zosmf_user";
 const USER_ROLE = "user_role";
 
@@ -49,12 +50,14 @@ const actions = {
   login({ commit }, loginState) {
     commit("SET_USER", loginState.uid);
     commit("SET_ROLE", loginState.role);
+    router.push("/");
   },
 
   logout({ commit }) {
-    Axios.delete("/api/logoff").then(() => {
+    Axios.delete("/api/logoff").finally(() => {
       commit("SET_USER", "");
       commit("SET_ROLE", "");
+      router.push("/");
     });
   }
 };
