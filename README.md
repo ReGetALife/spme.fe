@@ -11,6 +11,7 @@ This is the front-end project of a simulation platform of mainframe experiment a
 -[ ] refine project structure
 -[ ] fix eslint
 -[ ] change site logo 
+-[ ] importing components on demand
 
 ### Project setup
 ```
