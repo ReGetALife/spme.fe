@@ -4,7 +4,7 @@ import Router from "vue-router";
 import store from "@/store";
 
 // import layout
-import DashBoardLayout from "@/layouts/dashboard.vue";
+import PlaygroundLayout from "@/layouts/playgroundLayout";
 import AuthLayout from "@/layouts/auth.vue";
 
 // import pages
@@ -24,63 +24,63 @@ const router = new Router({
       redirect: () => {
         switch (store.state.user.role) {
           case "TEACHER":
-            return "/teacher/home";
+            return "/administration/overview";
           case "STUDENT":
-            return "/dashboard/reports";
+            return "/playground/reports";
           default:
             return "/auth/login";
         }
       }
     },
     {
-      path: "/dashboard",
-      component: DashBoardLayout,
+      path: "/playground",
+      component: PlaygroundLayout,
       children: [
         {
           path: "reports",
-          component: () => import("@/pages/dashboard/reports")
+          component: () => import("@/pages/playground/reports")
         },
         {
           path: "rexx/intro",
-          component: () => import("@/pages/dashboard/rexx/intro/index")
+          component: () => import("@/pages/playground/rexx/intro/index")
         },
         {
           path: "rexx/lab1",
-          component: () => import("@/pages/dashboard/rexx/lab1")
+          component: () => import("@/pages/playground/rexx/lab1")
         },
         {
           path: "rexx/lab2",
-          component: () => import("@/pages/dashboard/rexx/lab2")
+          component: () => import("@/pages/playground/rexx/lab2")
         },
         {
           path: "rexx/lab3",
-          component: () => import("@/pages/dashboard/rexx/lab3")
+          component: () => import("@/pages/playground/rexx/lab3")
         },
         {
           path: "rexx/lab4",
-          component: () => import("@/pages/dashboard/rexx/lab4")
+          component: () => import("@/pages/playground/rexx/lab4")
         },
         {
           path: "rexx/lab5",
-          component: () => import("@/pages/dashboard/rexx/lab5")
+          component: () => import("@/pages/playground/rexx/lab5")
         },
         {
           path: "rexx/lab6",
-          component: () => import("@/pages/dashboard/rexx/lab6")
+          component: () => import("@/pages/playground/rexx/lab6")
         },
         {
           path: "rexx/lab7",
-          component: () => import("@/pages/dashboard/rexx/lab7")
+          component: () => import("@/pages/playground/rexx/lab7")
         },
         {
           path: "racf/:lab",
-          component: () => import("@/pages/dashboard/racf/index")
+          component: () => import("@/pages/playground/racf/index")
         },
         {
           path: "dfsms/:lab",
           redirect: "dfsms/:lab/master",
           name: "lab",
-          component: () => import("@/pages/dashboard/dfsms/lab"),
+          component: () => import("@/pages/playground/dfsms/lab"),
           children: [
             {
               path: "master",
@@ -143,48 +143,48 @@ const router = new Router({
         },
         {
           path: "catalog/intro",
-          component: () => import("@/pages/dashboard/catalog/intro/index")
+          component: () => import("@/pages/playground/catalog/intro/index")
         },
         {
           path: "catalog/lab1",
-          component: () => import("@/pages/dashboard/catalog/lab1")
+          component: () => import("@/pages/playground/catalog/lab1")
         },
         {
           path: "catalog/lab2",
-          component: () => import("@/pages/dashboard/catalog/lab2")
+          component: () => import("@/pages/playground/catalog/lab2")
         },
         {
           path: "catalog/lab3",
-          component: () => import("@/pages/dashboard/catalog/lab3")
+          component: () => import("@/pages/playground/catalog/lab3")
         },
         {
           path: "catalog/lab4",
-          component: () => import("@/pages/dashboard/catalog/lab4")
+          component: () => import("@/pages/playground/catalog/lab4")
         },
         {
           path: "catalog/lab5",
-          component: () => import("@/pages/dashboard/catalog/lab5")
+          component: () => import("@/pages/playground/catalog/lab5")
         },
         {
           path: "catalog/lab6",
-          component: () => import("@/pages/dashboard/catalog/lab6")
+          component: () => import("@/pages/playground/catalog/lab6")
         },
         {
           path: "catalog/lab7",
-          component: () => import("@/pages/dashboard/catalog/lab7")
+          component: () => import("@/pages/playground/catalog/lab7")
         },
         {
           path: "catalog/lab8",
-          component: () => import("@/pages/dashboard/catalog/lab8")
+          component: () => import("@/pages/playground/catalog/lab8")
         },
         {
           path: "catalog/lab9",
-          component: () => import("@/pages/dashboard/catalog/lab9")
+          component: () => import("@/pages/playground/catalog/lab9")
         },
         {
           path: "ispf/lab",
           redirect: "ispf/lab/master",
-          component: () => import("@/pages/dashboard/ispf/lab/index"),
+          component: () => import("@/pages/playground/ispf/lab/index"),
           children: [
             {
               path: "master",

@@ -1,13 +1,13 @@
-import TeacherLayout from "@/layouts/teacherLayout";
+import AdminLayout from "@/layouts/adminLayout";
 
 export default {
   name: "teacher",
-  path: "/teacher",
-  redirect: "/teacher/home",
-  component: TeacherLayout,
+  path: "/administration",
+  redirect: "/administration/overview",
+  component: AdminLayout,
   children: [
     {
-      path: "home",
+      path: "overview",
       name: "teach-home",
       component: () => import("./home")
     },

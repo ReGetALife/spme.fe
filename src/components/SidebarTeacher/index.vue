@@ -31,7 +31,7 @@ export default {
       menuConfig: [
         {
           name: "实验总览",
-          path: "home",
+          path: "overview",
           icon: "home"
         },
         {

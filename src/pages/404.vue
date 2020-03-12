@@ -4,7 +4,7 @@
       <div>
         <h1><a-icon type="stop" /> 404</h1>
         <h2>你访问的页面不存在！</h2>
-        <router-link to="/dashboard">返回首页</router-link>
+        <router-link to="/">返回首页</router-link>
         <a-divider type="vertical" />
         <router-link :to="from">返回上一页</router-link>
       </div>

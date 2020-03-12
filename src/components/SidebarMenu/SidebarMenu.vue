@@ -7,7 +7,7 @@
       :selectedKeys="selectedKeys"
       :defaultOpenKeys="defaultOpenKeys"
     >
-      <a-sub-menu v-for="menu in menuConfig" :key="'/dashboard/' + menu.path">
+      <a-sub-menu v-for="menu in menuConfig" :key="'/playground/' + menu.path">
         <span slot="title">
           <a-icon :type="menu.icon" />
           <span>{{ menu.name }}</span>
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     handleMenuClick(e) {
-      if (e.keyPath[1] === "/dashboard/dfsms") {
+      if (e.keyPath[1] === "/playground/dfsms") {
         this.$router.push({ name: "lab", params: { lab: e.key } });
       } else {
         this.$router.push(e.keyPath[1] + "/" + e.key);
