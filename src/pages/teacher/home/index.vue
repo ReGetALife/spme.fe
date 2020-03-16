@@ -8,7 +8,9 @@
           >查看详情</a-button
         >
         <a-list-item-meta :description="`已有 ${item.submit} 人提交`">
-          <a slot="title" :href="`/teacher/${item.path}`">{{ item.name }}</a>
+          <a slot="title" :href="`/administration/${item.path}`">
+            {{ item.name }}
+          </a>
           <!-- <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> -->
         </a-list-item-meta>
       </a-list-item>

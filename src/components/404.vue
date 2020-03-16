@@ -5,28 +5,10 @@
         <h1><a-icon type="stop" /> 404</h1>
         <h2>你访问的页面不存在！</h2>
         <router-link to="/">返回首页</router-link>
-        <a-divider type="vertical" />
-        <router-link :to="from">返回上一页</router-link>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "notfound",
-  data() {
-    return {
-      from: null
-    };
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.from = from;
-    });
-  }
-};
-</script>
 
 <style lang="scss">
 #notfound {

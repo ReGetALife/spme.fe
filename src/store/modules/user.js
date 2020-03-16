@@ -1,5 +1,5 @@
 import Axios from "axios";
-import router from "@/router";
+import router from "@/router/router";
 const SESSION_USER = "zosmf_user";
 const USER_ROLE = "user_role";
 

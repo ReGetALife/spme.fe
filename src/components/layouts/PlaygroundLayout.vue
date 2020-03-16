@@ -21,7 +21,8 @@
           <a-dropdown>
             <a>{{ username }}</a>
             <a-menu slot="overlay" @click="handleClick">
-              <a-menu-item key="reports">学生视角</a-menu-item>
+              <a-menu-item key="teacher" v-if="isTeacher">教师面板</a-menu-item>
+              <a-menu-item key="reports">我的实验</a-menu-item>
               <a-menu-item key="logout">退出登录</a-menu-item>
             </a-menu>
           </a-dropdown>
@@ -43,9 +44,9 @@
 </template>
 
 <script>
-import SidebarMenu from "@/components/SidebarTeacher";
+import SidebarMenu from "@/components/sidebar/PlaygroundSidebar";
 export default {
-  name: "AdminLayout",
+  name: "PlaygroundLayout",
   components: {
     SidebarMenu
   },
@@ -58,6 +59,9 @@ export default {
   computed: {
     username() {
       return this.$store.state.user.username;
+    },
+    isTeacher() {
+      return this.$store.state.user.role === "TEACHER";
     }
   },
 
@@ -67,6 +71,8 @@ export default {
         await this.$store.dispatch("user/logout");
       } else if (key === "reports") {
         this.$router.push("/playground");
+      } else if (key === "teacher") {
+        this.$router.push("/administration");
       }
     }
   }
