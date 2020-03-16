@@ -31,7 +31,7 @@ export default {
       menuConfig: [
         {
           name: "实验总览",
-          path: "overview",
+          path: "",
           icon: "home"
         },
         {
@@ -69,7 +69,8 @@ export default {
   },
   methods: {
     handleMenuClick(e) {
-      this.$router.push(e.key);
+      if (e.key) this.$router.push("/administration/" + e.key);
+      else this.$router.push("/administration");
     }
   }
 };

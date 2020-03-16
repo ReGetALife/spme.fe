@@ -109,15 +109,15 @@ export default {
   },
   methods: {
     datasetApp() {
-      console.log({
-        dataSetName: this.dataSetName,
-        source: this.source,
-        volume: this.volume,
-        acquireVolume: this.acquireVolume
-      });
+      // console.log({
+      //   dataSetName: this.dataSetName,
+      //   source: this.source,
+      //   volume: this.volume,
+      //   acquireVolume: this.acquireVolume
+      // });
     },
     routerTo(e) {
-      console.log(e);
+      // console.log(e);
       this.$router.push({
         name: "isoption",
         params: { option: e.target.value }

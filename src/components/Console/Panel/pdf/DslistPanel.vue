@@ -45,7 +45,7 @@ export default {
       this.$http
         .get(`/api/sms/getdslist?dsName=${this.$route.query.dsn}`)
         .then(res => {
-          console.log("DslistPanel Get '/sms/getdslist' Success: ", res);
+          // console.log("DslistPanel Get '/sms/getdslist' Success: ", res);
           this.datasets = res.data.items;
 
           for (let i = 0; i < this.datasets.length; i++)

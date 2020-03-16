@@ -63,7 +63,7 @@ export default {
           }
         })
         .then(res => {
-          console.log("GET /db/submitted", res);
+          //console.log("GET /db/submitted", res);
           lab.submit = res.body.length;
         });
       // this.$http.get(`/api/db/getStudents`)

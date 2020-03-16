@@ -3,11 +3,10 @@ import AdminLayout from "@/layouts/adminLayout";
 export default {
   name: "teacher",
   path: "/administration",
-  redirect: "/administration/overview",
   component: AdminLayout,
   children: [
     {
-      path: "overview",
+      path: "",
       name: "teach-home",
       component: () => import("./home")
     },

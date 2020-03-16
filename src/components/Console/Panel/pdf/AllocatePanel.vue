@@ -146,7 +146,7 @@ export default {
             lrecl: parseInt(this.recordLen)
           })
           .then(res => {
-            console.log("AllocatePanel post '/sms/createds' 请求成功：", res);
+            // console.log("AllocatePanel post '/sms/createds' 请求成功：", res);
 
             if (res.data == "") {
               this.$message.success("Data set allocated");

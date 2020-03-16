@@ -70,9 +70,9 @@ export default {
       if (key === "logout") {
         await this.$store.dispatch("user/logout");
       } else if (key === "reports") {
-        this.$router.push("/playground/reports");
+        this.$router.push("/playground");
       } else if (key === "teacher") {
-        this.$router.push("/administration/overview");
+        this.$router.push("/administration");
       }
     }
   }

@@ -54,10 +54,10 @@ export default {
       this.$http
         .get(`/api/sms/getpdsmemberlist?dsName=${this.$route.query.dsn}`)
         .then(res => {
-          console.log(
-            "PdslistPanel Get '/sms/getpdsmemberlist' Success: ",
-            res
-          );
+          // console.log(
+          //   "PdslistPanel Get '/sms/getpdsmemberlist' Success: ",
+          //   res
+          // );
           this.datasets = res.data.items;
           for (let i = 0; i < this.datasets.length; i++)
             this.datasets[i].key = i;

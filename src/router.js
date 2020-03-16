@@ -24,9 +24,9 @@ const router = new Router({
       redirect: () => {
         switch (store.state.user.role) {
           case "TEACHER":
-            return "/administration/overview";
+            return "/administration";
           case "STUDENT":
-            return "/playground/reports";
+            return "/playground";
           default:
             return "/auth/login";
         }
@@ -37,7 +37,7 @@ const router = new Router({
       component: PlaygroundLayout,
       children: [
         {
-          path: "reports",
+          path: "",
           component: () => import("@/pages/playground/reports")
         },
         {
