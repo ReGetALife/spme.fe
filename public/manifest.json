@@ -1,6 +1,6 @@
 {
-  "name": "zosmf.fe",
-  "short_name": "zosmf.fe",
+  "name": "Simulation Platform of Mainframe Experiment",
+  "short_name": "spme",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
