@@ -8,17 +8,17 @@ export default {
     {
       path: "",
       name: "teach-home",
-      component: () => import("../../pages/teacher/home/index")
+      component: () => import("@/components/administration/overview")
     },
     {
       path: "check",
       name: "teach-check",
-      component: () => import("../../pages/teacher/check/index")
+      component: () => import("@/components/administration/check")
     },
     {
       path: ":name",
       name: "details",
-      component: () => import("../../pages/teacher/detail/index")
+      component: () => import("@/components/administration/detail")
     }
   ]
 };
