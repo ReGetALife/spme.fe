@@ -65,6 +65,7 @@ import Axios from "axios";
 import { Modal } from "ant-design-vue";
 
 export default {
+  name: "LoginForm",
   data() {
     return {
       form: this.$form.createForm(this),

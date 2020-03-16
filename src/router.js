@@ -5,7 +5,7 @@ import store from "@/store";
 
 // import layout
 import PlaygroundLayout from "@/layouts/playgroundLayout";
-import AuthLayout from "@/layouts/auth.vue";
+import Login from "@/layouts/Login.vue";
 
 // import pages
 import teacher from "@/pages/teacher";
@@ -28,7 +28,7 @@ const router = new Router({
           case "STUDENT":
             return "/playground";
           default:
-            return "/auth/login";
+            return "/login";
         }
       }
     },
@@ -249,16 +249,9 @@ const router = new Router({
     },
     teacher,
     {
-      path: "/auth",
-      component: AuthLayout,
-      redirect: "/auth/login",
-      children: [
-        {
-          path: "login",
-          name: "login",
-          component: () => import("@/pages/auth/login")
-        }
-      ]
+      path: "/login",
+      name: "login",
+      component: Login
     },
     {
       path: "*",
@@ -275,7 +268,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     if (to.name !== "login") {
-      next("/auth/login");
+      next("/login");
     }
   }
   next();
