@@ -6,7 +6,7 @@ export default {
   children: [
     {
       path: "",
-      component: () => import("@/pages/playground/reports")
+      component: () => import("@/components/Reports")
     },
     {
       path: "rexx/intro",

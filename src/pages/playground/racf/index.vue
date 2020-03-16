@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import LabLayout from "@/components/LabLayout";
-import LabContent from "@/components/LabContent";
-import LabReport from "@/components/LabReport";
+import LabLayout from "@/components/common/LabContainer";
+import LabContent from "@/components/common/LabContent";
+import LabReport from "@/components/common/LabReport";
 import Console from "./components/Console";
 import Question from "./components/Question";
 

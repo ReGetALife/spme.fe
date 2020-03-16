@@ -1,5 +1,5 @@
 <template>
-  <div class="lab-layout">
+  <div class="lab-container">
     <div class="left">
       <slot name="left" />
     </div>
@@ -11,7 +11,7 @@
 </template>
 
 <style lang="scss" scoped>
-.lab-layout {
+.lab-container {
   display: flex;
   justify-content: space-between;
   position: relative;

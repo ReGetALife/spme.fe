@@ -11,8 +11,8 @@
 
 <script>
 import axios from "axios";
-import LabLayout from "@/components/LabLayout";
-import LabContent from "@/components/LabContent";
+import LabLayout from "@/components/common/LabContainer";
+import LabContent from "@/components/common/LabContent";
 // import LabReport from "@/components/LabReport";
 import Console from "@/components/Console/SMSConsole";
 import content from "./lab1.md";
