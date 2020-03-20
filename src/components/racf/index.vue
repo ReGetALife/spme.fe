@@ -1,5 +1,5 @@
 <template>
-  <LabLayout>
+  <LabContainer>
     <template slot="left">
       <LabContent :content="content" />
     </template>
@@ -35,15 +35,15 @@
       <a-divider />
       <Console />
     </template>
-  </LabLayout>
+  </LabContainer>
 </template>
 
 <script>
-import LabLayout from "@/components/common/LabContainer";
+import LabContainer from "@/components/common/LabContainer";
 import LabContent from "@/components/common/LabContent";
 import LabReport from "@/components/common/LabReport";
-import Console from "./components/Console";
-import Question from "./components/Question";
+import Console from "@/components/common/Console";
+import Question from "@/components/common/Question";
 
 import allQuestion from "./question.json";
 
@@ -51,7 +51,7 @@ import Axios from "axios";
 
 export default {
   components: {
-    LabLayout,
+    LabContainer,
     LabContent,
     LabReport,
     Console,

@@ -42,7 +42,7 @@ export default {
     },
     {
       path: "racf/:lab",
-      component: () => import("@/pages/playground/racf/index")
+      component: () => import("@/components/racf/index")
     },
     {
       path: "dfsms/:lab",
