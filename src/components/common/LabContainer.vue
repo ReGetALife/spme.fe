@@ -9,7 +9,7 @@
     <div class="right" v-if="this.subLab !== 'intro'">
       <h2>步骤 {{ step }}</h2>
       <a-spin :spinning="this.isLoadingQuestionsAndDrafts">
-        <Question />
+        <Question ref="question" />
       </a-spin>
       <div>
         <span>
@@ -29,7 +29,10 @@
           >
         </span>
         <span style="float: right">
-          <a-button style="margin-right: 10px" type="primary" @click="() => {}"
+          <a-button
+            style="margin-right: 10px"
+            type="primary"
+            @click="this.saveToDrafts"
             >保存本页</a-button
           >
           <a-button
@@ -104,7 +107,11 @@ export default {
     this.$store.commit("lab/SET_LAB", this.labName);
     this.$store.dispatch("lab/initSubLab", this.subLab);
   },
-
+  methods: {
+    saveToDrafts() {
+      this.$store.dispatch("lab/saveToDrafts", this.$refs.question.draftsTemp);
+    }
+  },
   watch: {
     subLab() {
       this.$store.dispatch("lab/initSubLab", this.subLab);

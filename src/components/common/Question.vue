@@ -23,6 +23,9 @@ export default {
   data() {
     return {
       form: this.$form.createForm(this),
+      // don't use drafts(which stored in vuex) directly
+      // because v-model cannot change element of drafts without mutation
+      // so use draftsTemp as a copy
       draftsTemp: []
     };
   },
@@ -59,30 +62,6 @@ export default {
           this.isLoading = false;
         }
       });
-    },
-
-    saveCurrent() {
-      let _this = this;
-      let QAarray = this.stepQuestion.map((q, index) => {
-        return {
-          lab: "RACF",
-          lower_lab: _this.lower_lab,
-          step: _this.step,
-          question_id: q.question_id,
-          answer: _this.drafts[index]
-        };
-      });
-
-      Axios.post("/api/db/subAnswer", QAarray)
-        .then(response => {
-          if (response.data.error === "OK") {
-            this.$message.success("保存成功");
-          }
-        })
-        .catch(e => {
-          e.response.status;
-          this.$message.error("实验已提交，保存无效");
-        });
     },
 
     submitAll() {

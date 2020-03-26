@@ -117,6 +117,28 @@ const actions = {
       });
   },
 
+  saveToDrafts({ commit, state }, draftsTemp) {
+    const answers = state.stepQuestions.map((q, index) => {
+      const answer = draftsTemp[index] || "";
+      return {
+        lab: state.lab,
+        lower_lab: state.subLab.split("lab")[1],
+        step: state.step,
+        question_id: q.question_id,
+        answer
+      };
+    });
+
+    Axios.post("/api/db/subAnswer", answers)
+      .then(() => {
+        commit("SET_DRAFTS", draftsTemp);
+        message.success("保存成功").then();
+      })
+      .catch(e => {
+        message.error("实验已提交，保存无效：" + e.message).then();
+      });
+  },
+
   initSubLab({ dispatch, commit, state }, subLab) {
     commit("SET_SUB_LAB", subLab);
     commit("SET_STEP", 1);
