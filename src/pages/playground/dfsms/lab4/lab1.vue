@@ -50,7 +50,6 @@
 import axios from "axios";
 import LabLayout from "@/components/common/LabContainer";
 import LabContent from "@/components/common/LabContent";
-import LabReport from "@/components/common/LabReport";
 import Console from "@/components/Console/SMSConsole";
 import content from "./lab1.md";
 
@@ -58,7 +57,6 @@ export default {
   components: {
     LabLayout,
     LabContent,
-    LabReport,
     Console
   },
   data() {

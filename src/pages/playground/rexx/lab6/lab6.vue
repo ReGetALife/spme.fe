@@ -49,7 +49,6 @@
 <script>
 import LabLayout from "@/components/common/LabContainer";
 import LabContent from "@/components/common/LabContent";
-import LabReport from "@/components/common/LabReport";
 import Rexx from "@/components/Rexx";
 import content from "./lab6.md";
 import Axios from "axios";
@@ -58,7 +57,6 @@ export default {
   components: {
     LabLayout,
     LabContent,
-    LabReport,
     Rexx
   },
   data() {

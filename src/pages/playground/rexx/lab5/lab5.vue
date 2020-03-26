@@ -50,7 +50,6 @@
 <script>
 import LabLayout from "@/components/common/LabContainer";
 import LabContent from "@/components/common/LabContent";
-import LabReport from "@/components/common/LabReport";
 import Jcl from "@/components/Jcl";
 import content from "./lab5.md";
 import Axios from "axios";
@@ -59,7 +58,6 @@ export default {
   components: {
     LabLayout,
     LabContent,
-    LabReport,
     Jcl
   },
   data() {

@@ -5,9 +5,9 @@
       :trigger="null"
       collapsible
       v-model="collapsed"
-      :width="240"
+      :width="280"
     >
-      <div class="logo"><span>z/OSMF</span></div>
+      <div class="logo"><span>z/OS</span></div>
       <SidebarMenu />
     </a-layout-sider>
     <a-layout>
@@ -105,7 +105,7 @@ export default {
 
 .layout {
   min-height: 100vh;
-  margin-left: 240px;
+  margin-left: 280px;
   transition: margin-left 0.2s;
 
   &.collapsed {

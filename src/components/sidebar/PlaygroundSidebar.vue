@@ -12,9 +12,12 @@
           <a-icon :type="menu.icon" />
           <span>{{ menu.name }}</span>
         </span>
-        <a-menu-item v-for="submenu in menu.children" :key="submenu.path">{{
-          submenu.name
-        }}</a-menu-item>
+        <a-menu-item
+          v-for="submenu in menu.children"
+          :key="submenu.path"
+          :title="submenu.name"
+          >{{ submenu.name }}</a-menu-item
+        >
       </a-sub-menu>
     </a-menu>
   </div>

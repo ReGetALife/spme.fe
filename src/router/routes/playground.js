@@ -41,8 +41,8 @@ export default {
       component: () => import("@/pages/playground/rexx/lab7")
     },
     {
-      path: "racf/:lab",
-      component: () => import("@/components/racf/RACF")
+      path: "racf/:subLab",
+      component: () => import("@/components/RACF")
     },
     {
       path: "dfsms/:lab",
