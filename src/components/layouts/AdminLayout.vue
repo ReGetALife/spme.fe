@@ -3,7 +3,7 @@
     <a-layout-sider
       class="sidebar"
       :trigger="null"
-      collapsible="true"
+      :collapsible="true"
       v-model="this.collapsed"
       :width="280"
     >
