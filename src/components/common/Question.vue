@@ -83,3 +83,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.ant-form-item-label {
+  /* fix text cannot fully display */
+  white-space: normal;
+}
+</style>
