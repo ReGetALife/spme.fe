@@ -6,12 +6,12 @@ const USER_ROLE = "user_role";
 let username = "";
 let role = "";
 try {
-  username = JSON.parse(sessionStorage.getItem(SESSION_USER)).toUpperCase();
+  username = JSON.parse(localStorage.getItem(SESSION_USER)).toUpperCase();
 } catch (error) {
   // ignore error
 }
 try {
-  role = JSON.parse(sessionStorage.getItem(USER_ROLE)).toUpperCase();
+  role = JSON.parse(localStorage.getItem(USER_ROLE)).toUpperCase();
 } catch (e) {
   //ignore
 }
@@ -30,7 +30,7 @@ const getters = {
 const mutations = {
   SET_USER(state, uid) {
     try {
-      sessionStorage.setItem(SESSION_USER, JSON.stringify(uid.toUpperCase()));
+      localStorage.setItem(SESSION_USER, JSON.stringify(uid.toUpperCase()));
       state.username = uid.toUpperCase();
     } catch (e) {
       //ignore
@@ -38,7 +38,7 @@ const mutations = {
   },
   SET_ROLE(state, role) {
     try {
-      sessionStorage.setItem(USER_ROLE, JSON.stringify(role.toUpperCase()));
+      localStorage.setItem(USER_ROLE, JSON.stringify(role.toUpperCase()));
       state.role = role.toUpperCase();
     } catch (e) {
       //ignore
