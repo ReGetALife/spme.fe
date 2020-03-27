@@ -11,6 +11,7 @@ const state = {
   isLoadingDoc: true,
   isLoadingQuestions: true,
   isLoadingDrafts: true,
+  isSavingDrafts: false,
   isFetchingNext: true
 };
 
@@ -44,6 +45,9 @@ const mutations = {
   },
   SET_IS_LOADING_DRAFTS(state, v) {
     state.isLoadingDrafts = v;
+  },
+  SET_IS_SAVING_DRAFTS(state, v) {
+    state.isSavingDrafts = v;
   },
   SET_IS_FETCHING_NEXT(state, v) {
     state.isFetchingNext = v;
@@ -118,6 +122,7 @@ const actions = {
   },
 
   saveToDrafts({ commit, state }, draftsTemp) {
+    commit("SET_IS_SAVING_DRAFTS", true);
     const answers = state.stepQuestions.map((q, index) => {
       const answer = draftsTemp[index] || "";
       return {
@@ -132,10 +137,29 @@ const actions = {
     Axios.post("/api/db/subAnswer", answers)
       .then(() => {
         commit("SET_DRAFTS", draftsTemp);
-        message.success("保存成功").then();
+        message.success(`步骤 ${state.step} 已保存 👍`).then();
+        commit("SET_IS_SAVING_DRAFTS", false);
       })
       .catch(e => {
-        message.error("实验已提交，保存无效：" + e.message).then();
+        message.error("本实验已提交，保存无效：" + e.message).then();
+        commit("SET_IS_SAVING_DRAFTS", false);
+      });
+  },
+
+  submitLabReport() {
+    Axios.post("/api/db/submitLab", {
+      lab: "RACF",
+      lower_lab: this.lower_lab,
+      step: this.step
+    })
+      .then(response => {
+        if (response.data.errcode != 404) {
+          this.$message.success("成功提交实验报告，等待老师批阅");
+        }
+      })
+      .catch(e => {
+        e.response.status;
+        this.$message.error("提交失败，请重试");
       });
   },
 

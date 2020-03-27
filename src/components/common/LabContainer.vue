@@ -8,7 +8,7 @@
     <div class="divider" v-if="this.subLab !== 'intro'"></div>
     <div class="right" v-if="this.subLab !== 'intro'">
       <h2>步骤 {{ step }}</h2>
-      <a-spin :spinning="this.isLoadingQuestionsAndDrafts">
+      <a-spin :spinning="this.isLoading">
         <Question ref="question" />
       </a-spin>
       <div>
@@ -89,10 +89,11 @@ export default {
     isLoadingDoc() {
       return this.$store.state.lab.isLoadingDoc;
     },
-    isLoadingQuestionsAndDrafts() {
+    isLoading() {
       return (
-        this.$store.state.lab.isLoadingQuestions &&
-        this.$store.state.lab.isLoadingDrafts
+        this.$store.state.lab.isLoadingQuestions ||
+        this.$store.state.lab.isLoadingDrafts ||
+        this.$store.state.lab.isSavingDrafts
       );
     },
     hasNextStep() {
