@@ -17,14 +17,15 @@
             style="margin-right: 10px"
             icon="left-circle"
             :disabled="step === 1"
+            :loading="isFetchingNext"
             @click="step--"
             >上一步</a-button
           >
           <a-button
-            @click="step++"
-            :loading="isFetchingNext"
             icon="right-circle"
             :disabled="!this.hasNextStep"
+            :loading="isFetchingNext"
+            @click="step++"
             >下一步</a-button
           >
         </span>
@@ -35,17 +36,6 @@
             @click="this.saveToDrafts"
             >保存本页</a-button
           >
-          <a-button
-            type="primary"
-            @click="visible = true"
-            v-if="!this.hasNextStep"
-            >提交所有</a-button
-          >
-          <a-modal title="确认提交？" v-model="visible" @ok="() => {}">
-            <p>提交报告后老师将可以看到</p>
-            <p>同时将不能再对答案进行更改。</p>
-            <p>确定提交报告吗</p>
-          </a-modal>
         </span>
       </div>
       <a-divider />
@@ -67,9 +57,7 @@ export default {
     }
   },
   data() {
-    return {
-      visible: false
-    };
+    return {};
   },
   computed: {
     content() {

@@ -19,10 +19,38 @@
         >
           <a-icon type="download" />&nbsp;下载
         </a>
-        <!-- <a-divider type="vertical" /> -->
+        <a-divider type="vertical" />
         <!-- <a-button type="primary" :disabled="record.status !== 0">提交所有</a-button> -->
+        <a :disabled="!record.url" @click="visible = true">
+          <a-icon type="upload" /> 提交
+        </a>
       </span>
     </a-table>
+    <a-modal title="朋友，确定提交么？" v-model="visible" @ok="() => {}">
+      <p>
+        <span style="color: coral"
+          >重要：请确保本实验所有步骤的回答都已经保存。</span
+        >
+        <a-popover>
+          <template slot="content">
+            点击"保存本页"按钮即可保存该步骤的回答。
+          </template>
+          <a-icon type="question-circle" />
+        </a-popover>
+      </p>
+      <p>
+        注意：提交实验报告后老师便可以看到并批改，同时你将<span
+          style="color: coral"
+          >无法更改</span
+        >你的回答。
+      </p>
+      <p>
+        建议在正式提交之前预览一下实验报告 😁。<router-link to="/playground"
+          >[ 点我预览 ]</router-link
+        >
+      </p>
+      <p>确定提交报告么？</p>
+    </a-modal>
   </div>
 </template>
 
@@ -83,17 +111,17 @@ export default {
     return {
       columns,
       data,
-      allRates: []
+      allRates: [],
+      visible: false
     };
   },
   async created() {
     // 获取提交状态
     let labStatus = await this.$http.get("/api/db/getLabStatus");
     this.data.forEach((item, index, arr) => {
-      let status = labStatus.body.find(
+      arr[index].status = labStatus.body.find(
         lab => lab.lab.toLowerCase() === item.labId
       ).status;
-      arr[index].status = status;
     });
 
     // 获取分数（若已经批改）
