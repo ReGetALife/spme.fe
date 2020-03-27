@@ -3,8 +3,8 @@
     <a-layout-sider
       class="sidebar"
       :trigger="null"
-      collapsible
-      v-model="collapsed"
+      collapsible="true"
+      v-model="this.collapsed"
       :width="280"
     >
       <div class="logo"><span>z/OS</span></div>
@@ -14,12 +14,12 @@
       <a-layout-header style="display: flex; background: #fff; padding: 0">
         <a-icon
           class="trigger"
-          :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-          @click="() => (collapsed = !collapsed)"
+          :type="this.collapsed ? 'menu-unfold' : 'menu-fold'"
+          @click="() => (this.collapsed = !this.collapsed)"
         />
-        <div style="margin-left: auto; margin-right: 1em;">
+        <div style="margin-left: auto; margin-right: 24px;">
           <a-dropdown>
-            <a>{{ username }}</a>
+            <a><a-icon type="user" /> {{ username }} </a>
             <a-menu slot="overlay" @click="handleClick">
               <a-menu-item key="teacher" v-if="isTeacher">教师面板</a-menu-item>
               <a-menu-item key="reports">我的实验</a-menu-item>
@@ -95,9 +95,9 @@ export default {
 .logo {
   height: 32px;
   color: #fff;
-  margin: 16px;
+  margin: 12px;
   text-align: center;
-
+  font-size: 24px;
   span {
     line-height: 32px;
   }
@@ -110,6 +110,9 @@ export default {
 
   &.collapsed {
     margin-left: 80px;
+    .logo {
+      font-size: 16px;
+    }
   }
 }
 

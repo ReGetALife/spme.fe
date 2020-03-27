@@ -3,23 +3,23 @@
     <a-layout-sider
       class="sidebar"
       :trigger="null"
-      collapsible
-      v-model="collapsed"
-      :width="240"
+      collapsible="true"
+      v-model="this.collapsed"
+      :width="280"
     >
-      <div class="logo"><span>z/OSMF</span></div>
+      <div class="logo"><span>Admin</span></div>
       <SidebarMenu />
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="display: flex; background: #fff; padding: 0">
         <a-icon
           class="trigger"
-          :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-          @click="() => (collapsed = !collapsed)"
+          :type="this.collapsed ? 'menu-unfold' : 'menu-fold'"
+          @click="() => (this.collapsed = !this.collapsed)"
         />
-        <div style="margin-left: auto; margin-right: 1em;">
+        <div style="margin-left: auto; margin-right: 24px;">
           <a-dropdown>
-            <a>{{ username }}</a>
+            <a><a-icon type="user" /> {{ username }} </a>
             <a-menu slot="overlay" @click="handleClick">
               <a-menu-item key="reports">学生视角</a-menu-item>
               <a-menu-item key="logout">退出登录</a-menu-item>
@@ -89,9 +89,9 @@ export default {
 .logo {
   height: 32px;
   color: #fff;
-  margin: 16px;
+  margin: 12px;
   text-align: center;
-
+  font-size: 24px;
   span {
     line-height: 32px;
   }
@@ -99,11 +99,14 @@ export default {
 
 .layout {
   min-height: 100vh;
-  margin-left: 240px;
+  margin-left: 280px;
   transition: margin-left 0.2s;
 
   &.collapsed {
     margin-left: 80px;
+    .logo {
+      font-size: 16px;
+    }
   }
 }
 
