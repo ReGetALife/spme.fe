@@ -146,23 +146,6 @@ const actions = {
       });
   },
 
-  submitLabReport() {
-    Axios.post("/api/db/submitLab", {
-      lab: "RACF",
-      lower_lab: this.lower_lab,
-      step: this.step
-    })
-      .then(response => {
-        if (response.data.errcode != 404) {
-          this.$message.success("成功提交实验报告，等待老师批阅");
-        }
-      })
-      .catch(e => {
-        e.response.status;
-        this.$message.error("提交失败，请重试");
-      });
-  },
-
   initSubLab({ dispatch, commit, state }, subLab) {
     commit("SET_SUB_LAB", subLab);
     commit("SET_STEP", 1);

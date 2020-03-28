@@ -6,7 +6,6 @@
         <a-badge :status="status | statusFilter" />
         {{ status | statusFilter2 }}
       </span>
-      <!-- <span slot="action" slot-scope="text, record"> -->
       <span slot="action" slot-scope="record">
         <a :href="record.url" target="_blank" :disabled="!record.url">
           <a-icon type="eye" />&nbsp;预览
@@ -20,20 +19,19 @@
           <a-icon type="download" />&nbsp;下载
         </a>
         <a-divider type="vertical" />
-        <!-- <a-button type="primary" :disabled="record.status !== 0">提交所有</a-button> -->
-        <a :disabled="!record.url" @click="visible = true">
+        <a :disabled="!record.url" @click="handelSubmitClick(record)">
           <a-icon type="upload" /> 提交
         </a>
       </span>
     </a-table>
-    <a-modal title="朋友，确定提交么？" v-model="visible" @ok="() => {}">
+    <a-modal title="朋友，确定提交么？" v-model="visible" @ok="submitLabReport">
       <p>
-        <span style="color: coral"
-          >重要：请确保本实验所有步骤的回答都已经保存。</span
-        >
+        <span style="color: coral">
+          重要：请确保{{ clickedRecord.name }}实验的所有步骤的回答都已经保存。
+        </span>
         <a-popover>
           <template slot="content">
-            点击"保存本页"按钮即可保存该步骤的回答。
+            在实验界面点击"保存本页"按钮即可保存该步骤的回答。
           </template>
           <a-icon type="question-circle" />
         </a-popover>
@@ -45,8 +43,10 @@
         >你的回答。
       </p>
       <p>
-        建议在正式提交之前预览一下实验报告 😁。<router-link to="/playground"
-          >[ 点我预览 ]</router-link
+        建议在正式提交之前预览一下实验报告 😁。<a
+          :href="clickedRecord.url"
+          target="_blank"
+          >[ 点我预览 ]</a
         >
       </p>
       <p>确定提交报告么？</p>
@@ -55,15 +55,16 @@
 </template>
 
 <script>
+import Axios from "axios";
+
 const columns = [
-  { title: "实验名称", dataIndex: "name", key: "name" },
+  { title: "实验名称", dataIndex: "name" },
   { title: "实验状态", key: "status", scopedSlots: { customRender: "status" } },
   { title: "评分", dataIndex: "score" },
   { title: "评语", dataIndex: "comment", width: "300px" },
   {
     title: "操作",
     key: "action",
-    // dataIndex: 'action',
     scopedSlots: { customRender: "action" }
   }
 ];
@@ -71,35 +72,35 @@ const columns = [
 const data = [
   {
     name: "安全管理（RACF）",
-    labId: "racf",
+    labId: "RACF",
     status: "",
     score: "",
     comment: ""
   },
   {
     name: "存储管理（DFSMS）",
-    labId: "sms",
+    labId: "SMS",
     status: "",
     score: "",
     comment: ""
   },
   {
     name: "目录管理（Catalog）",
-    labId: "catalog",
+    labId: "CATALOG",
     status: "",
     score: "",
     comment: ""
   },
   {
     name: "系统命令（MVS）",
-    labId: "mvs",
+    labId: "MVS",
     status: "",
     score: "",
     comment: ""
   },
   {
     name: "脚本语言（REXX）",
-    labId: "rexx",
+    labId: "REXX",
     status: "",
     score: "",
     comment: ""
@@ -112,7 +113,8 @@ export default {
       columns,
       data,
       allRates: [],
-      visible: false
+      visible: false,
+      clickedRecord: {}
     };
   },
   async created() {
@@ -120,7 +122,7 @@ export default {
     let labStatus = await this.$http.get("/api/db/getLabStatus");
     this.data.forEach((item, index, arr) => {
       arr[index].status = labStatus.body.find(
-        lab => lab.lab.toLowerCase() === item.labId
+        lab => lab.lab === item.labId
       ).status;
     });
 
@@ -131,7 +133,7 @@ export default {
       this.$http
         .get("/api/db/getReports", {
           params: {
-            lab: lab.labId.toUpperCase()
+            lab: lab.labId
           },
           responseType: "arraybuffer"
         })
@@ -162,7 +164,7 @@ export default {
             // console.log("allrates", this.allRates);
             if (this.allRates && +this.allRates.status === 200) {
               let ratedLabIndex = this.allRates.body.findIndex(rate => {
-                return rate.lab.toLowerCase() === lab.labId;
+                return rate.lab === lab.labId;
               });
               if (ratedLabIndex !== -1) {
                 lab.comment = this.allRates.body[ratedLabIndex].comment;
@@ -176,7 +178,28 @@ export default {
         });
     });
   },
-  methods: {},
+  methods: {
+    handelSubmitClick(record) {
+      this.visible = true;
+      this.clickedRecord = record;
+    },
+    // submit an entire lab e.g. RACF
+    submitLabReport() {
+      Axios.post("/api/db/submitLab", {
+        lab: this.clickedRecord.labId
+      })
+        .then(() => {
+          this.$message
+            .success(`成功提交${this.clickedRecord.name}实验报告，等待老师批阅`)
+            .then();
+          this.visible = false;
+        })
+        .catch(e => {
+          this.$message.error("提交失败：" + e.message).then();
+          this.visible = false;
+        });
+    }
+  },
   filters: {
     statusFilter(status) {
       switch (status) {
