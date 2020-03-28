@@ -1,7 +1,6 @@
 import AdminLayout from "@/components/layouts/AdminLayout";
 
 export default {
-  name: "administration",
   path: "/administration",
   component: AdminLayout,
   children: [
