@@ -8,7 +8,7 @@
       </span>
       <span slot="action" slot-scope="record">
         <a :href="record.url" target="_blank" :disabled="!record.url">
-          <a-icon type="eye" />&nbsp;预览
+          <a-icon type="eye" /> 浏览
         </a>
         <a-divider type="vertical" />
         <a
@@ -16,10 +16,13 @@
           :download="record.disposition"
           :disabled="!record.url"
         >
-          <a-icon type="download" />&nbsp;下载
+          <a-icon type="download" /> 下载
         </a>
         <a-divider type="vertical" />
-        <a :disabled="!record.url" @click="handelSubmitClick(record)">
+        <a
+          :disabled="record.status !== 'saved'"
+          @click="handelSubmitClick(record)"
+        >
           <a-icon type="upload" /> 提交
         </a>
       </span>
@@ -118,6 +121,7 @@ export default {
     };
   },
   async created() {
+    // todo: show loading while fetching data
     // 获取提交状态
     let labStatus = await this.$http.get("/api/db/getLabStatus");
     this.data.forEach((item, index, arr) => {
@@ -140,14 +144,11 @@ export default {
         .then(res => {
           if (res.data.byteLength) {
             // 生成 pdf url
-            // console.log(res);
             // lab.status = 1; // 已提交
             lab.disposition = res.headers.map["content-disposition"][0]
               .split("=")[1]
               .replace(/"/g, "");
-            // console.log("dis", lab.disposition);
             let binaryData = [];
-            // console.log("body", res.body);
             binaryData.push(res.body);
 
             lab.url = window.URL.createObjectURL(
@@ -161,7 +162,6 @@ export default {
             // console.log("url", lab.url);
 
             // 是否批改
-            // console.log("allrates", this.allRates);
             if (this.allRates && +this.allRates.status === 200) {
               let ratedLabIndex = this.allRates.body.findIndex(rate => {
                 return rate.lab === lab.labId;
@@ -185,6 +185,7 @@ export default {
     },
     // submit an entire lab e.g. RACF
     submitLabReport() {
+      // todo: show loading while submitting
       Axios.post("/api/db/submitLab", {
         lab: this.clickedRecord.labId
       })
@@ -199,6 +200,7 @@ export default {
           this.visible = false;
         });
     }
+    // todo: refresh lab status after submitting
   },
   filters: {
     statusFilter(status) {
