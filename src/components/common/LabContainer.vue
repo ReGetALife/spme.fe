@@ -30,9 +30,16 @@
           >
         </span>
         <span style="float: right">
+          <a-popover style="margin-right: 10px">
+            <template slot="content">
+              保存了回答后才可以提交实验报告。
+            </template>
+            <a-icon type="question-circle" />
+          </a-popover>
           <a-button
             style="margin-right: 10px"
             type="primary"
+            :disabled="$store.state.lab.labStatus === 'submitted'"
             @click="this.saveToDrafts"
             >保存本页</a-button
           >
@@ -93,7 +100,7 @@ export default {
   },
   // init data
   created() {
-    this.$store.commit("lab/SET_LAB", this.labName);
+    this.$store.dispatch("lab/initLab", this.labName);
     this.$store.dispatch("lab/initSubLab", this.subLab);
   },
   methods: {

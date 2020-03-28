@@ -2,6 +2,7 @@ import Axios from "axios";
 import { message } from "ant-design-vue";
 const state = {
   lab: "",
+  labStatus: "unsaved",
   labContent: "",
   subLab: "",
   step: 1,
@@ -18,6 +19,9 @@ const state = {
 const mutations = {
   SET_LAB(state, v) {
     state.lab = v;
+  },
+  SET_LAB_STATUS(state, v) {
+    state.labStatus = v;
   },
   SET_LAB_CONTENT(state, v) {
     state.labContent = v;
@@ -90,7 +94,7 @@ const actions = {
   getStepDrafts({ commit }, { lab, subLab, step }) {
     commit("SET_DRAFTS", []);
     commit("SET_IS_LOADING_DRAFTS", true);
-    Axios.post("/api/db/getdraft", {
+    Axios.post("/api/db/getDraft", {
       lab,
       lower_lab: subLab,
       step
@@ -144,6 +148,17 @@ const actions = {
         message.error("本实验已提交，保存无效：" + e.message).then();
         commit("SET_IS_SAVING_DRAFTS", false);
       });
+  },
+
+  initLab({ commit }, labName) {
+    commit("SET_LAB", labName);
+    Axios.get("/api/db/getLabStatus")
+      .then(res => {
+        const lab = res.data.find(e => e.lab === labName);
+        const status = (lab && lab.status) || "unsaved";
+        commit("SET_LAB_STATUS", status);
+      })
+      .catch();
   },
 
   initSubLab({ dispatch, commit, state }, subLab) {

@@ -4,13 +4,14 @@
     <a-form v-else :form="form" layout="vertical">
       <a-form-item
         v-for="(Ques, index) in questions"
-        :key="Ques ? Ques.question_id : index"
+        :key="Ques ? Ques.question_id : index + 1"
         :label="Ques ? Ques.question : 'No question, please skip this one.'"
         :colon="false"
       >
         <a-input
-          v-model="draftsTemp[(Ques && Ques.question_id - 1) || index]"
+          v-model="draftsTemp[index]"
           placeholder="请输入你的回答"
+          :disabled="submitted"
         ></a-input>
       </a-form-item>
     </a-form>
@@ -34,12 +35,16 @@ export default {
     },
     drafts() {
       return this.$store.state.lab.stepDrafts;
+    },
+    submitted() {
+      return this.$store.state.lab.labStatus === "submitted";
     }
   },
   watch: {
     drafts(newValue) {
       // update draftsTemp for v-model when draft is fetched
-      this.draftsTemp = [...newValue];
+      // stringify and parse to deep clone this array
+      this.draftsTemp = JSON.parse(JSON.stringify(newValue));
     }
   }
 };
