@@ -112,9 +112,9 @@ const actions = {
       });
   },
 
-  getDoc({ commit }, labName) {
+  getDoc({ commit, state }, labName) {
     commit("SET_IS_LOADING_DOC", true);
-    Axios.get(`/docs/racf/${labName}.md`)
+    Axios.get(`/docs/${state.lab.toLowerCase()}/${labName}.md`)
       .then(response => {
         commit("SET_LAB_CONTENT", response.data);
         commit("SET_IS_LOADING_DOC", false);

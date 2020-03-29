@@ -46,7 +46,10 @@
         </span>
       </div>
       <a-divider />
-      <Console />
+      <slot>
+        <!-- default content -->
+        <Console />
+      </slot>
     </div>
   </div>
 </template>
