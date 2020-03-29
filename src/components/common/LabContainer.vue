@@ -34,7 +34,7 @@
             <template slot="content">
               保存了回答后才可以提交实验报告。
             </template>
-            <a-icon type="question-circle" />
+            <a-icon type="question-circle" style="cursor: pointer" />
           </a-popover>
           <a-button
             style="margin-right: 10px"

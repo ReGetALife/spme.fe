@@ -6,7 +6,7 @@
           :autosize="{ minRows: 5 }"
           placeholder="请输入JCL代码"
           v-decorator="[
-            'command',
+            'jcl',
             {
               rules: [{ required: true, message: '请输入JCL代码' }]
             }
@@ -17,6 +17,14 @@
         <a-button type="primary" html-type="submit" :loading="isLoading">
           提交
         </a-button>
+        <a-popover style="margin-left: 20px; cursor: pointer">
+          <template slot="content">
+            <p>JCL 中每行不能超过 72 个字符，超出的部分会被忽略哦。</p>
+            <p>至于其他的，请参考 JCL 的语法规则 🙈。</p>
+          </template>
+          JCL怎么写
+          <a-icon type="question-circle" />
+        </a-popover>
       </a-form-item>
     </a-form>
     <a-collapse :bordered="false" v-if="result">
@@ -58,10 +66,16 @@ export default {
         if (errors) return;
         this.isLoading = true;
         try {
-          const response = await Axios.post("/api/racf/JCLjob", values);
-          this.result = response.data;
+          const response = await Axios.post("/api/racf/JCLjob", {
+            command: values.jcl
+          });
+          if (response.status === 200) {
+            this.result = response.data;
+          } else {
+            this.$message.warn("命令已提交，但服务器响应超时了 😥").then();
+          }
         } catch (error) {
-          this.$message.error("JCL 执行失败");
+          this.$message.error("JCL 执行失败：" + error.message).then();
         } finally {
           this.isLoading = false;
         }
