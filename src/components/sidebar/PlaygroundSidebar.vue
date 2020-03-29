@@ -4,7 +4,7 @@
       theme="dark"
       mode="inline"
       @click="handleMenuClick"
-      :selectedKeys="selectedKeys"
+      :defaultSelectedKeys="defaultSelectedKeys"
       :defaultOpenKeys="defaultOpenKeys"
     >
       <a-sub-menu v-for="menu in menuConfig" :key="'/playground/' + menu.path">
@@ -14,7 +14,7 @@
         </span>
         <a-menu-item
           v-for="submenu in menu.children"
-          :key="submenu.path"
+          :key="`/playground/${menu.path}/${submenu.path}`"
           :title="submenu.name"
           >{{ submenu.name }}</a-menu-item
         >
@@ -28,7 +28,7 @@ export default {
   name: "SidebarMenu",
   data() {
     return {
-      selectedKeys: [this.$route.path],
+      defaultSelectedKeys: [this.$route.path],
       defaultOpenKeys: [
         this.$route.path
           .split("/")
@@ -52,8 +52,8 @@ export default {
           ]
         },
         {
-          name: "存储管理（DFSMS）",
-          path: "dfsms",
+          name: "存储管理（SMS）",
+          path: "sms",
           icon: "hdd",
           children: [
             { name: "实验介绍", path: "intro" },
@@ -116,18 +116,10 @@ export default {
       ]
     };
   },
-  watch: {
-    $route(to) {
-      this.selectedKeys = [to.path];
-    }
-  },
+  watch: {},
   methods: {
     handleMenuClick(e) {
-      if (e.keyPath[1] === "/playground/dfsms") {
-        this.$router.push({ name: "lab", params: { lab: e.key } });
-      } else {
-        this.$router.push(e.keyPath[1] + "/" + e.key);
-      }
+      this.$router.push(e.key);
     }
   }
 };

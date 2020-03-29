@@ -4,10 +4,15 @@
       theme="dark"
       mode="inline"
       @click="handleMenuClick"
-      :selectedKeys="selectedKeys"
+      :defaultSelectedKeys="defaultSelectedKeys"
       :defaultOpenKeys="defaultOpenKeys"
     >
-      <a-menu-item v-for="menu in menuConfig" :key="menu.path">
+      <a-menu-item
+        v-for="menu in menuConfig"
+        :key="
+          (menu.path && '/administration/' + menu.path) || '/administration'
+        "
+      >
         <a-icon :type="menu.icon" />
         <!-- 没有 span 收起来时字还会有 -->
         <span>{{ menu.name }}</span>
@@ -21,7 +26,7 @@ export default {
   name: "SidebarMenu",
   data() {
     return {
-      selectedKeys: [this.$route.path],
+      defaultSelectedKeys: [this.$route.path],
       defaultOpenKeys: [
         this.$route.path
           .split("/")
@@ -40,7 +45,7 @@ export default {
           icon: "safety"
         },
         {
-          name: "存储管理（DFSMS）",
+          name: "存储管理（SMS）",
           path: "sms",
           icon: "hdd"
         },
@@ -62,14 +67,10 @@ export default {
       ]
     };
   },
-  watch: {
-    $route(to) {
-      this.selectedKeys = [to.path];
-    }
-  },
+  watch: {},
   methods: {
     handleMenuClick(e) {
-      if (e.key) this.$router.push("/administration/" + e.key);
+      if (e.key) this.$router.push(e.key);
       else this.$router.push("/administration");
     }
   }
