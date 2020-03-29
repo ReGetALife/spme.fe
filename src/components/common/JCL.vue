@@ -8,7 +8,10 @@
           v-decorator="[
             'jcl',
             {
-              rules: [{ required: true, message: '请输入JCL代码' }]
+              rules: [
+                { required: true, message: '请输入JCL代码' },
+                { validator: jclValidator }
+              ]
             }
           ]"
         />
@@ -80,6 +83,17 @@ export default {
           this.isLoading = false;
         }
       });
+    },
+
+    jclValidator(rule, value, callback) {
+      const lines = value.split("\n");
+      for (const l of lines) {
+        if (l.length > 72) {
+          callback("每行不能超过 72 个字符 😅");
+        }
+      }
+      // always call callback. ref: https://github.com/ant-design/ant-design/issues/5155
+      callback();
     }
   }
 };
