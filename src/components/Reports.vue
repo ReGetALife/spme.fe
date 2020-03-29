@@ -36,7 +36,7 @@
           <template slot="content">
             在实验界面点击"保存本页"按钮即可保存该步骤的回答。
           </template>
-          <a-icon type="question-circle" />
+          <a-icon type="question-circle" style="cursor: pointer" />
         </a-popover>
       </p>
       <p>
@@ -191,7 +191,9 @@ export default {
       })
         .then(() => {
           this.$message
-            .success(`成功提交${this.clickedRecord.name}实验报告，等待老师批阅`)
+            .success(
+              `✨成功提交${this.clickedRecord.name}实验报告，等待老师批阅`
+            )
             .then();
           this.visible = false;
         })
@@ -226,7 +228,7 @@ export default {
         case "scored":
           return "已批改";
         default:
-          return "状态未知";
+          return "获取中...";
       }
     }
   }
