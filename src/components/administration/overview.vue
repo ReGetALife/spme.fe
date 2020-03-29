@@ -4,14 +4,16 @@
     <a-list class="overview-list" itemLayout="horizontal" :dataSource="data">
       <a-list-item slot="renderItem" slot-scope="item">
         <!-- <a slot="actions">edit</a> -->
-        <a-button slot="actions" type="primary" @click="$router.push(item.path)"
+        <a-button
+          slot="actions"
+          type="primary"
+          @click="$router.push(`/administration/${item.path}`)"
           >查看详情</a-button
         >
         <a-list-item-meta :description="`已有 ${item.submit} 人提交`">
           <a slot="title" :href="`/administration/${item.path}`">
             {{ item.name }}
           </a>
-          <!-- <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> -->
         </a-list-item-meta>
       </a-list-item>
     </a-list>
