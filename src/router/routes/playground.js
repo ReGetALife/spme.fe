@@ -9,40 +9,16 @@ export default {
       component: () => import("@/components/Reports")
     },
     {
-      path: "rexx/intro",
-      component: () => import("@/pages/playground/rexx/intro/index")
-    },
-    {
-      path: "rexx/lab1",
-      component: () => import("@/pages/playground/rexx/lab1")
-    },
-    {
-      path: "rexx/lab2",
-      component: () => import("@/pages/playground/rexx/lab2")
-    },
-    {
-      path: "rexx/lab3",
-      component: () => import("@/pages/playground/rexx/lab3")
-    },
-    {
-      path: "rexx/lab4",
-      component: () => import("@/pages/playground/rexx/lab4")
-    },
-    {
-      path: "rexx/lab5",
-      component: () => import("@/pages/playground/rexx/lab5")
-    },
-    {
-      path: "rexx/lab6",
-      component: () => import("@/pages/playground/rexx/lab6")
-    },
-    {
-      path: "rexx/lab7",
-      component: () => import("@/pages/playground/rexx/lab7")
+      path: "rexx/:subLab",
+      component: () => import("@/components/REXX")
     },
     {
       path: "racf/:subLab",
       component: () => import("@/components/RACF")
+    },
+    {
+      path: "sms/:subLab",
+      component: () => import("@/components/SMS")
     },
     {
       path: "dfsms/:lab",
@@ -105,44 +81,8 @@ export default {
       ]
     },
     {
-      path: "catalog/intro",
-      component: () => import("@/pages/playground/catalog/intro/index")
-    },
-    {
-      path: "catalog/lab1",
-      component: () => import("@/pages/playground/catalog/lab1")
-    },
-    {
-      path: "catalog/lab2",
-      component: () => import("@/pages/playground/catalog/lab2")
-    },
-    {
-      path: "catalog/lab3",
-      component: () => import("@/pages/playground/catalog/lab3")
-    },
-    {
-      path: "catalog/lab4",
-      component: () => import("@/pages/playground/catalog/lab4")
-    },
-    {
-      path: "catalog/lab5",
-      component: () => import("@/pages/playground/catalog/lab5")
-    },
-    {
-      path: "catalog/lab6",
-      component: () => import("@/pages/playground/catalog/lab6")
-    },
-    {
-      path: "catalog/lab7",
-      component: () => import("@/pages/playground/catalog/lab7")
-    },
-    {
-      path: "catalog/lab8",
-      component: () => import("@/pages/playground/catalog/lab8")
-    },
-    {
-      path: "catalog/lab9",
-      component: () => import("@/pages/playground/catalog/lab9")
+      path: "catalog/:subLab",
+      component: () => import("@/components/Catalog")
     },
     {
       path: "ispf/lab",
