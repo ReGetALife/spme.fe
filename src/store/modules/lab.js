@@ -6,14 +6,12 @@ const state = {
   labContent: "",
   subLab: "",
   step: 1,
-  stepQuestions: [],
+  subLabQuestions: { steps: [], stepQuestions: {} },
   stepDrafts: [],
-  hasNextStep: true,
   isLoadingDoc: true,
   isLoadingQuestions: true,
   isLoadingDrafts: true,
-  isSavingDrafts: false,
-  isFetchingNext: true
+  isSavingDrafts: false
 };
 
 const mutations = {
@@ -33,13 +31,10 @@ const mutations = {
     state.step = v;
   },
   SET_QUESTIONS(state, v) {
-    state.stepQuestions = v;
+    state.subLabQuestions = v;
   },
   SET_DRAFTS(state, v) {
     state.stepDrafts = v;
-  },
-  SET_HAS_NEXT_STEP(state, v) {
-    state.hasNextStep = v;
   },
   SET_IS_LOADING_DOC(state, v) {
     state.isLoadingDoc = v;
@@ -52,42 +47,48 @@ const mutations = {
   },
   SET_IS_SAVING_DRAFTS(state, v) {
     state.isSavingDrafts = v;
-  },
-  SET_IS_FETCHING_NEXT(state, v) {
-    state.isFetchingNext = v;
   }
 };
 
 const actions = {
-  getStepQuestions({ commit }, { lab, subLab, step }) {
+  getQuestions({ commit, dispatch }, { lab, subLab }) {
     commit("SET_IS_LOADING_QUESTIONS", true);
-    commit("SET_IS_FETCHING_NEXT", true);
     Axios.post("/api/db/getQuestions", {
       lab,
-      lower_lab: subLab,
-      step
+      lower_lab: subLab
     })
       .then(response => {
-        commit("SET_QUESTIONS", response.data);
+        let questions = { steps: [], stepQuestions: {} };
+        // find all steps
+        response.data.forEach(e => {
+          if (questions.steps.find(s => s === e.step) === undefined) {
+            questions.steps.push(e.step);
+            questions.stepQuestions[e.step] = [];
+          }
+        });
+        // sort steps
+        questions.steps.sort((a, b) => a - b);
+        // map all questions with step
+        response.data.forEach(e => {
+          if (questions.stepQuestions[e.step] === undefined) {
+            questions.stepQuestions[e.step] = [e];
+          } else {
+            questions.stepQuestions[e.step].push(e);
+          }
+        });
+        // set first step
+        commit("SET_STEP", questions.steps[0]);
+        commit("SET_QUESTIONS", questions);
         commit("SET_IS_LOADING_QUESTIONS", false);
+        dispatch("getStepDrafts", {
+          lab,
+          subLab,
+          step: questions.steps[0]
+        });
       })
       .catch(e => {
         message.error("获取问题失败，请重试：" + e.message).then();
         commit("SET_IS_LOADING_QUESTIONS", false);
-      });
-    // try to fetch next
-    Axios.post("/api/db/getQuestions", {
-      lab,
-      lower_lab: subLab,
-      step: step + 1
-    })
-      .then(() => {
-        commit("SET_HAS_NEXT_STEP", true);
-        commit("SET_IS_FETCHING_NEXT", false);
-      })
-      .catch(() => {
-        commit("SET_HAS_NEXT_STEP", false);
-        commit("SET_IS_FETCHING_NEXT", false);
       });
   },
 
@@ -127,16 +128,18 @@ const actions = {
 
   saveToDrafts({ commit, state }, draftsTemp) {
     commit("SET_IS_SAVING_DRAFTS", true);
-    const answers = state.stepQuestions.map((q, index) => {
-      const answer = draftsTemp[index] || "";
-      return {
-        lab: state.lab,
-        lower_lab: state.subLab.split("lab")[1],
-        step: state.step,
-        question_id: q.question_id,
-        answer
-      };
-    });
+    const answers = state.subLabQuestions.stepQuestions[state.step].map(
+      (q, index) => {
+        const answer = draftsTemp[index] || "";
+        return {
+          lab: state.lab,
+          lower_lab: state.subLab.split("lab")[1],
+          step: state.step,
+          question_id: q.question_id,
+          answer
+        };
+      }
+    );
 
     Axios.post("/api/db/subAnswer", answers)
       .then(() => {
@@ -163,27 +166,23 @@ const actions = {
 
   initSubLab({ dispatch, commit, state }, subLab) {
     commit("SET_SUB_LAB", subLab);
-    commit("SET_STEP", 1);
     dispatch("getDoc", state.subLab);
     if (subLab !== "intro") {
       const params = {
         lab: state.lab,
-        subLab: state.subLab.split("lab")[1],
-        step: state.step
+        subLab: state.subLab.split("lab")[1]
       };
-      dispatch("getStepQuestions", params);
-      dispatch("getStepDrafts", params);
+      dispatch("getQuestions", params);
     }
   },
 
-  updateStepQuestions({ dispatch, state }, step) {
+  updateStepDrafts({ dispatch, state }, step) {
     if (state.subLab !== "intro") {
       const params = {
         lab: state.lab,
         subLab: state.subLab.split("lab")[1],
         step: step
       };
-      dispatch("getStepQuestions", params);
       dispatch("getStepDrafts", params);
     }
   }

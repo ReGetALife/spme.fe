@@ -1,11 +1,15 @@
 <template>
   <div>
-    <p v-if="questions.length === 0">暂无问题</p>
+    <p v-if="questions === undefined || questions.length === 0">暂无问题</p>
     <a-form v-else :form="form" layout="vertical">
       <a-form-item
         v-for="(Ques, index) in questions"
-        :key="Ques ? Ques.question_id : index + 1"
-        :label="Ques ? Ques.question : 'No question, please skip this one.'"
+        :key="Ques.question_id"
+        :label="
+          Ques
+            ? Ques.question_id + '. ' + Ques.question
+            : 'No question, please skip this one.'
+        "
         :colon="false"
       >
         <a-input
@@ -31,7 +35,8 @@ export default {
   },
   computed: {
     questions() {
-      return this.$store.state.lab.stepQuestions;
+      const stepQuestions = this.$store.state.lab.subLabQuestions.stepQuestions;
+      return stepQuestions && stepQuestions[this.$store.state.lab.step];
     },
     drafts() {
       return this.$store.state.lab.stepDrafts;

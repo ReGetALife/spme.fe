@@ -7,7 +7,7 @@
     </div>
     <div class="divider" v-if="this.subLab !== 'intro'"></div>
     <div class="right" v-if="this.subLab !== 'intro'">
-      <h2>步骤 {{ step }}</h2>
+      <h2>步骤 {{ steps[stepIndex] }}</h2>
       <a-spin :spinning="this.isLoading">
         <Question ref="question" />
       </a-spin>
@@ -16,16 +16,14 @@
           <a-button
             style="margin-right: 10px"
             icon="left-circle"
-            :disabled="step === 1"
-            :loading="isFetchingNext"
-            @click="step--"
+            :disabled="stepIndex === 0"
+            @click="stepIndex--"
             >上一步</a-button
           >
           <a-button
             icon="right-circle"
-            :disabled="!this.hasNextStep"
-            :loading="isFetchingNext"
-            @click="step++"
+            :disabled="stepIndex === steps.length - 1"
+            @click="stepIndex++"
             >下一步</a-button
           >
         </span>
@@ -67,7 +65,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      stepIndex: 0
+    };
   },
   computed: {
     content() {
@@ -76,13 +76,8 @@ export default {
     subLab() {
       return this.$route.params.subLab;
     },
-    step: {
-      get() {
-        return this.$store.state.lab.step;
-      },
-      set(v) {
-        this.$store.commit("lab/SET_STEP", v);
-      }
+    steps() {
+      return this.$store.state.lab.subLabQuestions.steps;
     },
     isLoadingDoc() {
       return this.$store.state.lab.isLoadingDoc;
@@ -93,12 +88,6 @@ export default {
         this.$store.state.lab.isLoadingDrafts ||
         this.$store.state.lab.isSavingDrafts
       );
-    },
-    hasNextStep() {
-      return this.$store.state.lab.hasNextStep;
-    },
-    isFetchingNext() {
-      return this.$store.state.lab.isFetchingNext;
     }
   },
   // init data
@@ -113,10 +102,13 @@ export default {
   },
   watch: {
     subLab() {
+      this.stepIndex = 0;
       this.$store.dispatch("lab/initSubLab", this.subLab);
     },
-    step(newValue) {
-      this.$store.dispatch("lab/updateStepQuestions", newValue);
+    stepIndex(newValue) {
+      const s = this.$store.state.lab.subLabQuestions.steps[newValue];
+      this.$store.commit("lab/SET_STEP", s);
+      this.$store.dispatch("lab/updateStepDrafts", s);
     }
   }
 };
