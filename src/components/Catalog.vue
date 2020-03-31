@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import LabContainer from "@/components/common/LabContainer";
+import LabContainer from "@/components/common/lab/LabContainer";
 export default {
   name: "Catalog",
   components: {

@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import LabLayout from "@/components/common/LabContainer";
-import LabContent from "@/components/common/LabContent";
+import LabLayout from "@/components/common/lab/LabContainer";
+import LabContent from "@/components/common/lab/LabContent";
 import content from "./intro.md";
 export default {
   components: {

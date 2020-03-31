@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import LabLayout from "@/components/common/LabContainer";
-import LabContent from "@/components/common/LabContent";
+import LabLayout from "@/components/common/lab/LabContainer";
+import LabContent from "@/components/common/lab/LabContent";
 import Jcl from "@/components/Jcl";
 import content from "./lab5.md";
 import Axios from "axios";

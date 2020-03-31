@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import LabContent from "@/components/common/LabContent";
-import Question from "@/components/common/Question";
-import Console from "@/components/common/Console";
+import LabContent from "@/components/common/lab/LabContent";
+import Question from "@/components/common/lab/Question";
+import Console from "@/components/common/console/Console";
 export default {
   components: { LabContent, Question, Console },
   props: {
