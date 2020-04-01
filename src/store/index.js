@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import user from "./modules/user";
 import report from "./modules/report";
 import lab from "./modules/lab";
+import ispf from "./modules/ispf";
 
 Vue.use(Vuex);
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
   modules: {
     user,
     report,
-    lab
+    lab,
+    ispf
   },
   strict: debug
 });

@@ -5,7 +5,7 @@
     <a-input
       class="panel-option"
       addonBefore="OPTION >"
-      @pressEnter="routerTo"
+      @pressEnter="onEnter"
     />
     <div class="panel-content">
       <a-row :gutter="16" v-for="option in options" :key="option.cmd">
@@ -20,16 +20,7 @@
 <script>
 export default {
   name: "master-panel",
-  props: {
-    isLoading: {
-      type: Boolean,
-      default: false
-    },
-    result: {
-      type: String,
-      default: "这里显示返回结果 \n\nbalbalbl\nbabdba"
-    }
-  },
+  props: {},
   data() {
     return {
       option: "",
@@ -84,13 +75,13 @@ export default {
   },
 
   methods: {
-    routerTo(e) {
+    onEnter(e) {
       if (e.target.value.toLowerCase() === "p.3.2") {
-        this.$router.push({ name: "p32" });
+        this.$store.commit("ispf/SET_PANEL", "p32");
       } else if (e.target.value.toLowerCase() === "p.3.4") {
-        this.$router.push({ name: "p34" });
+        this.$store.commit("ispf/SET_PANEL", "p34");
       } else {
-        this.$router.push(e.target.value);
+        this.$store.commit("ispf/SET_PANEL", e.target.value);
       }
     }
   }
