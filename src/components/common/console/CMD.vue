@@ -3,6 +3,7 @@
     <a-form :form="form" layout="vertical" @submit="handleSubmit">
       <a-form-item>
         <a-textarea
+          :autosize="{ minRows: 5 }"
           placeholder="请输入命令"
           v-decorator="[
             'cmd',
