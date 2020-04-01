@@ -86,7 +86,7 @@ export default {
     },
 
     jclValidator(rule, value, callback) {
-      const lines = value.split("\n");
+      const lines = (value && value.split("\n")) || [];
       for (const l of lines) {
         if (l.length > 72) {
           callback("每行不能超过 72 个字符 😅");
