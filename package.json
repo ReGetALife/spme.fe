@@ -20,7 +20,8 @@
     "vue-markdown": "^2.2.4",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.3",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "async-validator": "^1.11.2"
   },
   "devDependencies": {
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
