@@ -5,7 +5,7 @@
       v-focus
       class="panel-option"
       addonBefore="OPTION >"
-      @pressEnter="routerTo"
+      @pressEnter="onEnter"
     />
 
     <div class="panel-content">
@@ -42,15 +42,10 @@ export default {
     };
   },
   methods: {
-    chooseOption(index) {
-      if (index == 0) this.$router.push("data-set-utility");
-      else if (index == 1) this.$router.push("data-set-list-utility");
-    },
-    routerTo(e) {
-      if (e.target.value === "3.2") {
-        this.chooseOption(0);
-      } else if (e.target.value === "3.4") {
-        this.chooseOption(1);
+    onEnter(e) {
+      if (e.target.value) {
+        const panel = `p_${e.target.value}`.replace(/\./, "_").toLowerCase();
+        this.$store.commit("ispf/SET_PANEL", panel);
       }
     }
   }

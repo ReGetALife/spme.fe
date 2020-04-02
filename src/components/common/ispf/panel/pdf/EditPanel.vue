@@ -1,7 +1,6 @@
 <template>
   <div class="master-panel" @keyup.114="goBackSave">
-    <h3 class="panel-title">EDIT {{ this.$route.query.dsn }}</h3>
-    <!-- <textarea name="" id="" cols="80" rows="15" v-model="jclText"></textarea> -->
+    <h3 class="panel-title">EDIT {{ this.$store.state.ispf.dsMember }}</h3>
     <a-textarea class="panel-text" :rows="15" v-model="jclText" />
     <br />
     <br />
@@ -29,7 +28,7 @@
 
 <script>
 export default {
-  name: "jcl-panel",
+  name: "edit-panel",
   data() {
     return {
       cmd: "",
@@ -43,67 +42,49 @@ export default {
     getDsContent() {
       // 获取数据集（成员）内容
       this.$http
-        .get(`/api/sms/getds?dsName=${this.$route.query.dsn}`)
+        .get(`/api/sms/getds?dsName=${this.$store.state.ispf.dsMember}`)
         .then(res => {
-          console.log("JCLPanel Put '/sms/getds' Success:", res);
-
-          // var jclList = res.data.split("\n");
-          // console.log(jclList)
           this.jclText = res.data;
           this.jclText.replace(/\s/g, "\t");
-
-          // for (let i = 0; i < jclList.length; i++) {
-          //   //this.jclText += jclList[i].substr(0, jclList[i].length - 8) + "\n";
-          //   //var tmp = jclList[i].split("                ");
-          //   this.jclText += jclList[i] + "\n";
-          // }
-          console.log(this.jclText);
         })
         .catch(err => {
-          console.log("JCLPanel GET '/sms/getds' Error: ", err);
+          this.$message.error("请求错误：" + err.message);
         });
     },
     Write() {
       // 写入 JCL
       this.$http
         .put("/api/sms/writeds", {
-          dsName: this.$route.query.dsn,
+          dsName: this.$store.state.ispf.dsMember,
           jclList: this.jclText.split("\n")
         })
-        .then(res => {
-          console.log("JCLPanel Put '/sms/writeds' Success:", res);
+        .then(() => {
           this.$message.success("Saved");
         })
         .catch(err => {
-          console.log("JCLPanel Put '/sms/writeds' Error: ", err);
+          this.$message.error("请求错误：" + err.message);
         });
     },
     Submit() {
       // 提交 JCL
-      console.log(this.jclText.split("\n"));
       this.$http
         .put("/api/sms/subjob", {
           jclList: this.jclText.split("\n")
         })
         .then(res => {
-          console.log("JCLPanel Put '/sms/subjob' Success:", res);
           this.$message.info("Job " + res.data.jobid + " Submitted");
-          this.jclResult(
-            //res.data.jobid + res.data.type + res.data.jobname + res.data.status
-            res.data
-          );
+          this.jclResult(res.data);
         })
         .catch(err => {
-          console.log("JCLPanel Put '/sms/subjob' Error: ", err);
+          this.$message.error("请求错误：" + err.message);
         });
     },
     Command() {
-      if (this.cmd.toUpperCase() == "SUBMIT") {
+      if (this.cmd.toUpperCase() === "SUBMIT") {
         this.Write();
         this.Submit();
       } else
         this.$message.error("Command " + this.cmd.toUpperCase() + " Not Found");
-      //console.log(this.cmd, this.jclText)
     },
     goBackSave() {
       this.Write();

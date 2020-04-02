@@ -1,13 +1,12 @@
 <template>
   <div class="pdalist-panel">
-    <!-- <hr /> -->
-    <h3 class="panel-title">EDIT {{ this.$route.query.dsn }}</h3>
+    <h3 class="panel-title">EDIT {{ this.$store.state.ispf.dataSetName }}</h3>
 
     <a-table :columns="columns" :dataSource="datasets">
       <a slot="cmd" slot-scope="record">
         <a-popover title="Enter you command" trigger="click">
           <a slot="content">
-            <a-input @keyup.enter="Command(record.key)" v-model="cmd" />
+            <a-input @keyup.enter="onEnter(record.key)" v-model="cmd" />
           </a>
           <a-button type="primary" width="10"><a-icon type="edit"/></a-button>
         </a-popover>
@@ -52,69 +51,62 @@ export default {
   methods: {
     getPdsMemList() {
       this.$http
-        .get(`/api/sms/getpdsmemberlist?dsName=${this.$route.query.dsn}`)
+        .get(
+          `/api/sms/getpdsmemberlist?dsName=${
+            this.$store.state.ispf.dataSetName
+          }`
+        )
         .then(res => {
-          // console.log(
-          //   "PdslistPanel Get '/sms/getpdsmemberlist' Success: ",
-          //   res
-          // );
           this.datasets = res.data.items;
           for (let i = 0; i < this.datasets.length; i++)
             this.datasets[i].key = i;
         })
         .catch(err => {
-          console.log("PdslistPanel Get '/sms/getpdsmemberlist' Error: ", err);
+          this.$message.error("请求错误：" + err.message);
         });
     },
 
-    Command(key) {
-      // console.log(key, this.cmd)
-      if (this.cmd.toUpperCase() == "D") {
+    onEnter(key) {
+      if (this.cmd.toUpperCase() === "D") {
         // 删除数据集成员
         this.$http
           .delete(
             "/api/sms/deletepdsmember?dsName=" +
-              this.$route.query.dsn +
+              this.$store.state.ispf.dataSetName +
               "(" +
               this.datasets[key].member +
               ")"
           )
-          .then(res => {
-            console.log(
-              "PdslistPanel Delete '/sms/deletepdsmember' 请求成功：",
-              res
-            );
+          .then(() => {
             this.$message.success(
               "Member " + this.datasets[key].member + " deleted"
             );
             this.getPdsMemList();
           })
           .catch(err => {
-            console.log(
-              "PdslistPanel Delete '/sms/deletepdsmember' 请求错误：",
-              err
-            );
+            this.$message.error("请求错误：" + err.message);
           });
-      } else if (this.cmd.toUpperCase() == "E") {
-        this.$router.push({
-          path: "jcl",
-          query: {
-            dsn: this.$route.query.dsn + "(" + this.datasets[key].member + ")"
-          }
-        });
+      } else if (this.cmd.toUpperCase() === "E") {
+        this.$store.commit(
+          "ispf/SET_DS_MEMBER",
+          this.$store.state.ispf.dataSetName +
+            "(" +
+            this.datasets[key].member +
+            ")"
+        );
+        this.$store.commit("ispf/SET_PANEL", "edit");
       }
     },
 
     commandLine() {
-      if (this.cmdLine[0].toUpperCase() == "S") {
-        var memName = this.cmdLine.split(" ")[1].toUpperCase();
+      if (this.cmdLine[0].toUpperCase() === "S") {
+        let memName = this.cmdLine.split(" ")[1].toUpperCase();
         // 创建分区数据集成员
-        this.$router.push({
-          path: "jcl",
-          query: {
-            dsn: this.$route.query.dsn + "(" + memName + ")"
-          }
-        });
+        this.$store.commit(
+          "ispf/SET_DS_MEMBER",
+          this.$store.state.ispf.dataSetName + "(" + memName + ")"
+        );
+        this.$store.commit("ispf/SET_PANEL", "edit");
       }
     }
   }

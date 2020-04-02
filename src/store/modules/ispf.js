@@ -1,6 +1,9 @@
 const state = {
   currentPanel: "master",
-  panelStack: []
+  panelStack: [],
+  dataSetName: "",
+  dsnLevel: "",
+  dsMember: ""
 };
 const mutations = {
   SET_PANEL(state, v) {
@@ -11,6 +14,15 @@ const mutations = {
     if (state.panelStack.length > 0) {
       state.currentPanel = state.panelStack.pop();
     }
+  },
+  SET_DSN(state, v) {
+    state.dataSetName = v;
+  },
+  SET_DSN_LEVEL(state, v) {
+    state.dsnLevel = v;
+  },
+  SET_DS_MEMBER(state, v) {
+    state.dsMember = v;
   }
 };
 const actions = {};

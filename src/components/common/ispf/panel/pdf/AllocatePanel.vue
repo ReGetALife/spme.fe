@@ -1,8 +1,6 @@
 <template>
   <div class="master-panel">
     <h3 class="panel-title">Allocate New Data Set</h3>
-    <!-- <a-card title="Allocate New Data Set"> -->
-    <!-- <a-row></a-row> -->
     <div class="panel-content">
       <a-form-item
         class="panel-option"
@@ -10,7 +8,7 @@
         label="Data Set Name: "
         :label-col="{ span: 8 }"
         :wrapper-col="{ span: 16 }"
-        >{{ this.$route.query.dataset }}</a-form-item
+        >{{ this.$store.state.ispf.dataSetName }}</a-form-item
       >
       <a-form-item
         class="panel-option"
@@ -99,10 +97,9 @@
       <a-input
         class="panel-option"
         addonBefore="Command >"
-        @keyup.enter="Allocate"
+        @keyup.enter="allocate"
         placeholder
       />
-      <!-- </a-card> -->
     </div>
   </div>
 </template>
@@ -126,13 +123,13 @@ export default {
     };
   },
   methods: {
-    Allocate() {
-      if (this.dsorg.toUpperCase() != "PDS")
-        this.$message.error("Please allocate a PDS");
+    allocate() {
+      if (this.dsorg.toUpperCase() !== "PDS")
+        this.$message.warn("Please allocate a PDS");
       else {
         axios
           .post("/api/sms/createds", {
-            dsname: this.$route.query.dataset.toUpperCase(),
+            dsname: this.$store.state.ispf.dataSetName.toUpperCase(),
             volser: this.volumeName.toUpperCase(),
             unit: "3390",
             dsorg: "PO",
@@ -146,17 +143,15 @@ export default {
             lrecl: parseInt(this.recordLen)
           })
           .then(res => {
-            // console.log("AllocatePanel post '/sms/createds' 请求成功：", res);
-
-            if (res.data == "") {
+            if (res.data === "") {
               this.$message.success("Data set allocated");
-              this.$router.push("data-set-utility");
+              this.$store.commit("ispf/GO_BACK");
             } else {
               this.$message.error("Data set not allocated");
             }
           })
-          .catch(err => {
-            console.log("AllocatePanel post '/sms/createds' 请求错误：", err);
+          .catch(e => {
+            this.$message.error("请求错误：" + e.message);
           });
       }
     }

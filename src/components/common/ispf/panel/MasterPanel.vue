@@ -76,12 +76,9 @@ export default {
 
   methods: {
     onEnter(e) {
-      if (e.target.value.toLowerCase() === "p.3.2") {
-        this.$store.commit("ispf/SET_PANEL", "p32");
-      } else if (e.target.value.toLowerCase() === "p.3.4") {
-        this.$store.commit("ispf/SET_PANEL", "p34");
-      } else {
-        this.$store.commit("ispf/SET_PANEL", e.target.value);
+      if (e.target.value) {
+        const panel = e.target.value.replace(/\./g, "_").toLowerCase();
+        this.$store.commit("ispf/SET_PANEL", panel);
       }
     }
   }

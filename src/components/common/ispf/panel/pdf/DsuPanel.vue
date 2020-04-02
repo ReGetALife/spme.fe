@@ -26,7 +26,6 @@
       <a-row class="panel-desc"
         >Other Partitioned, Sequential or VSAM Data Set:</a-row
       >
-      <!-- <a-card title="Other Partitioned, Sequential or VSAM Data Set"> -->
       <a-form-item
         class="panel-option"
         v-focus
@@ -61,12 +60,10 @@
       <a-input
         class="panel-option"
         addonBefore="Option >"
-        @keyup.enter="Option"
+        @keyup.enter="onEnter"
         placeholder=""
         v-model="option"
       />
-      <!-- </a-card> -->
-
       <br />
     </div>
   </div>
@@ -84,15 +81,15 @@ export default {
     };
   },
   methods: {
-    Option() {
-      if (this.dsName.length == 0) this.$message.error("Enter required field");
-      else if (this.option.toUpperCase() == "A") {
-        this.$router.push({
-          path: "allocate-dataset",
-          query: {
-            dataset: this.dsName.toUpperCase()
-          }
-        });
+    onEnter() {
+      if (!this.dsName) {
+        this.$message.warn("请输入 Data Set 的名字");
+        return;
+      }
+      if (this.option) {
+        const panel = `p_3_2_${this.option}`.replace(/\./, "_").toLowerCase();
+        this.$store.commit("ispf/SET_DSN", this.dsName.toUpperCase());
+        this.$store.commit("ispf/SET_PANEL", panel);
       }
     }
   }
