@@ -106,8 +106,11 @@ export default {
       }
       let opt = this.option.trim();
       opt = opt === "" ? "blank" : opt;
-      const panel = `p_3_4_${opt}`.replace(/\./, "_").toLowerCase();
-      this.$store.commit("ispf/SET_DSN_LEVEL", this.dsName.toUpperCase());
+      const panel = `p_3_4_${opt}`.replace(/\./g, "_").toLowerCase();
+      this.$store.commit(
+        "ispf/SET_DSN_LEVEL",
+        this.dsName.toUpperCase().trim()
+      );
       this.$store.commit("ispf/SET_PANEL", panel);
     }
   }

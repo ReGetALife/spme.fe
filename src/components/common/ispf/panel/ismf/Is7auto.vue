@@ -60,7 +60,7 @@
             class="panel-option"
             addonBefore="CDS Name"
             v-model="cdsName"
-            @keyup.enter="Option"
+            @keyup.enter="onEnter"
           ></a-input>
         </a-col>
       </a-row>
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import Axios from "axios";
 export default {
   data() {
     return {
@@ -78,25 +79,24 @@ export default {
   },
 
   methods: {
-    Option() {
-      if (this.cdsName.length == 0 || this.option.length == 0)
-        this.$message.error("Enter required field");
-      else if (this.option.toUpperCase() == "2") {
-        this.$router.push({
-          path: "7/2",
-          query: {
-            cdsName: this.cdsName.toUpperCase()
-          }
-        });
-      } else if (this.option.toUpperCase() == "3") {
-        this.$http
-          .post("/api/sms/ismf/12/1")
-          .then(res => {
-            console.log("'/sms/ismf/12' Success: ", res);
+    onEnter() {
+      if (this.cdsName.trim().length === 0 || this.option.trim().length === 0) {
+        this.$message.warn("Enter required field: Option & CDS Name");
+        return;
+      }
+      if (this.option.trim().toUpperCase() === "2") {
+        this.$store.commit(
+          "ispf/SET_CDS_NAME",
+          this.cdsName.trim().toUpperCase()
+        );
+        this.$store.commit("ispf/SET_PANEL", "is_7_2");
+      } else if (this.option.trim().toUpperCase() === "3") {
+        Axios.post("/api/sms/ismf/12/1")
+          .then(() => {
             this.$message.success("成功");
           })
           .catch(err => {
-            console.log("Get '/sms/ismf/12' Error: ", err);
+            this.$message.error(err.message);
           });
       }
     }

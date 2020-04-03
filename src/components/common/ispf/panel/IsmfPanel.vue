@@ -4,7 +4,7 @@
     <a-input
       class="panel-option"
       addonBefore="OPTION >"
-      @pressEnter="routerTo"
+      @pressEnter="onEnter"
       v-focus
     />
     <div class="panel-content">
@@ -78,11 +78,13 @@ export default {
     };
   },
   methods: {
-    routerTo(e) {
-      this.$router.push({
-        name: "isoption",
-        params: { option: e.target.value }
-      });
+    onEnter(e) {
+      if (e.target.value) {
+        const panel = `is_${e.target.value.trim()}`
+          .replace(/\./g, "_")
+          .toLowerCase();
+        this.$store.commit("ispf/SET_PANEL", panel);
+      }
     }
   }
 };

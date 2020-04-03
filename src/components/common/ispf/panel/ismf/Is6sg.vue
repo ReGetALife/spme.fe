@@ -79,7 +79,7 @@ export default {
       axios
         .post(`/api/sms/ismf/8/1`)
         .then(() => this.$message.success("创建成功"))
-        .catch(err => console.log(err));
+        .catch(err => this.$message.error(err.message));
     }
   }
 };

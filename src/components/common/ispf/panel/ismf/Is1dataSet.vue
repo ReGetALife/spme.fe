@@ -115,13 +115,6 @@ export default {
       //   volume: this.volume,
       //   acquireVolume: this.acquireVolume
       // });
-    },
-    routerTo(e) {
-      // console.log(e);
-      this.$router.push({
-        name: "isoption",
-        params: { option: e.target.value }
-      });
     }
   }
 };

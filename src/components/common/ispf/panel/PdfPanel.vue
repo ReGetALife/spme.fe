@@ -44,7 +44,9 @@ export default {
   methods: {
     onEnter(e) {
       if (e.target.value) {
-        const panel = `p_${e.target.value}`.replace(/\./, "_").toLowerCase();
+        const panel = `p_${e.target.value.trim()}`
+          .replace(/\./g, "_")
+          .toLowerCase();
         this.$store.commit("ispf/SET_PANEL", panel);
       }
     }

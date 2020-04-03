@@ -99,8 +99,16 @@ export default {
     },
 
     commandLine() {
-      if (this.cmdLine[0].toUpperCase() === "S") {
-        let memName = this.cmdLine.split(" ")[1].toUpperCase();
+      if (this.cmdLine && this.cmdLine[0].toUpperCase() === "S") {
+        let arr = this.cmdLine
+          .trim()
+          .replace(/ +/g, " ")
+          .split(" ");
+        if (arr.length < 2) {
+          this.$message.warn("请指定 Member Name");
+          return;
+        }
+        const memName = arr[1].toUpperCase();
         // 创建分区数据集成员
         this.$store.commit(
           "ispf/SET_DS_MEMBER",

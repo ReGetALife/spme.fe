@@ -70,17 +70,17 @@ export default {
         axios
           .post(`/api/sms/ismf/5/1`)
           .then(() => this.$message.success("创建成功"))
-          .catch(err => console.log(err));
+          .catch(err => this.$message.error(err.message));
       } else if (this.dcName.toUpperCase() === "DCPDS") {
         axios
           .post(`/api/sms/ismf/5/2`)
           .then(() => this.$message.success("创建成功"))
-          .catch(err => console.log(err));
+          .catch(err => this.$message.error(err.message));
       } else if (this.dcName.toUpperCase() === "DCKSDS") {
         axios
           .post(`/api/sms/ismf/5/3`)
           .then(() => this.$message.success("创建成功"))
-          .catch(err => console.log(err));
+          .catch(err => this.$message.error(err.message));
       }
     }
   }

@@ -87,7 +87,7 @@ export default {
       } else if (this.cmd.toUpperCase() === "E") {
         this.$store.commit(
           "ispf/SET_DSN",
-          this.datasets[key].dsname.toUpperCase()
+          this.datasets[key].dsname.toUpperCase().trim()
         );
         this.$store.commit("SET_PANEL", "p_3_4_blank_e");
       }

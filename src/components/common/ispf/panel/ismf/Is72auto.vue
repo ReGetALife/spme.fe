@@ -11,7 +11,7 @@
             class="panel-option"
             addonBefore="SCDS Name"
             v-model="scdsName"
-            @keyup.enter="Option"
+            @keyup.enter="onEnter"
           ></a-input>
         </a-col>
         <br />
@@ -49,66 +49,60 @@
 </template>
 
 <script>
+import Axios from "axios";
+
 export default {
   name: "ismf-acs-translate",
   data() {
     return {
-      scdsName: this.$route.query.cdsName,
+      scdsName: this.$store.state.ispf.cdsName,
       dataSet: "",
       sourceMem: "",
       listDS: ""
-    }; //this.$route.query.dsn
+    };
   },
 
   methods: {
-    Option() {
+    onEnter() {
       if (
-        this.scdsName.length == 0 ||
-        this.dataSet.length == 0 ||
-        this.sourceMem.length == 0 ||
-        this.listDS.length == 0
+        this.scdsName.trim().length === 0 ||
+        this.dataSet.trim().length === 0 ||
+        this.sourceMem.trim().length === 0 ||
+        this.listDS.trim().length === 0
       )
         this.$message.error("Enter required field");
       else {
-        if (this.sourceMem.toUpperCase() == "SC") {
-          this.$http
-            .post("/api/sms/ismf/11/1")
-            .then(res => {
+        if (this.sourceMem.trim().toUpperCase() === "SC") {
+          Axios.post("/api/sms/ismf/11/1")
+            .then(() => {
               this.$message.success("成功");
-              console.log("'/api/sms/ismf/11/1' Success: ", res);
             })
             .catch(err => {
-              console.log("Get '/api/sms/ismf/11/1' Error: ", err);
+              this.$message.error("Error: " + err.message);
             });
-        } else if (this.sourceMem.toUpperCase() == "DC") {
-          this.$http
-            .post("/api/sms/ismf/11/2")
-            .then(res => {
+        } else if (this.sourceMem.trim().toUpperCase() === "DC") {
+          Axios.post("/api/sms/ismf/11/2")
+            .then(() => {
               this.$message.success("成功");
-              console.log("'/api/sms/ismf/11/2' Success: ", res);
             })
             .catch(err => {
-              console.log("Get '/api/sms/ismf/11/2' Error: ", err);
+              this.$message.error("Error: " + err.message);
             });
-        } else if (this.sourceMem.toUpperCase() == "MC") {
-          this.$http
-            .post("/api/sms/ismf/11/3")
-            .then(res => {
+        } else if (this.sourceMem.trim().toUpperCase() === "MC") {
+          Axios.post("/api/sms/ismf/11/3")
+            .then(() => {
               this.$message.success("成功");
-              console.log("'/api/sms/ismf/11/3' Success: ", res);
             })
             .catch(err => {
-              console.log("Get '/api/sms/ismf/11/3' Error: ", err);
+              this.$message.error("Error: " + err.message);
             });
-        } else if (this.sourceMem.toUpperCase() == "SG") {
-          this.$http
-            .post("/api/sms/ismf/11/4")
-            .then(res => {
+        } else if (this.sourceMem.trim().toUpperCase() === "SG") {
+          Axios.post("/api/sms/ismf/11/4")
+            .then(() => {
               this.$message.success("成功");
-              console.log("'/api/sms/ismf/11/4' Success: ", res);
             })
             .catch(err => {
-              console.log("Get '/api/sms/ismf/11/4' Error: ", err);
+              this.$message.error("Error: " + err.message);
             });
         }
       }

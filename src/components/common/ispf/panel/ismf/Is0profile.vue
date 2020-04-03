@@ -5,7 +5,7 @@
     <a-input
       class="panel-option"
       addonBefore="Select one of the following options and Press Enter: "
-      @pressEnter="routerTo"
+      @pressEnter="onEnter"
       v-focus
     ></a-input>
 
@@ -42,8 +42,13 @@ export default {
     };
   },
   methods: {
-    routerTo(e) {
-      this.$router.push("0/" + e.target.value);
+    onEnter(e) {
+      if (e.target.value) {
+        const panel = `is_0_${e.target.value.trim()}`
+          .replace(/\./g, "_")
+          .toLowerCase();
+        this.$store.commit("ispf/SET_PANEL", panel);
+      }
     }
   }
 };

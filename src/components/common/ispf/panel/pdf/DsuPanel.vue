@@ -87,8 +87,10 @@ export default {
         return;
       }
       if (this.option) {
-        const panel = `p_3_2_${this.option}`.replace(/\./, "_").toLowerCase();
-        this.$store.commit("ispf/SET_DSN", this.dsName.toUpperCase());
+        const panel = `p_3_2_${this.option.trim()}`
+          .replace(/\./g, "_")
+          .toLowerCase();
+        this.$store.commit("ispf/SET_DSN", this.dsName.toUpperCase().trim());
         this.$store.commit("ispf/SET_PANEL", panel);
       }
     }

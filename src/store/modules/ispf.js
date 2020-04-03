@@ -3,7 +3,8 @@ const state = {
   panelStack: [],
   dataSetName: "",
   dsnLevel: "",
-  dsMember: ""
+  dsMember: "",
+  cdsName: ""
 };
 const mutations = {
   SET_PANEL(state, v) {
@@ -23,6 +24,9 @@ const mutations = {
   },
   SET_DS_MEMBER(state, v) {
     state.dsMember = v;
+  },
+  SET_CDS_NAME(state, v) {
+    state.cdsName = v;
   }
 };
 const actions = {};
