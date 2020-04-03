@@ -94,6 +94,7 @@ export default {
   border-radius: 5px;
   padding: 20px 10px 0 10px;
   background-color: rgb(0, 0, 0);
+  min-height: 450px;
 }
 .panel-title {
   color: dodgerblue;

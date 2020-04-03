@@ -19,6 +19,9 @@
           >{{ submenu.name }}</a-menu-item
         >
       </a-sub-menu>
+      <a-menu-item :key="'/playground/ispf'" title="ISPF"
+        ><a-icon type="menu" />ISPF</a-menu-item
+      >
     </a-menu>
   </div>
 </template>
@@ -106,12 +109,6 @@ export default {
             { name: "实验 6 显示数据集信息实验", path: "lab6" },
             { name: "实验 7 综合实验", path: "lab7" }
           ]
-        },
-        {
-          name: "ISPF",
-          path: "ispf",
-          icon: "hdd",
-          children: [{ name: "独立实验", path: "lab" }]
         }
       ]
     };
