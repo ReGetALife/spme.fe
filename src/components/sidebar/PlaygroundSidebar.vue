@@ -19,8 +19,8 @@
           >{{ submenu.name }}</a-menu-item
         >
       </a-sub-menu>
-      <a-menu-item :key="'/playground/ispf'" title="ISPF"
-        ><a-icon type="menu" />ISPF</a-menu-item
+      <a-menu-item :key="'/playground/ispf'"
+        ><a-icon type="menu" /><span>ISPF</span></a-menu-item
       >
     </a-menu>
   </div>
