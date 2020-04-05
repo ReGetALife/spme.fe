@@ -4,12 +4,12 @@
       <a-form-item>
         <a-textarea
           :autosize="{ minRows: 5 }"
-          placeholder="请输入JCL代码"
+          placeholder="请输入 JCL 代码"
           v-decorator="[
             'jcl',
             {
               rules: [
-                { required: true, message: '请输入JCL代码' },
+                { required: true, message: '请输入 JCL 代码' },
                 { validator: jclValidator }
               ]
             }
@@ -25,7 +25,7 @@
             <p>JCL 中每行不能超过 72 个字符，超出的部分会被忽略哦。</p>
             <p>至于其他的，请参考 JCL 的语法规则 🙈。</p>
           </template>
-          JCL怎么写
+          JCL 怎么写
           <a-icon type="question-circle" />
         </a-popover>
       </a-form-item>
