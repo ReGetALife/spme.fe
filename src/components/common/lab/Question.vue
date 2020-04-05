@@ -12,11 +12,12 @@
         "
         :colon="false"
       >
-        <a-input
+        <a-textarea
           v-model="draftsTemp[index]"
           placeholder="请输入你的回答"
+          autosize
           :disabled="submitted"
-        ></a-input>
+        ></a-textarea>
       </a-form-item>
     </a-form>
   </div>
