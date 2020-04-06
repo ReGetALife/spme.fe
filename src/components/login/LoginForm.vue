@@ -1,7 +1,7 @@
 <template>
   <div class="login-page">
     <a-form :form="form" @submit="handleSubmit" style="width: 360px">
-      <h1>z/OS MF</h1>
+      <h1>主机实验平台</h1>
       <a-form-item>
         <a-input
           v-focus
@@ -15,6 +15,12 @@
           size="large"
         >
           <a-icon slot="prefix" type="user" />
+          <a-popover style="cursor: pointer" slot="suffix">
+            <template slot="content">
+              账号和密码应该与你登录主机的账号和密码相同 ✅
+            </template>
+            <a-icon type="question-circle" />
+          </a-popover>
         </a-input>
       </a-form-item>
       <a-form-item>
@@ -30,6 +36,13 @@
           placeholder="请输入密码"
         >
           <a-icon slot="prefix" type="lock" />
+          <a-popover style="cursor: pointer" slot="suffix">
+            <template slot="content">
+              可以联系老师或同学帮你重置密码 😁
+            </template>
+            密码忘了
+            <a-icon type="question-circle" />
+          </a-popover>
         </a-input>
       </a-form-item>
       <a-form-item>
@@ -41,7 +54,8 @@
             }
           ]"
           size="large"
-          placeholder="10.60.43.8:8800"
+          placeholder="请填入 z/OS MF 的地址"
+          @change="onAddressChange"
         >
           <a-icon slot="prefix" type="cloud" />
         </a-input>
@@ -56,6 +70,28 @@
           >登录</a-button
         >
       </a-form-item>
+      <a-popover style="cursor: pointer">
+        <template slot="content">
+          <p>
+            请确保 z/OS MF 的地址正确，且能够访问。<a
+              :href="`https://${this.address}`"
+              target="_blank"
+              >[ 前往验证 ]</a
+            >
+          </p>
+          <p>
+            请确保填入的账号密码可以登录 z/OS MF。<a
+              :href="`https://${this.address}/zosmf`"
+              target="_blank"
+              >[ 前往验证 ]</a
+            >
+          </p>
+          <p>新创建的账号或重置了密码的账号需要先登录一次 TSO 。</p>
+          假如你可以登录 TSO 却无法登录 z/OS MF，请求助老师。
+        </template>
+        无法登录
+        <a-icon type="question-circle" />
+      </a-popover>
     </a-form>
   </div>
 </template>
@@ -63,25 +99,25 @@
 <script>
 import Axios from "axios";
 import { Modal } from "ant-design-vue";
+// remove warning of async-validator used by a-form
+// ref: https://github.com/yiminghe/async-validator#how-to-avoid-warning
+import Schema from "async-validator";
+Schema.warning = function() {};
 
 export default {
   name: "LoginForm",
   data() {
     return {
       form: this.$form.createForm(this),
-      isLoading: false
+      isLoading: false,
+      address: ""
     };
   },
-  // mounted() {
-  //   this.$nextTick(() => {
-  //     // To disabled submit button at the beginning.
-  //     this.form.validateFields();
-  //   });
-  // },
   mounted() {
     this.form.setFieldsValue({
       address: "10.60.43.8:8800"
     });
+    this.address = "10.60.43.8:8800";
   },
   methods: {
     handleSubmit(e) {
@@ -128,7 +164,19 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+    onAddressChange(e) {
+      if (e.target.value) {
+        this.address = e.target.value;
+      } else {
+        this.address = "请填入z/OSMF地址";
+      }
     }
   }
 };
 </script>
+<style scoped>
+h1 {
+  text-align: center;
+}
+</style>
