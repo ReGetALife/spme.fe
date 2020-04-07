@@ -131,7 +131,7 @@ export default {
     });
 
     // 获取分数（若已经批改）
-    this.allRates = await this.$http.get("/api/db/checkScore").catch(() => {});
+    this.allRates = await this.$http.get("/api/db/checkScore");
 
     this.data.forEach(lab => {
       this.$http
@@ -159,12 +159,10 @@ export default {
 
             this.data = [...this.data]; // 更新数据
 
-            // console.log("url", lab.url);
-
             // 是否批改
             if (this.allRates && +this.allRates.status === 200) {
               let ratedLabIndex = this.allRates.body.findIndex(rate => {
-                return rate.lab === lab.labId;
+                return rate.lab.toUpperCase() === lab.labId.toUpperCase();
               });
               if (ratedLabIndex !== -1) {
                 lab.comment = this.allRates.body[ratedLabIndex].comment;
@@ -172,8 +170,6 @@ export default {
                 lab.status = "scored";
               }
             }
-          } else {
-            // lab.status = 0; // 未提交
           }
         });
     });

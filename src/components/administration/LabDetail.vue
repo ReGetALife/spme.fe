@@ -23,8 +23,8 @@
         <a-badge :status="text.status ? 'success' : 'default'" />
         {{ text.status ? "已批阅" : "未批阅" }}
       </span>
-      <span slot="action" slot-scope="text, record">
-        <a href="javascript:;">
+      <span slot="action" slot-scope="record">
+        <a href="javascript:">
           <span v-if="record.status">
             <a-button type="primary" icon="eye" @click="review(record)"
               >查看</a-button
@@ -49,21 +49,19 @@
 import { mapMutations } from "vuex";
 
 const columns = [
-  { title: "TSO ID", dataIndex: "uid", key: "uid" },
+  { title: "TSO ID", dataIndex: "uid" },
   { title: "实验状态", key: "status", scopedSlots: { customRender: "status" } },
   { title: "评分", dataIndex: "score" },
-  // { title: '评语', dataIndex: 'comment', width: '300px' },
   { title: "评语", dataIndex: "comment" },
   {
     title: "操作",
-    dataIndex: "action",
+    key: "action",
     scopedSlots: { customRender: "action" }
   }
 ];
 export default {
   data() {
     return {
-      // lab: this.$route.params.name,
       data: [],
       loading: false,
       columns,
@@ -74,7 +72,7 @@ export default {
   },
   computed: {
     lab() {
-      return this.$route.params.name;
+      return this.$route.params.name.toUpperCase();
     }
   },
   created() {
@@ -97,7 +95,6 @@ export default {
           }
         })
         .then(data => {
-          console.log("GET /db/submitted", data);
           this.loading = false;
           this.data = data.body;
         });
@@ -114,11 +111,9 @@ export default {
             { responseType: "arraybuffer" }
           )
           .then(res => {
-            console.log("POST /db/downloadPDF", res);
             this.disposition = res.headers.map["content-disposition"][0]
               .split("=")[1]
               .replace(/"/g, "");
-            console.log(this.disposition);
             let binaryData = [];
             binaryData.push(res.body);
             this.url = window.URL.createObjectURL(
@@ -181,9 +176,6 @@ export default {
           break;
       }
       return title;
-    },
-    stateFormat(state) {
-      return state ? "success" : "default";
     }
   }
 };

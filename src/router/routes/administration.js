@@ -7,17 +7,17 @@ export default {
     {
       path: "",
       name: "teach-home",
-      component: () => import("@/components/administration/overview")
+      component: () => import("@/components/administration/Overview")
     },
     {
       path: "check",
       name: "teach-check",
-      component: () => import("@/components/administration/check")
+      component: () => import("@/components/administration/Mark")
     },
     {
       path: ":name",
       name: "details",
-      component: () => import("@/components/administration/detail")
+      component: () => import("@/components/administration/LabDetail")
     }
   ]
 };

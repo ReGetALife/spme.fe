@@ -88,7 +88,6 @@ export default {
     ...mapState("report", ["score", "comment", "uid", "url", "lab"])
   },
   mounted() {
-    console.log(this.url);
     this.form.setFieldsValue({
       score: this.score,
       comment: this.comment
