@@ -43,4 +43,8 @@ pre {
 
   border: 1px solid #ddd;
 }
+.ant-tabs-tab {
+  min-width: 80px;
+  text-align: center;
+}
 </style>
