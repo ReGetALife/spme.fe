@@ -6,6 +6,7 @@
       @click="handleMenuClick"
       :defaultSelectedKeys="defaultSelectedKeys"
       :defaultOpenKeys="defaultOpenKeys"
+      v-model="selectedKeys"
     >
       <a-menu-item
         v-for="menu in menuConfig"
@@ -27,6 +28,7 @@ export default {
   data() {
     return {
       defaultSelectedKeys: [this.$route.path],
+      selectedKeys: [],
       defaultOpenKeys: [
         this.$route.path
           .split("/")
@@ -67,7 +69,16 @@ export default {
       ]
     };
   },
-  watch: {},
+  computed: {
+    path() {
+      return this.$route.path;
+    }
+  },
+  watch: {
+    path(v) {
+      this.selectedKeys = [v];
+    }
+  },
   methods: {
     handleMenuClick(e) {
       if (e.key) this.$router.push(e.key);

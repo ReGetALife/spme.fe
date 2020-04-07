@@ -6,6 +6,7 @@
       @click="handleMenuClick"
       :defaultSelectedKeys="defaultSelectedKeys"
       :defaultOpenKeys="defaultOpenKeys"
+      v-model="selectedKeys"
     >
       <a-sub-menu v-for="menu in menuConfig" :key="'/playground/' + menu.path">
         <span slot="title">
@@ -32,6 +33,7 @@ export default {
   data() {
     return {
       defaultSelectedKeys: [this.$route.path],
+      selectedKeys: [],
       defaultOpenKeys: [
         this.$route.path
           .split("/")
@@ -113,7 +115,16 @@ export default {
       ]
     };
   },
-  watch: {},
+  computed: {
+    path() {
+      return this.$route.path;
+    }
+  },
+  watch: {
+    path(v) {
+      this.selectedKeys = [v];
+    }
+  },
   methods: {
     handleMenuClick(e) {
       this.$router.push(e.key);
