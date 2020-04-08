@@ -12,7 +12,12 @@
     </div>
     <div class="wrapper">
       <div class="pdf">
-        <a-spin :spinning="isLoadingPDF" :style="{ height: '100%' }">
+        <a-spin
+          size="large"
+          :spinning="isLoadingPDF"
+          :style="{ height: '100%' }"
+        >
+          <a-icon slot="indicator" type="sync" :spin="true" />
           <embed :src="url" type="application/pdf" width="100%" height="100%" />
         </a-spin>
       </div>

@@ -2,6 +2,7 @@
   <div class="lab-container">
     <div class="left">
       <a-spin size="large" :spinning="this.isLoadingDoc">
+        <a-icon slot="indicator" type="sync" :spin="true" />
         <LabContent :content="content" />
       </a-spin>
     </div>
@@ -9,6 +10,7 @@
     <div class="right" v-if="this.subLab !== 'intro'">
       <h2>步骤 {{ steps[stepIndex] }}</h2>
       <a-spin :spinning="this.isLoading">
+        <a-icon slot="indicator" type="sync" :spin="true" />
         <Question ref="question" />
       </a-spin>
       <div>
