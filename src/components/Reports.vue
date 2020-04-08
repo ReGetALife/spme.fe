@@ -1,33 +1,41 @@
 <template>
   <div>
     <h1>我的实验</h1>
-    <a-table :columns="columns" :dataSource="data" rowKey="name">
-      <span slot="status" slot-scope="{ status }">
-        <a-badge :status="status | statusFilter" />
-        {{ status | statusFilter2 }}
-      </span>
-      <span slot="action" slot-scope="record">
-        <a :href="record.url" target="_blank" :disabled="!record.url">
-          <a-icon type="eye" /> 浏览
-        </a>
-        <a-divider type="vertical" />
-        <a
-          :href="record.url"
-          :download="record.disposition"
-          :disabled="!record.url"
-        >
-          <a-icon type="download" /> 下载
-        </a>
-        <a-divider type="vertical" />
-        <a
-          :disabled="record.status !== 'saved'"
-          @click="handelSubmitClick(record)"
-        >
-          <a-icon type="upload" /> 提交
-        </a>
-      </span>
-    </a-table>
-    <a-modal title="朋友，确定提交么？" v-model="visible" @ok="submitLabReport">
+    <a-spin size="large" :spinning="isLoading">
+      <a-icon slot="indicator" type="sync" :spin="true" />
+      <a-table :columns="columns" :dataSource="data" rowKey="name">
+        <span slot="status" slot-scope="{ status }">
+          <a-badge :status="status | statusFilter" />
+          {{ status | statusFilter2 }}
+        </span>
+        <span slot="action" slot-scope="record">
+          <a :href="record.url" target="_blank" :disabled="!record.url">
+            <a-icon type="eye" /> 浏览
+          </a>
+          <a-divider type="vertical" />
+          <a
+            :href="record.url"
+            :download="record.disposition"
+            :disabled="!record.url"
+          >
+            <a-icon type="download" /> 下载
+          </a>
+          <a-divider type="vertical" />
+          <a
+            :disabled="record.status !== 'saved'"
+            @click="handelSubmitClick(record)"
+          >
+            <a-icon type="upload" /> 提交
+          </a>
+        </span>
+      </a-table>
+    </a-spin>
+    <a-modal
+      title="朋友，确定提交么？"
+      v-model="visible"
+      @ok="submitLabReport"
+      :confirmLoading="isSubmitting"
+    >
       <p>
         <span style="color: coral">
           重要：请确保{{ clickedRecord.name }}实验的所有步骤的回答都已经保存。
@@ -81,7 +89,7 @@ const data = [
     comment: ""
   },
   {
-    name: "存储管理（DFSMS）",
+    name: "存储管理（SMS）",
     labId: "SMS",
     status: "",
     score: "",
@@ -117,71 +125,79 @@ export default {
       data,
       allRates: [],
       visible: false,
-      clickedRecord: {}
+      clickedRecord: {},
+      isLoading: true,
+      isSubmitting: false
     };
   },
-  async created() {
-    // todo: show loading while fetching data
-    // 获取提交状态
-    let labStatus = await this.$http.get("/api/db/getLabStatus");
-    this.data.forEach((item, index, arr) => {
-      arr[index].status = labStatus.body.find(
-        lab => lab.lab === item.labId
-      ).status;
-    });
-
-    // 获取分数（若已经批改）
-    this.allRates = await this.$http.get("/api/db/checkScore");
-
-    this.data.forEach(lab => {
-      this.$http
-        .get("/api/db/getReports", {
-          params: {
-            lab: lab.labId
-          },
-          responseType: "arraybuffer"
-        })
-        .then(res => {
-          if (res.data.byteLength) {
-            // 生成 pdf url
-            // lab.status = 1; // 已提交
-            lab.disposition = res.headers.map["content-disposition"][0]
-              .split("=")[1]
-              .replace(/"/g, "");
-            let binaryData = [];
-            binaryData.push(res.body);
-
-            lab.url = window.URL.createObjectURL(
-              new Blob(binaryData, {
-                type: "application/pdf"
-              })
-            );
-
-            this.data = [...this.data]; // 更新数据
-
-            // 是否批改
-            if (this.allRates && +this.allRates.status === 200) {
-              let ratedLabIndex = this.allRates.body.findIndex(rate => {
-                return rate.lab.toUpperCase() === lab.labId.toUpperCase();
-              });
-              if (ratedLabIndex !== -1) {
-                lab.comment = this.allRates.body[ratedLabIndex].comment;
-                lab.score = this.allRates.body[ratedLabIndex].score;
-                lab.status = "scored";
-              }
-            }
-          }
-        });
-    });
+  created() {
+    this.init();
   },
   methods: {
+    // init page data
+    async init() {
+      this.isLoading = true;
+      // 获取提交状态
+      let labStatus = await this.$http.get("/api/db/getLabStatus");
+      this.data.forEach((item, index, arr) => {
+        arr[index].status = labStatus.body.find(
+          lab => lab.lab === item.labId
+        ).status;
+      });
+
+      // 获取分数（若已经批改）
+      this.allRates = await this.$http.get("/api/db/checkScore");
+
+      this.data.forEach(lab => {
+        this.$http
+          .get("/api/db/getReports", {
+            params: {
+              lab: lab.labId
+            },
+            responseType: "arraybuffer"
+          })
+          .then(res => {
+            if (res.data.byteLength) {
+              // 生成 pdf url
+              // lab.status = 1; // 已提交
+              lab.disposition = res.headers.map["content-disposition"][0]
+                .split("=")[1]
+                .replace(/"/g, "");
+              let binaryData = [];
+              binaryData.push(res.body);
+
+              lab.url = window.URL.createObjectURL(
+                new Blob(binaryData, {
+                  type: "application/pdf"
+                })
+              );
+
+              this.data = [...this.data]; // 更新数据
+
+              // 是否批改
+              if (this.allRates && +this.allRates.status === 200) {
+                let ratedLabIndex = this.allRates.body.findIndex(rate => {
+                  return rate.lab.toUpperCase() === lab.labId.toUpperCase();
+                });
+                if (ratedLabIndex !== -1) {
+                  lab.comment = this.allRates.body[ratedLabIndex].comment;
+                  lab.score = this.allRates.body[ratedLabIndex].score;
+                  lab.status = "scored";
+                }
+              }
+            }
+          });
+      });
+
+      this.isLoading = false;
+    },
     handelSubmitClick(record) {
       this.visible = true;
       this.clickedRecord = record;
     },
     // submit an entire lab e.g. RACF
     submitLabReport() {
-      // todo: show loading while submitting
+      this.isSubmitting = true;
       Axios.post("/api/db/submitLab", {
         lab: this.clickedRecord.labId
       })
@@ -191,14 +207,16 @@ export default {
               `✨成功提交${this.clickedRecord.name}实验报告，等待老师批阅`
             )
             .then();
-          this.visible = false;
         })
         .catch(e => {
           this.$message.error("提交失败：" + e.message).then();
+        })
+        .finally(() => {
+          this.isSubmitting = false;
           this.visible = false;
+          this.init();
         });
     }
-    // todo: refresh lab status after submitting
   },
   filters: {
     statusFilter(status) {
