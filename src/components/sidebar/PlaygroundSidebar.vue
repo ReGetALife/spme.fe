@@ -4,7 +4,6 @@
       theme="dark"
       mode="inline"
       @click="handleMenuClick"
-      :defaultSelectedKeys="defaultSelectedKeys"
       :defaultOpenKeys="defaultOpenKeys"
       v-model="selectedKeys"
     >
@@ -32,8 +31,7 @@ export default {
   name: "SidebarMenu",
   data() {
     return {
-      defaultSelectedKeys: [this.$route.path],
-      selectedKeys: [],
+      selectedKeys: [this.$route.path],
       defaultOpenKeys: [
         this.$route.path
           .split("/")
