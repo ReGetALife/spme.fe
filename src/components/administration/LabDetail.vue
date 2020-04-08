@@ -160,7 +160,7 @@ export default {
           title = "安全管理（RACF）";
           break;
         case "sms":
-          title = "存储管理（DFSMS）";
+          title = "存储管理（SMS）";
           break;
         case "catalog":
           title = "目录管理（Catalog）";

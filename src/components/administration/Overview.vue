@@ -32,7 +32,7 @@ export default {
           review: 5
         },
         {
-          name: "存储管理（DFSMS）",
+          name: "存储管理（SMS）",
           path: "sms",
           submit: "x",
           review: 5
