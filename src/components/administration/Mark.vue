@@ -99,7 +99,7 @@ export default {
     });
     setTimeout(() => {
       this.isLoadingPDF = false;
-    }, 1500);
+    }, 1000);
   },
   methods: {
     save() {

@@ -10,14 +10,13 @@ export default {
       component: () => import("@/components/administration/Overview")
     },
     {
-      path: "check",
-      name: "teach-check",
-      component: () => import("@/components/administration/Mark")
-    },
-    {
-      path: ":name",
+      path: ":lab",
       name: "details",
       component: () => import("@/components/administration/LabDetail")
+    },
+    {
+      path: ":lab/:uid",
+      component: () => import("@/components/administration/Mark")
     }
   ]
 };

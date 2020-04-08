@@ -1,6 +1,6 @@
 <template>
   <div class="detail-page">
-    <h1>{{ $route.params.name | formatName }}</h1>
+    <h1>{{ $route.params.lab | formatName }}</h1>
     <a-popconfirm
       title="确认发布成绩？"
       placement="left"
@@ -24,24 +24,21 @@
         {{ text.status ? "已批阅" : "未批阅" }}
       </span>
       <span slot="action" slot-scope="record">
-        <a href="javascript:">
-          <span v-if="record.status">
-            <a-button type="primary" icon="eye" @click="review(record)"
-              >查看</a-button
-            >
-          </span>
-          <span v-else>
-            <a-button type="primary" icon="edit" @click="review(record)"
-              >批阅</a-button
-            >
-          </span>
-        </a>
+        <span v-if="record.status">
+          <a-button type="primary" icon="eye" @click="review(record)"
+            >查看</a-button
+          >
+        </span>
+        <span v-else>
+          <a-button type="primary" icon="edit" @click="review(record)"
+            >批阅</a-button
+          >
+        </span>
         <a-divider type="vertical" />
         <a-button icon="download" @click="downloadPDF(record)">下载</a-button>
       </span>
     </a-table>
     <a :href="url" :download="disposition" ref="downloadHref"></a>
-    <!-- <a-pagination v-model="curPage" :total="total" /> -->
   </div>
 </template>
 
@@ -72,7 +69,7 @@ export default {
   },
   computed: {
     lab() {
-      return this.$route.params.name.toUpperCase();
+      return this.$route.params.lab.toUpperCase();
     }
   },
   created() {
@@ -132,7 +129,9 @@ export default {
     },
     review(record) {
       this.getPDF(record).then(() => {
-        this.$router.push({ name: "teach-check" });
+        this.$router.push(
+          `${this.lab.toLowerCase()}/${record.uid.toLowerCase()}`
+        );
       });
     },
     downloadPDF(record) {
