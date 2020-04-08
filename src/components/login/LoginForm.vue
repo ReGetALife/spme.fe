@@ -54,7 +54,7 @@
             }
           ]"
           size="large"
-          placeholder="请填入 z/OS MF 的地址"
+          placeholder="请填入 z/OSMF 的地址"
           @change="onAddressChange"
         >
           <a-icon slot="prefix" type="cloud" />
@@ -73,21 +73,21 @@
       <a-popover style="cursor: pointer">
         <template slot="content">
           <p>
-            请确保 z/OS MF 的地址正确，且能够访问。<a
+            请确保 z/OSMF 的地址正确，且能够访问。<a
               :href="`https://${this.address}`"
               target="_blank"
               >[ 前往验证 ]</a
             >
           </p>
           <p>
-            请确保填入的账号密码可以登录 z/OS MF。<a
+            请确保填入的账号密码可以登录 z/OSMF。<a
               :href="`https://${this.address}/zosmf`"
               target="_blank"
               >[ 前往验证 ]</a
             >
           </p>
           <p>新创建的账号或重置了密码的账号需要先登录一次 TSO 。</p>
-          假如你可以登录 TSO 却无法登录 z/OS MF，请求助老师。
+          假如你可以登录 TSO 却无法登录 z/OSMF，请求助老师。
         </template>
         无法登录
         <a-icon type="question-circle" />
