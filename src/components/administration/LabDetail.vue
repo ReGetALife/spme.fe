@@ -12,33 +12,35 @@
         <a-icon type="notification" />发布成绩
       </a-button>
     </a-popconfirm>
-    <a-table
-      :columns="columns"
-      :dataSource="data"
-      :rowKey="record => record.uid"
-      :loading="loading"
-    >
-      <span slot="status" slot-scope="text">
-        <!-- 1 已批阅; 0 未批阅 -->
-        <a-badge :status="text.status ? 'success' : 'default'" />
-        {{ text.status ? "已批阅" : "未批阅" }}
-      </span>
-      <span slot="action" slot-scope="record">
-        <span v-if="record.status">
-          <a-button type="primary" icon="eye" @click="review(record)"
-            >查看</a-button
-          >
+    <a-spin size="large" :spinning="loading">
+      <a-icon slot="indicator" type="loading-3-quarters" :spin="true" />
+      <a-table
+        :columns="columns"
+        :dataSource="data"
+        :rowKey="record => record.uid"
+      >
+        <span slot="status" slot-scope="text">
+          <!-- 1 已批阅; 0 未批阅 -->
+          <a-badge :status="text.status ? 'success' : 'default'" />
+          {{ text.status ? "已批阅" : "未批阅" }}
         </span>
-        <span v-else>
-          <a-button type="primary" icon="edit" @click="review(record)"
-            >批阅</a-button
-          >
+        <span slot="action" slot-scope="record">
+          <span v-if="record.status">
+            <a-button type="primary" icon="eye" @click="review(record)"
+              >查看</a-button
+            >
+          </span>
+          <span v-else>
+            <a-button type="primary" icon="edit" @click="review(record)"
+              >批阅</a-button
+            >
+          </span>
+          <a-divider type="vertical" />
+          <a-button icon="download" @click="downloadPDF(record)">下载</a-button>
         </span>
-        <a-divider type="vertical" />
-        <a-button icon="download" @click="downloadPDF(record)">下载</a-button>
-      </span>
-    </a-table>
-    <a :href="url" :download="disposition" ref="downloadHref"></a>
+      </a-table>
+    </a-spin>
+    <a :href="url" :download="disposition" ref="downloadHref" />
   </div>
 </template>
 

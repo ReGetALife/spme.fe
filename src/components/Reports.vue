@@ -2,7 +2,7 @@
   <div>
     <h1>我的实验</h1>
     <a-spin size="large" :spinning="isLoading">
-      <a-icon slot="indicator" type="sync" :spin="true" />
+      <a-icon slot="indicator" type="loading-3-quarters" :spin="true" />
       <a-table :columns="columns" :dataSource="data" rowKey="name">
         <span slot="status" slot-scope="{ status }">
           <a-badge :status="status | statusFilter" />

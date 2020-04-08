@@ -17,7 +17,7 @@
           :spinning="isLoadingPDF"
           :style="{ height: '100%' }"
         >
-          <a-icon slot="indicator" type="sync" :spin="true" />
+          <a-icon slot="indicator" type="loading-3-quarters" :spin="true" />
           <embed :src="url" type="application/pdf" width="100%" height="100%" />
         </a-spin>
       </div>
