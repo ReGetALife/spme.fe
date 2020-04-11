@@ -95,10 +95,12 @@ const actions = {
   getStepDrafts({ commit }, { lab, subLab, step }) {
     commit("SET_DRAFTS", []);
     commit("SET_IS_LOADING_DRAFTS", true);
-    Axios.post("/api/db/getDraft", {
-      lab,
-      lower_lab: subLab,
-      step
+    Axios.get("/api/draft", {
+      params: {
+        lab,
+        lower_lab: subLab,
+        step
+      }
     })
       .then(response => {
         let d = [];
@@ -141,7 +143,7 @@ const actions = {
       }
     );
 
-    Axios.post("/api/db/subAnswer", answers)
+    Axios.post("/api/draft", answers)
       .then(() => {
         commit("SET_DRAFTS", draftsTemp);
         message.success(`步骤 ${state.step} 已保存 👍`).then();
