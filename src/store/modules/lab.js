@@ -152,7 +152,7 @@ const actions = {
         commit("SET_IS_SAVING_DRAFTS", false);
       })
       .catch(e => {
-        message.error("本实验已提交，保存无效：" + e.message).then();
+        message.warn("答案超过了15000个字符：" + e.message).then();
         commit("SET_IS_SAVING_DRAFTS", false);
       });
   },
