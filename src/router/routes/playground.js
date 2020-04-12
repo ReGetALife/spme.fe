@@ -9,10 +9,6 @@ export default {
       component: () => import("@/components/Reports")
     },
     {
-      path: "rexx/:subLab",
-      component: () => import("@/components/REXX")
-    },
-    {
       path: "racf/:subLab",
       component: () => import("@/components/RACF")
     },
@@ -23,6 +19,14 @@ export default {
     {
       path: "catalog/:subLab",
       component: () => import("@/components/Catalog")
+    },
+    {
+      path: "mvs/:subLab",
+      component: () => import("@/components/MVS")
+    },
+    {
+      path: "rexx/:subLab",
+      component: () => import("@/components/REXX")
     },
     {
       path: "ispf",

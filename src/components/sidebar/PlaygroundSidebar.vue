@@ -93,7 +93,10 @@ export default {
           name: "系统命令（MVS）",
           path: "mvs",
           icon: "code",
-          children: []
+          children: [
+            { name: "实验介绍", path: "intro" },
+            { name: "实验 1：系统命令执行", path: "lab1" }
+          ]
         },
         {
           name: "脚本语言（REXX）",
