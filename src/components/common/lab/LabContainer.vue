@@ -8,7 +8,7 @@
     </div>
     <div class="divider" v-if="this.subLab !== 'intro'"></div>
     <div class="right" v-if="this.subLab !== 'intro'">
-      <h2>步骤 {{ steps[stepIndex] }}</h2>
+      <h2 v-if="steps[stepIndex]">步骤 {{ steps[stepIndex] }}</h2>
       <a-spin :spinning="this.isLoading">
         <a-icon slot="indicator" type="loading-3-quarters" :spin="true" />
         <Question ref="question" />
@@ -24,7 +24,7 @@
           >
           <a-button
             icon="right-circle"
-            :disabled="stepIndex === steps.length - 1"
+            :disabled="stepIndex >= steps.length - 1"
             @click="stepIndex++"
             >下一步</a-button
           >

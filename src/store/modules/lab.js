@@ -10,7 +10,7 @@ const state = {
   stepDrafts: [],
   isLoadingDoc: true,
   isLoadingQuestions: true,
-  isLoadingDrafts: true,
+  isLoadingDrafts: false,
   isSavingDrafts: false
 };
 
@@ -53,6 +53,8 @@ const mutations = {
 const actions = {
   getQuestions({ commit, dispatch }, { lab, subLab }) {
     commit("SET_IS_LOADING_QUESTIONS", true);
+    commit("SET_STEP", 1);
+    commit("SET_QUESTIONS", { steps: [], stepQuestions: {} });
     Axios.post("/api/db/getQuestions", {
       lab,
       lower_lab: subLab
