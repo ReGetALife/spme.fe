@@ -55,11 +55,11 @@ export default {
         if (errors) return;
         this.isLoading = true;
         try {
-          const response = await Axios.post("/api/racf/inputCommand", {
-            command: values.cmd
+          const response = await Axios.post("/api/cmd", {
+            cmd: values.cmd
           });
           if (response.status === 200) {
-            this.result = response.data.sysprint;
+            this.result = response.data;
           } else {
             this.$message.warn("命令已提交，但服务器响应超时了 😥").then();
           }

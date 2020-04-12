@@ -31,17 +31,12 @@
       </a-form-item>
     </a-form>
     <a-collapse :bordered="false" v-if="result">
-      <a-collapse-panel header="JESMSGLG" key="1">
-        <pre v-if="result.jesmsglg">{{ result.jesmsglg }}</pre>
-      </a-collapse-panel>
-      <a-collapse-panel header="JESJCL" key="2">
-        <pre v-if="result.jesjcl">{{ result.jesjcl }}</pre>
-      </a-collapse-panel>
-      <a-collapse-panel header="JESYSMSG" key="3">
-        <pre v-if="result.jesysmsg">{{ result.jesysmsg }}</pre>
-      </a-collapse-panel>
-      <a-collapse-panel header="SYSTSPRT" key="4">
-        <pre v-if="result.sysprint">{{ result.sysprint }}</pre>
+      <a-collapse-panel
+        v-for="item in result"
+        :key="item.id"
+        :header="item.ddName"
+      >
+        <pre v-if="item.output">{{ item.output }}</pre>
       </a-collapse-panel>
     </a-collapse>
   </div>
@@ -69,8 +64,8 @@ export default {
         if (errors) return;
         this.isLoading = true;
         try {
-          const response = await Axios.post("/api/racf/JCLjob", {
-            command: values.jcl
+          const response = await Axios.post("/api/jcl", {
+            jcl: values.jcl
           });
           if (response.status === 200) {
             this.result = response.data;
