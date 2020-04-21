@@ -47,4 +47,7 @@ pre {
   min-width: 80px;
   text-align: center;
 }
+.ant-input {
+  font-family: monospace;
+}
 </style>
