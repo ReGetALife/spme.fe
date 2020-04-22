@@ -3,34 +3,32 @@
     <a-form :form="form" layout="vertical" @submit="handleSubmit">
       <a-form-item>
         <span slot="label">
-          REXX 文件名
+          REXX 代码
           <a-popover style="cursor: pointer">
             <template slot="content">
-              <p>文件名可以是顺序数据集或分区数据集成员。</p>
-              <p>平台是通过 JCL 来提交执行 REXX 代码的，需要</p>
-              <p>把 REXX 代码保存到文件中才能执行该代码 😅。</p>
+              <p>
+                REXX 代码会暂存在
+                {{ this.$store.state.user.username }}.SPME.REXXTEMP.XXXXXXXX
+                数据集中。
+              </p>
+              <p>
+                每行不要超过 72 个字符，并且不支持交互操作（如 PARSE PULL)，
+              </p>
+              但你仍然可以使用 PARSE ARG 来获取传入的参数。
             </template>
             <a-icon type="question-circle" />
           </a-popover>
         </span>
-        <a-input
-          placeholder="请输入 REXX 文件名"
-          v-decorator="[
-            'name',
-            {
-              rules: [{ required: true, message: '请输入 REXX 文件名' }]
-            }
-          ]"
-        />
-      </a-form-item>
-      <a-form-item label="REXX 代码">
         <a-textarea
           placeholder="请输入 REXX 代码"
           :autosize="{ minRows: 5 }"
           v-decorator="[
-            'code',
+            'rexx',
             {
-              rules: [{ required: true, message: '请输入 REXX 代码' }]
+              rules: [
+                { required: true, message: '请输入 REXX 代码' },
+                { validator: this.rexxValidator }
+              ]
             }
           ]"
         />
@@ -41,14 +39,14 @@
           <a-popover style="cursor: pointer">
             <template slot="content">
               <p>你可以在执行 REXX 脚本的时候传入参数，</p>
-              <p>如果存在多个参数，用空格分隔开。</p>
+              如果存在多个参数，用空格分隔开。
             </template>
             <a-icon type="question-circle" />
           </a-popover>
         </span>
         <a-input
           placeholder="请输入参数（如果有的话）"
-          v-decorator="['param']"
+          v-decorator="['params']"
         />
       </a-form-item>
       <a-form-item>
@@ -75,74 +73,29 @@ export default {
   },
 
   methods: {
-    // todo: refine backend code and trim in frontend
-    // create file
-    async createDS() {
-      const { getFieldValue } = this.form;
-      const rexxName = getFieldValue("name");
-      try {
-        if (rexxName.indexOf("(") !== -1) {
-          const response = await Axios.post("/api/createDatasetP", {
-            rexxName
-          });
-          if (response.status === 200) {
-            this.$message.success("创建数据集成功").then();
-          }
-        } else {
-          const response = await Axios.post("/api/createDataset", {
-            rexxName
-          });
-          if (response.status === 200) {
-            this.$message.success("创建数据集成功").then();
-          }
+    rexxValidator(rule, value, callback) {
+      const lines = (value && value.split("\n")) || [];
+      for (const l of lines) {
+        if (l.length > 72) {
+          callback("每行不能超过 72 个字符 😅");
         }
-      } catch (e) {
-        this.$message.error("发生错误：" + e.message).then();
       }
+      // always call callback. ref: https://github.com/ant-design/ant-design/issues/5155
+      callback();
     },
-    // write file to sequential or partitioned data set
-    async writeDS() {
-      const { getFieldValue } = this.form;
-      const rexxName = getFieldValue("name");
-      const rexxCode = getFieldValue("code");
-      try {
-        const response = await Axios.post("/api/writeDataset", {
-          rexxName,
-          rexxCode
-        });
-        if (response.status === 200) {
-          this.$message.success("写入数据集成功").then();
-        }
-      } catch (e) {
-        this.$message.error("发生错误：" + e.message).then();
-      }
-    },
-    // run a rexx script
     async runRexx() {
       const { getFieldValue } = this.form;
-      const rexxName = getFieldValue("name");
-      const param = getFieldValue("param");
+      const rexx = getFieldValue("rexx");
+      let params = getFieldValue("params");
+      params = (params && params.trim()) || "";
       try {
-        if (rexxName.indexOf("(") !== -1) {
-          const arr = rexxName.trim().split(/[()]/g);
-          const response = await Axios.post("/api/rexx", {
-            libName: arr[0],
-            rexxName: arr[1],
-            rexxPut: param
-          });
-          if (response.status === 200) {
-            this.result = response.data;
-            this.$message.success("运行成功").then();
-          }
-        } else {
-          const response = await Axios.post("/api/rexx2", {
-            rexxName: rexxName.trim(),
-            rexxPut: param
-          });
-          if (response.status === 200) {
-            this.result = response.data;
-            this.$message.success("运行成功").then();
-          }
+        const response = await Axios.post("/api/rexx", {
+          rexx,
+          params
+        });
+        if (response.status === 200) {
+          this.result = response.data;
+          this.$message.success("REXX 执行成功").then();
         }
       } catch (e) {
         this.$message.error("发生错误：" + e.message).then();
@@ -157,8 +110,6 @@ export default {
         if (errors) return;
         this.isLoading = true;
         try {
-          await this.createDS();
-          await this.writeDS();
           await this.runRexx();
         } catch (error) {
           this.$message.error("REXX 执行失败：" + error.message).then();
