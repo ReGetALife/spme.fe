@@ -83,6 +83,7 @@ export default {
       // always call callback. ref: https://github.com/ant-design/ant-design/issues/5155
       callback();
     },
+
     async runRexx() {
       const { getFieldValue } = this.form;
       const rexx = getFieldValue("rexx");
@@ -96,11 +97,14 @@ export default {
         if (response.status === 200) {
           this.result = response.data;
           this.$message.success("REXX 执行成功").then();
+        } else {
+          this.$message.warn("REXX 已提交，但服务器响应超时了 😥").then();
         }
       } catch (e) {
         this.$message.error("发生错误：" + e.message).then();
       }
     },
+
     async handleSubmit(e) {
       e.preventDefault();
       const {
