@@ -13,7 +13,6 @@ import master from "@/components/common/ispf/panel/MasterPanel";
 import is from "@/components/common/ispf/panel/IsmfPanel";
 import is_0 from "@/components/common/ispf/panel/ismf/Is0profile";
 import is_1 from "@/components/common/ispf/panel/ismf/Is1dataSet";
-import is_2 from "@/components/common/ispf/panel/ismf/Is2volume";
 import is_3 from "@/components/common/ispf/panel/ismf/Is3class";
 import is_4 from "@/components/common/ispf/panel/ismf/Is4dc";
 import is_5 from "@/components/common/ispf/panel/ismf/Is5sc";
@@ -36,7 +35,6 @@ const componentsMapping = {
   is_0,
   is_0_0,
   is_1,
-  is_2,
   is_3,
   is_4,
   is_5,
@@ -60,6 +58,10 @@ export default {
   },
   computed: {
     currentPanel() {
+      if (!componentsMapping[this.$store.state.ispf.currentPanel]) {
+        this.$message.warn("该选项暂不支持");
+        this.goBack();
+      }
       return componentsMapping[this.$store.state.ispf.currentPanel];
     }
   },
