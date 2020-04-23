@@ -109,8 +109,10 @@ export default {
     },
     stepIndex(newValue) {
       const s = this.$store.state.lab.subLabQuestions.steps[newValue];
-      this.$store.commit("lab/SET_STEP", s);
-      this.$store.dispatch("lab/updateStepDrafts", s);
+      if (s !== undefined) {
+        this.$store.commit("lab/SET_STEP", s);
+        this.$store.dispatch("lab/updateStepDrafts", s);
+      }
     }
   }
 };
