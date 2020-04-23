@@ -1,6 +1,14 @@
 <template>
   <div>
-    <p v-if="questions === undefined || questions.length === 0">暂无问题</p>
+    <p
+      v-if="
+        (questions === undefined || questions.length === 0) &&
+          !this.$store.state.lab.isLoadingQuestions
+      "
+    >
+      暂无问题
+    </p>
+    <p v-if="this.$store.state.lab.isLoadingQuestions">题目加载中……</p>
     <a-form v-else :form="form" layout="vertical">
       <a-form-item
         v-for="(Ques, index) in questions"
