@@ -5,6 +5,7 @@
     <a-input
       class="panel-option"
       addonBefore="OPTION >"
+      placeholder="ONLY SUPPORT 'IS', 'P' AND THEIR SUB OPTION (SUCH AS P.3.4)"
       @pressEnter="onEnter"
     />
     <div class="panel-content">
