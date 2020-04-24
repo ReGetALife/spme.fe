@@ -66,7 +66,7 @@
         class="panel-option"
         addonBefore="Option >"
         @keyup.enter="onEnter"
-        placeholder=""
+        placeholder="Only support 'blank' for now and options above are all ignored except 'Dsname Level' 🤣"
         v-model="option"
       />
     </div>
