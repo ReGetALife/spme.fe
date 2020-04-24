@@ -61,7 +61,7 @@
         class="panel-option"
         addonBefore="Option >"
         @keyup.enter="onEnter"
-        placeholder=""
+        placeholder="Only support 'A' for now"
         v-model="option"
       />
       <br />
