@@ -36,18 +36,8 @@ export default {
 </script>
 
 <style>
-pre {
-  background: #eee;
-  padding: 1em;
-  margin: 1em 0 !important;
-
-  border: 1px solid #ddd;
-}
 .ant-tabs-tab {
   min-width: 80px;
   text-align: center;
-}
-.ant-input {
-  font-family: monospace;
 }
 </style>

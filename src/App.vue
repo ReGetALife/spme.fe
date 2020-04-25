@@ -23,4 +23,14 @@ export default {
 #app {
   min-height: 100vh;
 }
+pre {
+  background: #eee;
+  padding: 1em;
+  margin: 1em 0 !important;
+
+  border: 1px solid #ddd;
+}
+.ant-input {
+  font-family: monospace !important;
+}
 </style>
