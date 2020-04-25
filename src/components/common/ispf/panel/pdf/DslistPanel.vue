@@ -135,6 +135,9 @@ export default {
         case "D":
           this.selectedDatasetName = dsname;
           this.visible = true;
+          break;
+        default:
+          this.$message.warn("暂不支持该操作");
       }
     }
   }
