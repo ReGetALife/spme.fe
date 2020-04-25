@@ -4,7 +4,8 @@ const state = {
   dataSetName: "",
   dsnLevel: "",
   dsMember: "",
-  cdsName: ""
+  cdsName: "",
+  editMode: "" // view or edit
 };
 const mutations = {
   SET_PANEL(state, v) {
@@ -27,6 +28,9 @@ const mutations = {
   },
   SET_CDS_NAME(state, v) {
     state.cdsName = v;
+  },
+  SET_EDIT_MODE(state, v) {
+    state.editMode = v;
   }
 };
 const actions = {};
