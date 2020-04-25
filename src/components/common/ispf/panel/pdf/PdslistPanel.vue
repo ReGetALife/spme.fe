@@ -38,7 +38,7 @@
       @ok="deleteMember(selectedMemberName)"
       :confirmLoading="isDeleting"
     >
-      注意：删除数据集后将不能恢复！
+      注意：删除成员后将不能恢复！
     </a-modal>
   </div>
 </template>
