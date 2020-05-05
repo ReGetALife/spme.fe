@@ -17,7 +17,8 @@
           :type="this.collapsed ? 'menu-unfold' : 'menu-fold'"
           @click="() => (this.collapsed = !this.collapsed)"
         />
-        <div style="margin-left: auto; margin-right: 24px;">
+        <h2 class="title">大型主机系统管理虚拟仿真实验平台</h2>
+        <div style="margin-right: 24px;">
           <a-dropdown>
             <a><a-icon type="user" /> {{ username }} </a>
             <a-menu slot="overlay" @click="handleClick">
@@ -121,5 +122,8 @@ export default {
   overflow: hidden;
   position: fixed;
   left: 0;
+}
+.title {
+  margin: auto;
 }
 </style>

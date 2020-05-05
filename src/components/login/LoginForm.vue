@@ -1,7 +1,7 @@
 <template>
   <div class="login-page">
     <a-form :form="form" @submit="handleSubmit" style="width: 360px">
-      <h1>主机实验平台</h1>
+      <h1>大型主机系统管理虚拟仿真实验平台</h1>
       <a-form-item>
         <a-input
           v-focus
