@@ -77,6 +77,9 @@ export default {
         jcl: this.text
       })
         .then(res => {
+          if (res.status === 202) {
+            this.$message.warn("服务区执行 Job 超时了");
+          }
           this.showJobResult(res.data);
         })
         .catch(err => {
