@@ -19,6 +19,9 @@ import is_5 from "@/components/common/ispf/panel/ismf/Is5sc";
 import is_6 from "@/components/common/ispf/panel/ismf/Is6sg";
 import is_7 from "@/components/common/ispf/panel/ismf/Is7auto";
 import is_8 from "@/components/common/ispf/panel/ismf/Is8ctrl";
+import is_8_1 from "@/components/common/ispf/panel/ismf/DisplayBaseConfig";
+import is_8_2 from "@/components/common/ispf/panel/ismf/DefineBaseConfig";
+import is_8_3 from "@/components/common/ispf/panel/ismf/AlterBaseConfig";
 import is_0_0 from "@/components/common/ispf/panel/ismf/Is00profile";
 import is_7_2 from "@/components/common/ispf/panel/ismf/Is72auto";
 import p from "@/components/common/ispf/panel/PdfPanel";
@@ -42,6 +45,9 @@ const componentsMapping = {
   is_7,
   is_7_2,
   is_8,
+  is_8_1,
+  is_8_2,
+  is_8_3,
   p,
   p_3_2,
   p_3_2_a,

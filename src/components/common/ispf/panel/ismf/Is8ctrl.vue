@@ -20,6 +20,7 @@
         <a-input
           class="panel-option"
           addonBefore="Select one of the following Options: "
+          @pressEnter="onEnter"
         ></a-input>
       </a-row>
       <a-row>
@@ -86,7 +87,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    onEnter(e) {
+      if (e.target.value) {
+        const panel = `is_8_${e.target.value.trim()}`
+          .replace(/\./g, "_")
+          .toLowerCase();
+        this.$store.commit("ispf/SET_PANEL", panel);
+      }
+    }
+  }
+};
 </script>
 
 <style scoped></style>
