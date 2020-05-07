@@ -26,6 +26,7 @@
         </template>
         <template slot="dsorg" slot-scope="{ dsorg }">
           <span v-if="dsorg && dsorg === 'PO'">Partitioned</span>
+          <span v-if="dsorg && dsorg === 'PO-E'">Partitioned Extended</span>
           <span v-if="dsorg && dsorg === 'PS'">Sequential</span>
         </template>
       </a-table>
@@ -118,7 +119,8 @@ export default {
       }
       cmd = cmd.toUpperCase();
 
-      const panel = dsorg === "PO" ? "p_3_4_blank_e" : "edit";
+      const panel =
+        dsorg === "PO" || dsorg === "PO-E" ? "p_3_4_blank_e" : "edit";
       switch (cmd) {
         case "V":
           this.$store.commit("ispf/SET_DSN", dsname);
