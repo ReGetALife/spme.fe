@@ -18,7 +18,7 @@ import is_4 from "@/components/common/ispf/panel/ismf/Is4dc";
 import is_5 from "@/components/common/ispf/panel/ismf/Is5sc";
 import is_6 from "@/components/common/ispf/panel/ismf/Is6sg";
 import is_7 from "@/components/common/ispf/panel/ismf/Is7auto";
-import is_8 from "@/components/common/ispf/panel/ismf/Is8ctrl";
+import is_8 from "@/components/common/ispf/panel/ismf/ControlDataset";
 import is_8_1 from "@/components/common/ispf/panel/ismf/DisplayBaseConfig";
 import is_8_2 from "@/components/common/ispf/panel/ismf/DefineBaseConfig";
 import is_8_3 from "@/components/common/ispf/panel/ismf/AlterBaseConfig";
