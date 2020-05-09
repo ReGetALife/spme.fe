@@ -11,6 +11,7 @@
             v-focus
             class="panel-option"
             addonBefore="CDS Name"
+            v-model="cdsName"
           ></a-input>
         </a-col>
       </a-row>
@@ -27,7 +28,7 @@
         <a-input
           class="panel-option"
           addonBefore="Select one of the following options: "
-          @pressEnter="define"
+          @pressEnter="onEnter"
         ></a-input>
       </a-row>
       <a-row>
@@ -57,30 +58,28 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
+      cdsName: "",
       dcName: ""
     };
   },
   methods: {
-    define() {
-      if (this.dcName.toUpperCase() === "DCSDS") {
-        axios
-          .post(`/api/sms/ismf/5/1`)
-          .then(() => this.$message.success("创建成功"))
-          .catch(err => this.$message.error(err.message));
-      } else if (this.dcName.toUpperCase() === "DCPDS") {
-        axios
-          .post(`/api/sms/ismf/5/2`)
-          .then(() => this.$message.success("创建成功"))
-          .catch(err => this.$message.error(err.message));
-      } else if (this.dcName.toUpperCase() === "DCKSDS") {
-        axios
-          .post(`/api/sms/ismf/5/3`)
-          .then(() => this.$message.success("创建成功"))
-          .catch(err => this.$message.error(err.message));
+    onEnter(e) {
+      if (e.target.value) {
+        this.$store.commit(
+          "ispf/SET_CDS_NAME",
+          this.cdsName.trim().toUpperCase()
+        );
+        this.$store.commit(
+          "ispf/SET_CONSTRUCT",
+          this.dcName.trim().toUpperCase()
+        );
+        const panel = `is_4_${e.target.value.trim()}`
+          .replace(/\./g, "_")
+          .toLowerCase();
+        this.$store.commit("ispf/SET_PANEL", panel);
       }
     }
   }

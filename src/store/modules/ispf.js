@@ -5,6 +5,7 @@ const state = {
   dsnLevel: "",
   dsMember: "",
   cdsName: "",
+  construct: "",
   editMode: "" // view or edit
 };
 const mutations = {
@@ -28,6 +29,9 @@ const mutations = {
   },
   SET_CDS_NAME(state, v) {
     state.cdsName = v;
+  },
+  SET_CONSTRUCT(state, v) {
+    state.construct = v;
   },
   SET_EDIT_MODE(state, v) {
     state.editMode = v;

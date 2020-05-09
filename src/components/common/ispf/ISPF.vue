@@ -14,7 +14,8 @@ import is from "@/components/common/ispf/panel/IsmfPanel";
 import is_0 from "@/components/common/ispf/panel/ismf/Is0profile";
 import is_1 from "@/components/common/ispf/panel/ismf/Is1dataSet";
 import is_3 from "@/components/common/ispf/panel/ismf/Is3class";
-import is_4 from "@/components/common/ispf/panel/ismf/Is4dc";
+import is_4 from "@/components/common/ispf/panel/ismf/DataClass";
+import is_4_3 from "@/components/common/ispf/panel/ismf/DefineDataClass";
 import is_5 from "@/components/common/ispf/panel/ismf/Is5sc";
 import is_6 from "@/components/common/ispf/panel/ismf/Is6sg";
 import is_7 from "@/components/common/ispf/panel/ismf/Is7auto";
@@ -40,6 +41,7 @@ const componentsMapping = {
   is_1,
   is_3,
   is_4,
+  is_4_3,
   is_5,
   is_6,
   is_7,
