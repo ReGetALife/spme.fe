@@ -28,6 +28,7 @@
         <a-input
           class="panel-option"
           addonBefore="Select one of the following options: "
+          placeholder="Only support option 3"
           @pressEnter="onEnter"
         ></a-input>
       </a-row>
