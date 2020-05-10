@@ -2,7 +2,7 @@
   <div class="master-panel">
     <a-spin size="large" :spinning="isLoading">
       <a-icon slot="indicator" type="loading-3-quarters" :spin="true" />
-      <h3 class="panel-title">DATA CLASS DEFINE</h3>
+      <h3 class="panel-title">STORAGE CLASS DEFINE</h3>
       <div class="panel-content">
         <a-row>
           <a-col :span="10" class="panel-name">SCDS Name :</a-col>
@@ -11,7 +11,7 @@
           </a-col>
         </a-row>
         <a-row>
-          <a-col :span="10" class="panel-name">Data Class Name :</a-col>
+          <a-col :span="10" class="panel-name">Storage Class Name :</a-col>
           <a-col :span="14" class="panel-name">
             {{ this.$store.state.ispf.construct }}
           </a-col>
@@ -29,7 +29,7 @@
           <a-input
             class="panel-option"
             addonBefore="Direct Millisecond Response: "
-            placeholder="a1 to 999 or blank"
+            placeholder="1 to 999 or blank"
             v-model="dmsresp"
           ></a-input>
         </a-row>
