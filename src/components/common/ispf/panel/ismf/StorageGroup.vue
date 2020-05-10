@@ -11,6 +11,7 @@
             v-focus
             class="panel-option"
             addonBefore="CDS Name"
+            v-model="cdsName"
           ></a-input>
         </a-col>
       </a-row>
@@ -19,6 +20,7 @@
           <a-input
             class="panel-option"
             addonBefore="Storage Group Name"
+            v-model="construct"
           ></a-input>
         </a-col>
       </a-row>
@@ -27,6 +29,8 @@
           <a-input
             class="panel-option"
             addonBefore="Storage Group Type"
+            value="POOL"
+            disabled
           ></a-input>
         </a-col>
       </a-row>
@@ -34,7 +38,8 @@
         <a-input
           class="panel-option"
           addonBefore="Select one of the following options  :"
-          @pressEnter="define"
+          placeholder="Only support option 3"
+          @pressEnter="onEnter"
         ></a-input>
       </a-row>
       <a-row>
@@ -71,15 +76,29 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
+  data() {
+    return {
+      cdsName: "",
+      construct: ""
+    };
+  },
   methods: {
-    define() {
-      axios
-        .post(`/api/sms/ismf/8/1`)
-        .then(() => this.$message.success("创建成功"))
-        .catch(err => this.$message.error(err.message));
+    onEnter(e) {
+      if (e.target.value) {
+        this.$store.commit(
+          "ispf/SET_CDS_NAME",
+          this.cdsName.trim().toUpperCase()
+        );
+        this.$store.commit(
+          "ispf/SET_CONSTRUCT",
+          this.construct.trim().toUpperCase()
+        );
+        const panel = `is_6_${e.target.value.trim()}_pool`
+          .replace(/\./g, "_")
+          .toLowerCase();
+        this.$store.commit("ispf/SET_PANEL", panel);
+      }
     }
   }
 };
