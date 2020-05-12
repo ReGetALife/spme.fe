@@ -25,6 +25,7 @@ import is_6_3_pool from "@/components/common/ispf/panel/ismf/DefinePoolStorageGr
 import is_7 from "@/components/common/ispf/panel/ismf/Acs";
 import is_7_2 from "@/components/common/ispf/panel/ismf/TranslateAcs";
 import is_7_3 from "@/components/common/ispf/panel/ismf/ValidateAcs";
+import is_7_4 from "@/components/common/ispf/panel/ismf/TestAcs";
 import is_8 from "@/components/common/ispf/panel/ismf/ControlDataset";
 import is_8_1 from "@/components/common/ispf/panel/ismf/DisplayBaseConfig";
 import is_8_2 from "@/components/common/ispf/panel/ismf/DefineBaseConfig";
@@ -56,6 +57,7 @@ const componentsMapping = {
   is_7,
   is_7_2,
   is_7_3,
+  is_7_4,
   is_8,
   is_8_1,
   is_8_2,
