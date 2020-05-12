@@ -2,10 +2,10 @@
   <div class="master-panel">
     <a-spin size="large" :spinning="isLoading">
       <a-icon slot="indicator" type="loading-3-quarters" :spin="true" />
-      <h3 class="panel-title">TRANSLATE ACS ROUTINES</h3>
+      <h3 class="panel-title">VALIDATE ACS ROUTINES OR ENTIRE SCDS</h3>
       <div class="panel-content">
         <br />
-        <a-row class="panel-name">To Perform ACS Translation, Specify:</a-row>
+        <a-row class="panel-name">To Perform Validation, Specify:</a-row>
         <br />
         <a-row>
           <a-col>
