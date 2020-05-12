@@ -3,8 +3,8 @@
     <h3 class="panel-title">STORAGE GROUP APPLICATION SELECTION</h3>
     <div class="panel-content">
       <a-row class="panel-name"
-        >To perform Storage Group Operations, Specify:</a-row
-      >
+        >To perform Storage Group Operations, Specify:
+      </a-row>
       <a-row>
         <a-col :offset="1">
           <a-input
@@ -38,7 +38,7 @@
         <a-input
           class="panel-option"
           addonBefore="Select one of the following options  :"
-          placeholder="Only support option 3"
+          placeholder="Only support option 3 & 5"
           @pressEnter="onEnter"
         ></a-input>
       </a-row>
@@ -46,8 +46,8 @@
         <a-col :offset="1" :span="1" class="panel-cmd">1</a-col>
         <a-col :span="5" class="panel-name">List</a-col>
         <a-col :span="17" class="panel-desc"
-          >- Generate a list of Storage Groups</a-col
-        >
+          >- Generate a list of Storage Groups
+        </a-col>
       </a-row>
       <a-row>
         <a-col :offset="1" :span="1" class="panel-cmd">2</a-col>
@@ -68,8 +68,8 @@
         <a-col :offset="1" :span="1" class="panel-cmd">5</a-col>
         <a-col :span="5" class="panel-name">Volume</a-col>
         <a-col :span="17" class="panel-desc"
-          >- Display, Define, Alter or Delete Volume Information</a-col
-        >
+          >- Display, Define, Alter or Delete Volume Information
+        </a-col>
       </a-row>
     </div>
   </div>
@@ -94,9 +94,14 @@ export default {
           "ispf/SET_CONSTRUCT",
           this.construct.trim().toUpperCase()
         );
-        const panel = `is_6_${e.target.value.trim()}_pool`
-          .replace(/\./g, "_")
-          .toLowerCase();
+        let panel;
+        if (e.target.value.trim() === "5") {
+          panel = "is_6_5";
+        } else {
+          panel = `is_6_${e.target.value.trim()}_pool`
+            .replace(/\./g, "_")
+            .toLowerCase();
+        }
         this.$store.commit("ispf/SET_PANEL", panel);
       }
     }

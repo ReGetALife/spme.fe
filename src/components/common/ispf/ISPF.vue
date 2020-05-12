@@ -20,6 +20,7 @@ import is_4_3 from "@/components/common/ispf/panel/ismf/DefineDataClass";
 import is_5 from "@/components/common/ispf/panel/ismf/StorageClass";
 import is_5_3 from "@/components/common/ispf/panel/ismf/DefineStorageClass";
 import is_6 from "@/components/common/ispf/panel/ismf/StorageGroup";
+import is_6_5 from "@/components/common/ispf/panel/ismf/StorageGroupVolume";
 import is_6_3_pool from "@/components/common/ispf/panel/ismf/DefinePoolStorageGroup";
 import is_7 from "@/components/common/ispf/panel/ismf/Is7auto";
 import is_8 from "@/components/common/ispf/panel/ismf/ControlDataset";
@@ -49,6 +50,7 @@ const componentsMapping = {
   is_5,
   is_5_3,
   is_6,
+  is_6_5,
   is_6_3_pool,
   is_7,
   is_7_2,
