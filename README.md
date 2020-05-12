@@ -4,15 +4,15 @@ This is the front-end project of a simulation platform of mainframe experiment a
 
 ### Todo List
 
--[ ] fix UI & logic bugs
--[ ] beautify UI
--[ ] i18n
--[ ] refine experiment doc
--[ ] refine project structure
--[ ] fix eslint
--[x] change site logo 
--[ ] importing components on demand
--[ ] refine hard coded configuration
+- [ ] fix UI & logic bugs
+- [ ] beautify UI
+- [ ] i18n
+- [ ] refine experiment doc
+- [x] refine project structure
+- [x] fix eslint
+- [x] change site logo 
+- [ ] importing components on demand
+- [ ] refine hard coded configuration
 
 ### Project setup
 ```
