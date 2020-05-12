@@ -8,6 +8,7 @@
           class="panel-option"
           addonBefore="Select one of the following options:"
           v-model="option"
+          @keyup.enter="onEnter"
         ></a-input>
       </a-row>
       <a-row>
@@ -69,7 +70,6 @@
 </template>
 
 <script>
-import Axios from "axios";
 export default {
   data() {
     return {
@@ -80,25 +80,16 @@ export default {
 
   methods: {
     onEnter() {
-      if (this.cdsName.trim().length === 0 || this.option.trim().length === 0) {
-        this.$message.warn("Enter required field: Option & CDS Name");
+      if (this.option.trim().length === 0) {
+        this.$message.warn("请输入 Option");
         return;
       }
-      if (this.option.trim().toUpperCase() === "2") {
-        this.$store.commit(
-          "ispf/SET_CDS_NAME",
-          this.cdsName.trim().toUpperCase()
-        );
-        this.$store.commit("ispf/SET_PANEL", "is_7_2");
-      } else if (this.option.trim().toUpperCase() === "3") {
-        Axios.post("/api/sms/ismf/12/1")
-          .then(() => {
-            this.$message.success("成功");
-          })
-          .catch(err => {
-            this.$message.error(err.message);
-          });
-      }
+      this.$store.commit(
+        "ispf/SET_CDS_NAME",
+        this.cdsName.trim().toUpperCase()
+      );
+      const panel = `is_7_${this.option.trim()}`;
+      this.$store.commit("ispf/SET_PANEL", panel);
     }
   }
 };
