@@ -30,6 +30,7 @@
         </span>
       </a-table>
     </a-spin>
+    
     <a-modal
       title="朋友，确定提交么？"
       v-model="visible"
@@ -112,6 +113,13 @@ const data = [
   {
     name: "脚本语言（REXX）",
     labId: "REXX",
+    status: "",
+    score: "",
+    comment: ""
+  },
+  {
+    name: "主机软件安装（SMP/E）",
+    labId: "SMP",
     status: "",
     score: "",
     comment: ""

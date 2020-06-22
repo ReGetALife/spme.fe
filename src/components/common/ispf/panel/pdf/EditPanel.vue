@@ -41,9 +41,11 @@ export default {
     getContent() {
       this.text = "";
       this.isLoading = true;
+
       Axios.get(`/api/dataset/${this.$store.state.ispf.dsMember}`)
         .then(res => {
           this.text = res.data;
+          console.log(res.data);
         })
         .catch(err => {
           this.$message.error("请求错误：" + err.message);

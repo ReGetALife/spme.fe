@@ -25,8 +25,8 @@ export default {
       component: () => import("@/components/MVS")
     },
     {
-      path: "rexx/:subLab",
-      component: () => import("@/components/REXX")
+      path: "smp/:subLab",
+      component: () => import("@/components/SMP")
     },
     {
       path: "ispf",

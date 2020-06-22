@@ -99,6 +99,21 @@ export default {
           ]
         },
         {
+          name: "主机软件安装(SMP/E)",
+          path: "smp",
+          icon: "container",
+          children: [
+            { name: "实验介绍", path: "intro" },
+            { name: "实验一：SMP/E 准备工作", path: "lab1" },
+            { name: "实验二：RECEIVE 实验", path: "lab2" },
+            { name: "实验三：创建分配库(DLib)和目标库(TLib)", path: "lab3" },
+            { name: "实验四：定义 DDDEF 实验", path: "lab4" },
+            { name: "实验五：APPLY 实验", path: "lab5" },
+            { name: "实验六：ACCEPT 实验", path: "lab6" },
+            { name: "实验七：提交实验报告", path: "lab7" }
+          ]
+        },
+        {
           name: "脚本语言（REXX）",
           path: "rexx",
           icon: "snippets",

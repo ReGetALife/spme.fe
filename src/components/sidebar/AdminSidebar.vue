@@ -53,6 +53,11 @@ export default {
           icon: "code"
         },
         {
+          name: "主机软件实验（SMP/E)",
+          path: "smp",
+          icon: "code"
+        },
+        {
           name: "脚本语言（REXX）",
           path: "rexx",
           icon: "snippets"
