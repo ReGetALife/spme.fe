@@ -15,13 +15,17 @@ import is_0 from "@/components/common/ispf/panel/ismf/Is0profile";
 import is_1 from "@/components/common/ispf/panel/ismf/Is1dataSet";
 import is_3 from "@/components/common/ispf/panel/ismf/ManagementClass";
 import is_3_3 from "@/components/common/ispf/panel/ismf/DefineManagementClass";
+import is_3_4 from "@/components/common/ispf/panel/ismf/AlterManagementClass";
 import is_4 from "@/components/common/ispf/panel/ismf/DataClass";
 import is_4_3 from "@/components/common/ispf/panel/ismf/DefineDataClass";
+import is_4_4 from "@/components/common/ispf/panel/ismf/AlterDataClass";
 import is_5 from "@/components/common/ispf/panel/ismf/StorageClass";
 import is_5_3 from "@/components/common/ispf/panel/ismf/DefineStorageClass";
+import is_5_4 from "@/components/common/ispf/panel/ismf/AlterStorageClass";
 import is_6 from "@/components/common/ispf/panel/ismf/StorageGroup";
 import is_6_5 from "@/components/common/ispf/panel/ismf/StorageGroupVolume";
 import is_6_3_pool from "@/components/common/ispf/panel/ismf/DefinePoolStorageGroup";
+import is_6_4_pool from "@/components/common/ispf/panel/ismf/AlterPoolStorageGroup";
 import is_7 from "@/components/common/ispf/panel/ismf/Acs";
 import is_7_2 from "@/components/common/ispf/panel/ismf/TranslateAcs";
 import is_7_3 from "@/components/common/ispf/panel/ismf/ValidateAcs";
@@ -47,11 +51,15 @@ const componentsMapping = {
   is_1,
   is_3,
   is_3_3,
+  is_3_4,
   is_4,
   is_4_3,
+  is_4_4,
   is_5,
   is_5_3,
+  is_5_4,
   is_6,
+  is_6_4_pool,
   is_6_5,
   is_6_3_pool,
   is_7,

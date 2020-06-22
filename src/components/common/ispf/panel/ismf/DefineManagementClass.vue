@@ -97,7 +97,7 @@ export default {
         partrel: this.partrel.trim()
       };
       this.isLoading = true;
-      Axios.post("/api/sms/management-class", params)
+      Axios.post("/api/sms/display-management-class", params)
         .then(res => {
           this.showResult(res.data);
         })

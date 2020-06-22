@@ -2,7 +2,7 @@
   <div class="master-panel">
     <a-spin size="large" :spinning="isLoading">
       <a-icon slot="indicator" type="loading-3-quarters" :spin="true" />
-      <h3 class="panel-title">DATA CLASS DEFINE</h3>
+      <h3 class="panel-title">DATA CLASS ALTER</h3>
       <div class="panel-content">
         <a-row>
           <a-col :span="10" class="panel-name">SCDS Name :</a-col>
@@ -16,7 +16,7 @@
             {{ this.$store.state.ispf.construct }}
           </a-col>
         </a-row>
-        <a-row class="panel-name">To DEFINE Data Class, Specify:</a-row>
+        <a-row class="panel-name">To ALTER Data Class, Specify:</a-row>
         <a-row>
           <a-input
             class="panel-option"
@@ -177,7 +177,7 @@
 import Axios from "axios";
 
 export default {
-  name: "DefineDataClass",
+  name: "AlterDataClass",
   data() {
     return {
       descr: "",
@@ -226,8 +226,7 @@ export default {
         frspcca: this.frspcca.trim()
       };
       this.isLoading = true;
-      Axios.post("/api/sms/list-data-class", params)
-      //Axios.post("/api/sms/display-data-class", params)
+      Axios.post("/api/sms/alter-data-class", params)
         .then(res => {
           this.showResult(res.data);
         })
@@ -242,7 +241,7 @@ export default {
       if (result.length > 0) {
         const h = this.$createElement;
         this.$info({
-          title: `DEFINE 结果`,
+          title: `ALTER 结果`,
           width: 800,
           content: h("div", {}, [h("pre", result)]),
           onOk() {

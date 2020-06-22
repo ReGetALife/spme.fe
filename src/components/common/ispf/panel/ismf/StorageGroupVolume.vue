@@ -138,7 +138,7 @@ export default {
           return;
         }
         this.isLoading = true;
-        Axios.post("/api/sms/storage-group/volume", params)
+        Axios.post("/api/sms/storage-group/delete-volume", params)
           .then(res => {
             this.showResult(res.data);
           })

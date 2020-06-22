@@ -2,7 +2,7 @@
   <div class="master-panel">
     <a-spin size="large" :spinning="isLoading">
       <a-icon slot="indicator" type="loading-3-quarters" :spin="true" />
-      <h3 class="panel-title">POOL STORAGE GROUP DEFINE</h3>
+      <h3 class="panel-title">POOL STORAGE GROUP ALTER</h3>
       <div class="panel-content">
         <a-row>
           <a-col :span="10" class="panel-name">SCDS Name :</a-col>
@@ -16,7 +16,7 @@
             {{ this.$store.state.ispf.construct }}
           </a-col>
         </a-row>
-        <a-row class="panel-name">To DEFINE Storage Group, Specify:</a-row>
+        <a-row class="panel-name">To ALTER Storage Group, Specify:</a-row>
         <a-row>
           <a-input
             class="panel-option"
@@ -81,7 +81,7 @@
 import Axios from "axios";
 
 export default {
-  name: "DefinePoolStorageGroup",
+  name: "AlterPoolStorageGroup",
   data() {
     return {
       descr: "",
@@ -110,7 +110,7 @@ export default {
         return;
       }
       this.isLoading = true;
-      Axios.post("/api/sms/display-storage-group/pool", params)
+      Axios.post("/api/sms/alter-storage-group/pool", params)
         .then(res => {
           this.showResult(res.data);
         })
@@ -125,7 +125,7 @@ export default {
       if (result.length > 0) {
         const h = this.$createElement;
         this.$info({
-          title: `DEFINE 结果`,
+          title: `ALTER 结果`,
           width: 800,
           content: h("div", {}, [h("pre", result)]),
           onOk() {
